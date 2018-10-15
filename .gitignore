@@ -1,0 +1,14 @@
+.idea
+*.iml
+
+# IntelliJ
+*/out/**
+*/logs/**
+logs/**
+*/target/**
+
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+dependency-reduced-pom.xml

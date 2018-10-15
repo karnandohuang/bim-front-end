@@ -1,0 +1,211 @@
+html,body
+{
+	height: 100%;
+}
+
+body{
+	display: flex;
+	align-items: center;
+}
+
+.container-fluid{
+	height: 100%;
+	margin: 0 auto;
+}
+
+.login-container{ 
+	height: 85%;
+}
+
+.login-box{
+	background-color: white;
+	margin-top: 0;
+	opacity: 1;
+	transition: all 600ms ease-out;
+}
+
+.login-box.transitioned
+{
+	margin-top: 150px;
+	opacity: 0;
+}
+
+.login-box.failed
+{
+	animation: failedLogin 200ms ease-in-out forwards;
+}
+
+#page-row,.page-full, .left-navbar, #left-nav{
+	height: 100%;
+}
+
+#page-row{
+	width: 100%;
+	margin:0;
+}
+
+@keyframes failedLogin
+{
+	0%
+	{
+		margin-left: 0px;
+	}
+	25%
+	{
+		margin-left: -5px;
+	}
+	50%
+	{
+		margin-left: -8px;
+	}
+	75%
+	{
+		margin-left: 0px;
+		margin-right: -5px;
+	}
+	100%
+	{
+		margin-right: 0px;
+	}
+}
+
+.login-box input[type=email].failed, .login-box input[type=password].failed
+{
+	border: solid 1px red;
+}
+
+>>>>>>> login-animation
+
+
+
+.nav-link{
+}
+
+
+div.waiting
+{
+	position: fixed;
+	background-color: blue;
+	z-index: 10;
+	height: 2.5px;
+	top: 0;
+}
+
+div.waiting.done
+{
+	height: 0;
+}
+
+.nav-link
+{
+	cursor: pointer;
+}
+
+.nav-link a:hover{
+	color: #17a2b8;
+}
+
+.navbar-brand:hover{
+	box-shadow: 5px;
+}
+
+.navbar-brand:hover{
+	opacity: 0.8;
+}
+
+.dashboard-box:hover{
+	text-decoration: none;
+}
+
+
+.dashboard-box .card:hover{
+	opacity: 0.95;
+}
+
+/*.login-box
+{
+	width: 600px;
+	height: 400px;
+	box-shadow: 1px 2px 2px 2px rgb(0,0,0, 0.5);
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -230px;
+    margin-left: -300px;
+    border-radius: 7px;
+}
+
+.login-box .logo
+{
+	width: 100%;
+	height: 125px;
+	background: lightblue;
+}
+
+.login-box .content
+{
+	text-align: center;
+}
+
+
+.login-box .content form div
+{
+	text-align: right;
+	width: 450px;
+	margin-top: 15px;
+}
+
+.login-box .content form div label
+{
+	position: relative;
+	left: 5px;
+	margin-right: 35px;
+}
+
+.login-box .content form input
+{
+	width: 250px;
+	height: 20px;
+}
+
+
+.login-box .content form input[type=checkbox]
+{
+	margin-top: 10px;
+	width: 20px;
+	position: relative;
+	left: -50px;
+}
+
+.login-box .content form span
+{
+	position: relative;
+	left: -50px;
+	font-size: 15px;
+	top: -5px;
+}
+
+.login-box .content form label
+{
+	margin-right: 10px;
+	width: 70px;
+	height: 20px;
+}
+
+.login-box .content form button
+{
+	margin: 25px auto;
+	display: block;
+	border-radius: 30px;
+	width: 125px;
+	height: 50px;
+	transition: all 500ms ease-out;
+	background: blue;
+	color: white;
+}
+
+.login-box .content form button:hover
+{
+	background: white;
+	color: black;
+}*/
