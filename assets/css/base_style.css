@@ -1,0 +1,48 @@
+html,body
+{
+	height: 100%;
+}
+
+body{
+	display: flex;
+	align-items: center;
+}
+
+.container-fluid{
+	height: 100%;
+	margin: 0 auto;
+}
+
+#page-row,.page-full, .left-navbar, #left-nav{
+	height: 100%;
+}
+
+#page-row{
+	width: 100%;
+	margin:0;
+}
+
+.nav-link
+{
+	cursor: pointer;
+}
+
+.nav-link a:hover{
+	color: #17a2b8;
+}
+
+.navbar-brand:hover{
+	box-shadow: 5px;
+}
+
+.navbar-brand:hover{
+	opacity: 0.8;
+}
+
+.dashboard-box:hover{
+	text-decoration: none;
+}
+
+.dashboard-box .card:hover{
+	opacity: 0.95;
+}

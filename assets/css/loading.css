@@ -1,0 +1,13 @@
+div.waiting
+{
+    position: fixed;
+    background-color: blue;
+    z-index: 10;
+    height: 2.5px;
+    top: 0;
+}
+
+div.waiting.done
+{
+    height: 0;
+}
