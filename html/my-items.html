@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/base_style.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+		  integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="../assets/css/loading.css">
+
+	<link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon/favicon-16x16.png">
+	<link rel="manifest" href="../assets/images/favicon/site.webmanifest">
+	<link rel="mask-icon" href="../assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="shortcut icon" href="../assets/images/favicon/myFavicon.ico">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="msapplication-config" content="assets/images/favicon/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+	<div id="progress" class="waiting">
+	</div>
+	<div class="container-fluid p-0 m-0">
+		<div class="row" id="page-row">
+			<div class="left-navbar col-sm-2 col-md-3 col-lg-3 col-xl-2 p-0 shadow">
+				<nav class="navbar navbar-dark bg-dark flex-row flex-nowrap align-items-start navbar-expand-sm pl-4 pr-1" id="left-nav">
+			  		<nav class="nav flex-column nav-pills nav-fill nav-justified col-12 text-right" aria-orientation="vertical">
+						<a class="navbar-brand pl-1 pb-5 pt-3" href="dashboard.html">
+			    				<img src="../assets/images/logo.png" width="175" alt="">
+			  			</a>
+						<a class="nav-link show-loading text-light font-weight-light" id="dashboard"><i class="fas fa-desktop"></i> Dashboard</a>
+						<a class="nav-link show-loading text-light font-weight-light" id="items"><i class="fas fa-archive"></i> Items</a>
+						<a class="nav-link show-loading active shadow font-weight-light" id="my-items"><i class="fas fa-box-open"></i> My Items</a>
+						<a class="nav-link show-loading text-light font-weight-light" id="employees"><i class="fas fa-user-friends"></i> Employees</a>
+						<a class="nav-link show-loading text-light font-weight-light" id="assignment-list"><i class="fas fa-tasks"></i> Assignment List</a>
+					</nav>
+				</nav>
+			</div>
+			<div class="col-sm-10 col-md-9 col-lg-9 col-xl-10 p-0">
+				<nav class="navbar navbar-light bg-light justify-content-end shadow-sm">
+					<ul class="nav pr-4">
+						<li class="nav-item dropdown">
+						    <a class="nav-link text-secondary" data-toggle="dropdown" id="#" role="button"
+                               aria-haspopup="true" aria-expanded="false">Hello, Admin <i class="fas fa-user-circle"></i></a>
+						    <div class="dropdown-menu dropdown-menu-right text-center">
+						      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePasswordModal"><i class="fas fa-cog"></i> Change Password</a>
+						      <div class="dropdown-divider"></div>
+						      <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+						    </div>
+						</li>
+					</ul>
+				</nav>
+
+				<div class="p-4">
+					<h3 class="text-dark">My Items</h3>
+					<div class="table-responsive pt-4">
+						<table class="table table-hover">
+							<thead>
+							<tr>
+								<th scope="col" class="pl-3">
+									<input class="form-check-input position-static m-0" type="checkbox" value="" id="checkAll">
+								</th>
+								<th scope="col">SKU</th>
+								<th scope="col">Name</th>
+								<th scope="col">Price</th>
+								<th scope="col">Location</th>
+								<th scope="col">Qty</th>
+								<th scope="col" class="text-center">Action</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td scope="row" class="pl-3">
+									<input class="form-check-input position-static m-0" type="checkbox" value="" id="check1">
+								</td>
+								<td>SKU-123</td>
+								<td>Macbook Pro 15"</td>
+								<td>25.000.000</td>
+								<td>Thamrin Office</td>
+								<td>5</td>
+								<td>
+									<button type="button" class="btn btn-info btn-block p-0 m-0">Print</button>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"
+						 aria-labelledby="changePasswordLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title" id="changePasswordLabel">Change Password</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form>
+										<div class="form-group">
+											<label for="currentPassword">Current Password :</label>
+											<input type="password" class="form-control" id="currentPassword"
+												   placeholder="Current Password">
+										</div>
+										<div class="form-group">
+											<label for="newPassword">New Password :</label>
+											<input type="password" class="form-control" id="newPassword"
+												   placeholder="New Password">
+										</div>
+										<div class="form-group">
+											<label for="newPasswordRepeat">Verify Password :</label>
+											<input type="password" class="form-control" id="newPasswordRepeat"
+												   placeholder="Verify Password">
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary px-4" data-dismiss="modal">Close</button>
+									<button type="button" class="btn btn-primary px-3">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+    <script src="../assets/js/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../assets/js/bootstrap/bootstrap.js"></script>
+    <script src="../assets/js/loading.js"></script>
+	<script src="../assets/js/action-modal.js"></script>
+</body>
+</html>

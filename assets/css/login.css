@@ -1,0 +1,52 @@
+.login-container{
+    height: 85%;
+}
+
+.login-box{
+    background-color: white;
+    margin-top: 0;
+    opacity: 1;
+    transition: all 600ms ease-out;
+}
+
+.login-box.transitioned
+{
+    margin-top: 150px;
+    opacity: 0;
+}
+
+.login-box.failed
+{
+    animation: failedLogin 200ms ease-in-out forwards;
+}
+
+
+@keyframes failedLogin
+{
+    0%
+    {
+        margin-left: 0px;
+    }
+    25%
+    {
+        margin-left: -5px;
+    }
+    50%
+    {
+        margin-left: -8px;
+    }
+    75%
+    {
+        margin-left: 0px;
+        margin-right: -5px;
+    }
+    100%
+    {
+        margin-right: 0px;
+    }
+}
+
+.login-box input[type=email].failed, .login-box input[type=password].failed
+{
+    border: solid 1px red;
+}
