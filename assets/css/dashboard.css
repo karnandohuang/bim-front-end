@@ -1,0 +1,7 @@
+.dashboard-box:hover{
+    text-decoration: none;
+}
+
+.dashboard-box .card:hover{
+    opacity: 0.95;
+}

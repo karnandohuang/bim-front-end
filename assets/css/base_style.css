@@ -38,11 +38,3 @@ body{
 .navbar-brand:hover{
 	opacity: 0.8;
 }
-
-.dashboard-box:hover{
-	text-decoration: none;
-}
-
-.dashboard-box .card:hover{
-	opacity: 0.95;
-}
