@@ -72,11 +72,11 @@
 					</div>
 
                     <div class="table-responsive pt-4">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="data-table">
                             <thead>
                             <tr>
                                 <th scope="col" class="pl-3">
-                                    <input class="form-check-input position-static m-0" type="checkbox" value="" id="checkAll">
+                                    <input class="form-check-input position-static m-0 select-all" type="checkbox" value="">
                                 </th>
                                 <th scope="col">ID</th>
                                 <th scope="col">Name</th>
@@ -86,16 +86,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td scope="row" class="pl-3">
-                                    <input class="form-check-input position-static m-0" type="checkbox" value="" id="check1">
-                                </td>
-                                <td>E12345</td>
-                                <td>Oliver Sebastian Kindy</td>
-                                <td>oliversebastian@gmail.com</td>
-                                <td>IT Development</td>
-                                <td>E67899</td>
-                            </tr>
+                            <!--<tr>-->
+                                <!--<td scope="row" class="pl-3">-->
+                                    <!--<input class="form-check-input position-static m-0" type="checkbox" value="" id="check1">-->
+                                <!--</td>-->
+                                <!--<td>E12345</td>-->
+                                <!--<td>Oliver Sebastian Kindy</td>-->
+                                <!--<td>oliversebastian@gmail.com</td>-->
+                                <!--<td>IT Development</td>-->
+                                <!--<td>E67899</td>-->
+                            <!--</tr>-->
                             </tbody>
                         </table>
                     </div>
@@ -256,5 +256,9 @@
             uiLibrary: 'bootstrap4'
         });
     </script>
+
+    <script src="../assets/js/api/employees/show-employee-list.js"></script>
+    <script src="../assets/js/api/checkbox.js"></script>
+
 </body>
 </html>
