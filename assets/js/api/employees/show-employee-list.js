@@ -11,6 +11,7 @@ $(document).ready(function () {
                         "</td><td class='id'>"+ value.id +
                         "</td><td class='name'>" + value.name +
                         "</td><td class='email'>" + value.email +
+                        "</td><td class='position'>" + value.position +
                         "</td><td class='division'>" + value.division +
                         "</td><td class='superiorId'>" + value.superiorId + "</td></tr>";
 
