@@ -6,7 +6,7 @@ $('.actionModal').on('show.bs.modal', function (event) {
     var modal = $(this);
     modal.find('.modal-title').text(dataName);
 
-    if (dataName.toUpperCase() == "EDIT ITEM") {
+    if ($('.modal-title') == "Edit Item") {
         // NOT WORKING
         $("#inputItemSku").prop("readonly", true);
     }
@@ -15,7 +15,7 @@ $('.actionModal').on('show.bs.modal', function (event) {
 
     }
 
-    if(dataName.toUpperCase() == "REQUEST ITEM"){
+    if($('.modal-title') == "Request Item"){
         $("#entryEditForm").css("display", "none");
         $("#requestTable").css("display", "inline");
     }
@@ -24,11 +24,10 @@ $('.actionModal').on('show.bs.modal', function (event) {
         $("#requestTable").css("display", "none");
     }
 
-    if(dataName.toUpperCase() == "REJECT REQUEST"){
+    if($('.modal-title') == "Reject Request"){
         $("#rejectReasonBox").css("display", "inline");
     }
     else{
-        console.log("test");
         $("#rejectReasonBox").css("display", "none");
 
     }
