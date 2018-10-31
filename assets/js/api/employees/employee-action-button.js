@@ -37,11 +37,12 @@ $(document).ready(function () {
                 email: selectedEmail,
                 position: selectedPosition,
                 division: selectedDivision,
-                superiorid: selectedSuperiorId
+                superiorId: selectedSuperiorId
             };
             selectedEmployee.push(employee);
 
             employeeJson = JSON.stringify(selectedEmployee);
+            console.log(employeeJson);
         });
 
         if(!selectedEmployee.length>0){
@@ -57,15 +58,15 @@ $(document).ready(function () {
                     let employee = JSON.parse(employeeJson);
                     $('#input-employee-id').val(employee[0].id);
                     $('#input-employee-name').val(employee[0].name);
-                    $('#input-superior-id').val(employee[0].superiorid);
+                    $('#input-superior-id').val(employee[0].superiorId);
                     $('#input-email').val(employee[0].email);
                     $('#input-position').val(employee[0].position);
                     $('#input-division').val(employee[0].division);
 
-
                     setEditModalAttributes();
 
                     $('.modal-footer').on('click', '#edit-employee-button', function () {
+
                         let id = $('#input-employee-id').val();
                         let name = $('#input-employee-name').val();
                         let superiorId = $('#input-superior-id').val();
@@ -88,9 +89,6 @@ $(document).ready(function () {
                             division: division
                         };
 
-                        console.log(employee);
-
-
                         var employeeJson = JSON.stringify(employee);
                         console.log(employeeJson);
                         $.ajax({
@@ -101,7 +99,6 @@ $(document).ready(function () {
                             data: employeeJson,
                             success: function () {
                                 alert("Success");
-                                window.location.reload();
                             },
                             error: function () {
                                 alert("failed");
@@ -115,7 +112,7 @@ $(document).ready(function () {
 
                 let employee = JSON.parse(employeeJson);
 
-
+                //print table
                 for(let i=0;i<employee.length;i++) {
                     let tr = "<tr class='delete-row'>";
                     let td1 = "<td class='delete-id'>" + employee[i].id + "</td>";
@@ -139,6 +136,7 @@ $(document).ready(function () {
 
                     deleteEmployeeJson.ids = employees;
                     deleteEmployeeJson = JSON.stringify(deleteEmployeeJson);
+                    console.log(deleteEmployeeJson);
 
                     $.ajax({
                         url: 'http://localhost:8080/bim/api/employees',

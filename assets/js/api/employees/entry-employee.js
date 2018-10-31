@@ -21,46 +21,48 @@ $(document).ready(function () {
         setEntryModalAttributes();
     });
 
-    $('.modal-footer').on('click', '#entry-employee-button', function () {
-        let employeeName = $('#input-employee-name').val();
-        let superiorId = $('#input-superior-id').val();
-        let dob = $('#datepicker').val();
-        let email = $('#input-email').val();
-        let password = $('#input-password').val();
-        let position = $('#input-position').val();
-        let division = $('#input-division').val();
-
-        var employee = {
-            name: employeeName,
-            superiorId: superiorId,
-            dob: dob,
-            email: email,
-            password: password,
-            position: position,
-            division: division
-        };
-
-        var employeeJson = JSON.stringify(employee);
-
+    function sendEntryEmployeeJson(employeeJson) {
         $.ajax({
             url: "http://localhost:8080/bim/api/employees",
             type: "POST",
             dataType: "JSON",
-            contentType: "application/json",
+            contentType: "application/json; charset=utf-8",
             data: employeeJson,
+            async:false,
             success: function () {
                 alert("Success");
                 window.location.reload();
             },
             error: function () {
-                alert("failed");
+                alert("failed to add employee");
             }
         });
+    }
 
-        // TODO : Add form validation
+    $('.modal-footer').on('click', '#entry-employee-button', function () {
+        $('#submit-form').click();
+        let form = $("#entry-edit-form");
 
+        if(form[0].checkValidity()){
+            let employeeName = $('#input-employee-name').val();
+            let superiorId = $('#input-superior-id').val();
+            let dob = $('#datepicker').val();
+            let email = $('#input-email').val();
+            let password = $('#input-password').val();
+            let position = $('#input-position').val();
+            let division = $('#input-division').val();
+
+            let employee = {
+                name: employeeName,
+                superiorId: superiorId,
+                dob: dob,
+                email: email,
+                password: password,
+                position: position,
+                division: division
+            };
+            let employeeJson = JSON.stringify(employee);
+            sendEntryEmployeeJson(employeeJson);
+        }
     });
-
-
-
 });

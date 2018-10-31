@@ -101,12 +101,12 @@
                             </div>
                             <div class="modal-body">
                                 <div class="container-fluid">
-                                    <form id="entry-edit-form">
+                                    <form id="entry-edit-form" class="needs-validation" novalidate>
                                         <div class="form-group row" id="employee-id-row">
                                             <label for="input-employee-id" class="col-sm-3 col-form-label">Employee ID</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="input-employee-id"
-                                                       placeholder="Employee ID" readonly>
+                                                <input type="text" readonly class="form-control-plaintext" id="input-employee-id"
+                                                       placeholder="Employee ID">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -114,13 +114,19 @@
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" id="input-employee-name"
                                                        placeholder="Employee Name" required>
+                                                <div class="invalid-feedback">
+                                                    Please input Employee Name.
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="input-superior-id" class="col-sm-3 col-form-label">Superior ID</label>
                                             <div class="col-sm-4 pr-1">
                                                 <input type="text" class="form-control" id="input-superior-id"
-                                                       readonly placeholder="Superior ID" required>
+                                                       disabled placeholder="Superior ID" required>
+                                                <div class="invalid-feedback">
+                                                    Please choose Superior ID.
+                                                </div>
                                             </div>
                                             <div class="col-sm-4 pl-1">
                                                 <button type="button" class="btn btn-primary" id="choose-superior-id-button">Choose</button>
@@ -129,13 +135,19 @@
                                         <div class="form-group row">
                                             <label for="datepicker" class="col-sm-3 col-form-label">Date of Birth</label>
                                             <div class="col-sm-8">
-                                                <input id="datepicker" width="276" >
+                                                <input id="datepicker" width="276" required class="required">
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please choose Date of Birth.
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="input-email" class="col-sm-3 col-form-label">Email</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" id="input-email" placeholder="Email Address" required>
+                                                <div class="invalid-feedback">
+                                                    Please input Employee Email.
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row" id="employee-password-row">
@@ -143,6 +155,9 @@
                                             <div class="col-sm-8">
                                                 <input type="password" class="form-control" id="input-password"
                                                        placeholder="Password" required>
+                                                <div class="invalid-feedback">
+                                                    Please input Password.
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -150,6 +165,9 @@
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" id="input-position"
                                                        placeholder="Position" required>
+                                                <div class="invalid-feedback">
+                                                    Please input Employee Position.
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -168,9 +186,12 @@
                                                     <!--<option value="9">9</option>-->
                                                     <!--<option value="10">10</option>-->
                                                 </select>
+                                                <div class="invalid-feedback">
+                                                    Please select Employee Division.
+                                                </div>
                                             </div>
                                         </div>
-                                        <input type="submit" style="display:none" />
+                                        <input type="submit" style="display: none;" id="submit-form"/>
                                     </form>
 
                                     <div class="table-responsive" id="table-modal-div" style="display: none">
@@ -288,6 +309,7 @@
 </div>
 
 <script src="../assets/js/jquery/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
 <script src="../assets/js/bootstrap/bootstrap.js"></script>
 <script src="../assets/js/loading.js"></script>
 <script src="../assets/js/action-modal.js"></script>
@@ -297,6 +319,8 @@
 <script>
     $('#datepicker').datepicker({
         uiLibrary: 'bootstrap4'
+    }).on('change', function () {
+        $(this).valid;
     });
 </script>
 
@@ -304,7 +328,9 @@
 <script src="../assets/js/api/employees/entry-employee.js"></script>
 <script src="../assets/js/api/employees/select-superior.js"></script>
 <script src="../assets/js/api/employees/employee-action-button.js"></script>
+<script src="../assets/js/api/employees/employee-form-validation.js"></script>
 <script src="../assets/js/api/checkbox.js"></script>
+
 
 </body>
 </html>
