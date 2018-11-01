@@ -20,6 +20,11 @@ $(document).ready(function () {
         $('#employee-action-modal').modal('show');
     }
 
+    function displayMessageBox(message) {
+        $('#message-box .modal-body').text(message);
+        $('#message-box').modal('show');
+    }
+
     $('#edit-button, #delete-button').click(function () {
         let selectedEmployee = [];
         $('.row-select input:checked').each(function () {
@@ -29,7 +34,6 @@ $(document).ready(function () {
             let selectedPosition = $(this).closest('tr').find('.position').html();
             let selectedDivision = $(this).closest('tr').find('.division').html();
             let selectedSuperiorId = $(this).closest('tr').find('.superiorId').html();
-
 
             let employee = {
                 id: selectedId,
@@ -46,14 +50,12 @@ $(document).ready(function () {
         });
 
         if(!selectedEmployee.length>0){
-            $('#message-box .modal-body').text("You must select at least 1 employee");
-            $('#message-box').modal('show');
+            displayMessageBox("You must select at least 1 employee");
         }
         else{
             if(this.id == 'edit-button'){
                 if(selectedEmployee.length > 1){
-                    $('#message-box .modal-body').text("You can only select 1 employee to edit");
-                    $('#message-box').modal('show');
+                    displayMessageBox("You can only select 1 employee to edit");
                 } else {
                     let employee = JSON.parse(employeeJson);
                     $('#input-employee-id').val(employee[0].id);
@@ -98,10 +100,14 @@ $(document).ready(function () {
                             contentType: "application/json",
                             data: employeeJson,
                             success: function () {
-                                alert("Success");
+                                displayMessageBox("Successfully edited employee information");
+                                $('#employee-action-modal').modal('hide');
+                                $('.modal-footer').on('click', '#message-box-button', function () {
+                                    window.location.reload();
+                                });
                             },
                             error: function () {
-                                alert("failed");
+                                displayMessageBox("Failed to edit employee information");
                             }
                         });
                     });
@@ -145,11 +151,14 @@ $(document).ready(function () {
                         dataType: 'JSON',
                         data: deleteEmployeeJson,
                         success: function () {
-                            alert("delete success")
-                            window.location.reload();
+                            displayMessageBox("Delete Success");
+                            $('#employee-action-modal').modal('hide');
+                            $('.modal-footer').on('click', '#message-box-button', function () {
+                                window.location.reload();
+                            });
                         },
                         error: function () {
-                            alert("delete unsuccessful")
+                            displayMessageBox("Delete Failed");
                         }
                     });
                 })

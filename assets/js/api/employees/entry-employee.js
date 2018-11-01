@@ -16,6 +16,12 @@ $(document).ready(function () {
         $('#input-division').val(null);
     }
 
+    function displayMessageBox(message) {
+        $('#message-box .modal-body').text(message);
+        $('#message-box').modal('show');
+    }
+
+
     $('#entry-button').click(function () {
         EmptyEntryForm();
         setEntryModalAttributes();
@@ -30,11 +36,14 @@ $(document).ready(function () {
             data: employeeJson,
             async:false,
             success: function () {
-                alert("Success");
-                window.location.reload();
+                displayMessageBox("Successfully added new employee");
+                $('#employee-action-modal').modal('hide');
+                $('.modal-footer').on('click', '#message-box-button', function () {
+                    window.location.reload();
+                });
             },
             error: function () {
-                alert("failed to add employee");
+                displayMessageBox("Failed to add new employee");
             }
         });
     }
