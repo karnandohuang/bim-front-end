@@ -54,8 +54,6 @@
             </nav>
 
             <div class="p-4">
-
-
                 <div class="row pt-1 pl-1 pr-5">
                     <div class="col-3 px-2">
                         <button type="button" class="btn btn-success btn-block" data-toggle="modal"
@@ -86,7 +84,6 @@
                     </div>
                 </div>
 
-
                 <div class="table-responsive">
                     <table class="table table-hover" id="data-table">
                         <thead>
@@ -106,6 +103,9 @@
                         </tbody>
                     </table>
                     <div class="row mx-2 justify-content-end" id="table-pagination-button">
+                        <div class="col-lg-2 col-md-3 col-xs-4 text-right">
+                            <p>Page : <label id="current-page">1</label> / <label id="total-page">1</label></p>
+                        </div>
                         <div class="col-lg-2 col-md-3 col-xs-4 px-1">
                             <button type="button" class="btn btn-primary col-lg-12" id="table-prev-page-button">Previous</button>
                         </div>
@@ -114,7 +114,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="modal fade actionModal" id="employee-action-modal" tabindex="-1" role="dialog"
                      aria-labelledby="employee-action-label" aria-hidden="true">
@@ -355,7 +354,6 @@
 <script src="../assets/js/api/employees/employee-form-validation.js"></script>
 <script src="../assets/js/api/employees/table-pagination.js"></script>
 <script src="../assets/js/api/checkbox.js"></script>
-
 
 </body>
 </html>
