@@ -80,7 +80,7 @@
 
                     <div class="col-lg-4 col-md-5 col-xs-4 px-1">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Employee Name" aria-label="Employee Name" id="table-search-name">
+                            <input type="text" class="form-control" placeholder="Item Name" aria-label="Item Name" id="table-search-name">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button" id="table-search-button">Search</button>
                             </div>
@@ -109,6 +109,9 @@
                         </tbody>
                     </table>
                     <div class="row mx-2 justify-content-end" id="table-pagination-button">
+                        <div class="col-lg-2 col-md-3 col-xs-4 text-right">
+                            <p>Page : <label id="current-page">1</label> / <label id="total-page">1</label></p>
+                        </div>
                         <div class="col-lg-2 col-md-3 col-xs-4 px-1">
                             <button type="button" class="btn btn-primary col-lg-12" id="table-prev-page-button">Previous</button>
                         </div>
