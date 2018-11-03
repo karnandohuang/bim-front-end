@@ -1,10 +1,43 @@
 $(document).ready(function () {
     let idJson;
-    //when pressing request button
+
+    function setRequestModalAttributes() {
+        $("#entry-edit-form").css("display", "none");
+        $("#request-div").css("display", "inline");
+        $('.modal-title').text("Request Item");
+        $("#request-table>tbody").empty();
+        $('#item-action-modal').modal('show');
+    }
+
+    function setEditModalAttributes() {
+        $("#entry-edit-form").css("display", "inline");
+        $("#request-div").css("display", "none");
+        $("#input-item-id-row").css("display", "");
+        $('.modal-title').text("Edit Item");
+        $('.modal-save-button').prop('id', 'edit-item-button');
+        $('#item-action-modal').modal('show');
+    }
+
+    function setDeleteModalAttributes() {
+        $('.modal-title').text("Delete Item");
+        $("#request-table>tbody").empty();
+        $("#entry-edit-form").css("display", "none");
+        $("#request-div").css("display", "");
+        $("#input-item-id-row").css("display", "none");
+        $('.modal-save-button').prop('id', 'delete-item-button');
+        $('#item-action-modal').modal('show');
+    }
+
+    function displayMessageBox(message) {
+        $('#message-box .modal-body').text(message);
+        $('#message-box').modal('show');
+    }
+
+//when pressing action button
     $('#request-button, #edit-button, #delete-button').click(function () {
         let selectedItem = [];
 
-        //get item data from table to JSON
+        //get item data from selected table to JSON
         $('.row-select input:checked').each(function () {
             let selectedId = $(this).closest('tr').find('.id').html();
             let selectedSku = $(this).closest('tr').find('.sku').html();
@@ -12,7 +45,6 @@ $(document).ready(function () {
             let selectedPrice = $(this).closest('tr').find('.price').html();
             let selectedLocation = $(this).closest('tr').find('.location').html();
             let selectedQty = $(this).closest('tr').find('.qty').html();
-
 
             let item = {
                 id: selectedId,
@@ -23,23 +55,17 @@ $(document).ready(function () {
                 qty: selectedQty
             };
             selectedItem.push(item);
-
-            idJson = JSON.stringify(selectedItem);
-            console.log(idJson);
         });
+
+        idJson = JSON.stringify(selectedItem);
 
         //if no item is selected
         if(!selectedItem.length>0){
-            $('#message-box .modal-body').text("You must select at least 1 item");
-            $('#message-box').modal('show');
+            displayMessageBox("You must select at least 1 item")
 
         } else{
             if (this.id == 'request-button') {
-                $("#entry-edit-form").css("display", "none");
-                $("#request-div").css("display", "inline");
-                $('.modal-title').text("Request Item");
-                $('#item-action-modal').modal('show');
-                $("#request-table>tbody").empty();
+                setRequestModalAttributes();
 
                 let item = JSON.parse(idJson);
                 let quantities;
@@ -52,50 +78,37 @@ $(document).ready(function () {
                     let td4 = "<td class='selected-location'>" + item[i].location + "</td>";
 
                     let qty = parseInt(item[i].qty);
-
-
-                    function addQuantityOption () {
+                    (function addQuantityOption() {
                         for(let i=1;i<=qty;i++){
                             quantities += '<option val=' + i + '>' + i + '</option>';
                         }
-                    }
-                    addQuantityOption();
+                    })();
 
                     let td5 =
                         "<td class='selected-qty'>" +
-                        "<form><select class='form-control'><option>Choose...</option>"
+                        "<form><select class='form-control'><option selected>Choose...</option>"
                         + quantities + "</select></form></td></tr>";
 
                     $("#request-table").append(tr+td1+td2+td3+td4+td5);
-
                 }
-
 
             } else if (this.id == 'edit-button') {
 
                 if (selectedItem.length > 1) {
-                    $('#message-box .modal-body').text("You can only select 1 item to edit");
-                    $('#message-box').modal('show');
+                    displayMessageBox("You can only select 1 item to edit")
                 }
                 else {
-                    let item = JSON.parse(idJson);
-                    console.log(item);
+                    setEditModalAttributes();
 
+                    let item = JSON.parse(idJson);
+
+                    console.log(item);
                     $('#input-item-id').val(item[0].id);
                     $('#input-item-sku').val(item[0].sku);
                     $('#input-item-name').val(item[0].name);
                     $('#input-item-price').val(item[0].price);
                     $('#input-item-qty').val(item[0].qty);
                     $('#input-item-location').val(item[0].location);
-
-                    $("#entry-edit-form").css("display", "inline");
-                    $("#request-div").css("display", "none");
-                    $("#input-item-id-row").css("display", "");
-
-                    $('.modal-title').text("Edit Item");
-                    $('#item-action-modal').modal('show');
-
-                    $('.modal-save-button').prop('id', 'edit-item-button');
 
                     //send JSON to backend
                     let itemJson;
@@ -126,31 +139,20 @@ $(document).ready(function () {
                             contentType: 'application/json',
                             data: itemJson,
                             success: function () {
-                                alert("success");
-                                window.location.reload();
+                                displayMessageBox("Edit Success");
+                                $('#item-action-modal').modal('hide');
+                                $('.modal-footer').on('click', '#message-box-button', function () {
+                                    window.location.reload();
+                                });
                             },
                             error: function () {
-                                alert("failed");
+                                displayMessageBox("Edit Failed");
                             }
                         });
                     }));
-
-
-
-
                 }
             } else if (this.id == 'delete-button') {
-                $('.modal-title').text("Delete Item");
-                $('#item-action-modal').modal('show');
-                $("#request-table>tbody").empty();
-
-                $("#entry-edit-form").css("display", "none");
-                $("#request-div").css("display", "");
-                $("#input-item-id-row").css("display", "none");
-
-                $('.modal-save-button').prop('id', 'delete-item-button');
-
-
+                setDeleteModalAttributes();
 
                 let item = JSON.parse(idJson);
 
@@ -162,20 +164,14 @@ $(document).ready(function () {
                     let td4 = "<td class='delete-location'>" + item[i].location + "</td>";
                     let td5 = "<td class='delete-qty'>" + item[i].qty + "</td></tr>";
 
-
                     $("#request-table").append(tr+td1+td2+td3+td4+td5);
                 }
-
-
-                // $('#delete-body').text("Are you sure you want to delete " + selectedItem.length + " item(s) ?");
 
                 let deleteItemJson = {"ids": ""};
                 let items = [];
                 $('#delete-item-button').click(function () {
-
                     $('.delete-row').each(function () {
                         let deleteId = $(this).closest('tr').find('.delete-id').html();
-
 
                         items.push(deleteId);
                         console.log(items);
@@ -183,7 +179,6 @@ $(document).ready(function () {
 
                     deleteItemJson.ids = items;
                     deleteItemJson = JSON.stringify(deleteItemJson);
-                    console.log(deleteItemJson);
 
                     $.ajax({
                         url: 'http://localhost:8080/bim/api/items',
@@ -192,15 +187,17 @@ $(document).ready(function () {
                         dataType: 'JSON',
                         data: deleteItemJson,
                         success: function () {
-                            alert("delete successful")
-                            window.location.reload();
+                            displayMessageBox("delete success");
+                            $('#item-action-modal').modal('hide');
+                            $('.modal-footer').on('click', '#message-box-button', function () {
+                                window.location.reload();
+                            });
                         },
                         error: function () {
-                            alert("delete unsuccessful")
+                            displayMessageBox("delete failed");
                         }
                     });
                 });
-
             }
         }
     });
