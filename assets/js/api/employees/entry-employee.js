@@ -2,7 +2,9 @@ $(document).ready(function () {
     function setEntryModalAttributes() {
         $('.modal-title').text("Entry Employee");
         $('#employee-id-row').css('display', 'none');
+        $('#entry-edit-form').css('display', '');
         $('#employee-password-row').css('display', '');
+        $('#table-modal-div').css('display', 'none');
         $('.modal-save-button').prop('id', 'entry-employee-button');
         $('#employee-action-modal').modal('show');
     }
@@ -60,6 +62,9 @@ $(document).ready(function () {
             let password = $('#input-password').val();
             let position = $('#input-position').val();
             let division = $('#input-division').val();
+
+            if(superiorId === "")
+                superiorId = "null";
 
             let employee = {
                 name: employeeName,
