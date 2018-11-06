@@ -84,7 +84,6 @@ $(document).ready(function () {
                             name: name,
                             superiorId: superiorId,
                             //the API PUT does not accept json without password field
-                            password: "",
                             dob: dob,
                             email: email,
                             position: position,
