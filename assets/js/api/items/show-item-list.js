@@ -1,11 +1,17 @@
 $(document).ready(function () {
-    $.ajax({
-        url: 'http://localhost:8080/bim/api/items',
-        type: 'GET',
-        dataType: 'JSON',
-        contentType: 'application/json',
-        success: function (data) {
-            $(data.value.list).each(function (index, value) {
+
+    let currentPage = 1;
+    let pageSize = 7;
+    let totalPage = 1;
+
+    function displayTableName(currentPage) {
+        $.ajax({
+            url: 'http://localhost:8080/bim/api/items?pageNumber=' + currentPage + '&pageSize=' + pageSize,
+            type: 'GET',
+            dataType: 'JSON',
+            contentType: 'application/json',
+            success: function (data) {
+                $(data.value.list).each(function (index, value) {
 
                     let record =
                         "<tr class='row-select'><td class='select'>" +
@@ -22,11 +28,34 @@ $(document).ready(function () {
                         "</td></tr>";
 
                     $('#data-table').append(record);
-                }
-            );
-        },
-        error: function (data) {
+                });
 
+                totalPage = data.paging.totalPage;
+                $('#total-page').text(totalPage);
+            },
+            error: function (data) {
+
+            }
+        });
+    }
+
+    displayTableName(1);
+
+    //send JSON containing page number to backend, and retrieve employee list according to page number
+    $('#table-next-page-button').on('click',function () {
+        $("#data-table>tbody").empty();
+
+        if(currentPage !== totalPage){
+            currentPage++;
         }
+        displayTablePage(currentPage);
+    });
+
+    $('#table-prev-page-button').on('click',function () {
+        $("#data-table>tbody").empty();
+        if(currentPage!==1){
+            currentPage--;
+        }
+        displayTablePage(currentPage);
     });
 });
