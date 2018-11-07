@@ -3,12 +3,16 @@ $(document).ready(function () {
     let currentPage = 1;
     let pageSize = 7;
     let totalPage = 1;
+    let name = "";
+    let sortedBy = "id";
+    let sortedType = "asc";
 
-    function displayTablePage(currentPage, name){
+    function displayTablePage(currentPage){
         $('#current-page').text(currentPage);
 
         $.ajax({
-            url : 'http://localhost:8080/bim/api/employees?name=' + name + '&pageNumber=' + currentPage + '&pageSize=' + pageSize,
+            url : 'http://localhost:8080/bim/api/employees?name=' + name + '&pageNumber=' + currentPage +
+                '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
             type : 'GET',
             dataType : 'JSON',
             contentType:'application/json',
@@ -38,7 +42,7 @@ $(document).ready(function () {
         });
     }
 
-    displayTablePage(1, "");
+    displayTablePage(1);
 
     //send JSON containing page number to backend, and retrieve employee list according to page number
     $('#table-next-page-button').on('click',function () {
@@ -47,7 +51,7 @@ $(document).ready(function () {
         if(currentPage !== totalPage){
             currentPage++;
         }
-        displayTablePage(currentPage, "");
+        displayTablePage(currentPage);
     });
 
     $('#table-prev-page-button').on('click',function () {
@@ -55,12 +59,27 @@ $(document).ready(function () {
         if(currentPage!==1){
             currentPage--;
         }
-        displayTablePage(currentPage, "");
+        displayTablePage(currentPage);
     });
 
     $('#table-search-button').on('click', function () {
-       let name = $('#table-search-name').val();
+       name = $('#table-search-name').val();
        $('#data-table>tbody').empty();
-       displayTablePage(1, name);
+       currentPage = 1;
+       displayTablePage(currentPage);
+    });
+
+    $('#sorted-by').on('change', function () {
+        $('#data-table>tbody').empty();
+        sortedBy = $('#sorted-by').val();
+        currentPage = 1;
+        displayTablePage(currentPage);
+    });
+
+    $('#sorted-type').on('change', function () {
+        $('#data-table>tbody').empty();
+        sortedType = $('#sorted-type').val();
+        currentPage = 1;
+        displayTablePage(currentPage);
     });
 });
