@@ -79,12 +79,14 @@
                     </div>
 
                     <div class="col-lg-4 col-md-5 col-xs-4 px-1">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Item Name" aria-label="Item Name" id="table-search-name">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" id="table-search-button">Search</button>
+                        <form onsubmit="return false">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Item Name" aria-label="Item Name" id="table-search-name">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit" id="table-search-button">Search</button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
 
