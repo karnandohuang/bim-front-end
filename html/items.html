@@ -74,11 +74,36 @@
                 </div>
 
                 <div class="row mr-2 mt-4">
-                    <div class="col">
+                    <div class="col-lg-4 col-md-3 col-xs-3 px-1">
                         <h3 class="text-dark">Items</h3>
                     </div>
-
-                    <div class="col-lg-4 col-md-5 col-xs-4 px-1">
+                    <div class="col-lg-2 col-md-3 col-xs-3 px-1">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="sorted-by">Sort By</label>
+                            </div>
+                            <select class="custom-select" id="sorted-by">
+                                <option selected value="id">ID</option>
+                                <option value="sku">SKU</option>
+                                <option value="name">Name</option>
+                                <option value="price">Price</option>
+                                <option value="location">Location</option>
+                                <option value="qty">Qty</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-xs-3 px-1">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="sorted-type">Type</label>
+                            </div>
+                            <select class="custom-select" id="sorted-type">
+                                <option selected value="asc">Ascending</option>
+                                <option value="desc">Descending</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-3 col-xs-3 px-1">
                         <form onsubmit="return false">
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Item Name" aria-label="Item Name" id="table-search-name">
