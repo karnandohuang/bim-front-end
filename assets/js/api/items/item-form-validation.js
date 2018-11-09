@@ -1,4 +1,7 @@
 (function() {
+
+
+
     'use strict';
     window.addEventListener('load', function() {
         var forms = document.getElementsByClassName('needs-validation');

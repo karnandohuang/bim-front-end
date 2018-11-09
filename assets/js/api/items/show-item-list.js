@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     let currentPage = 1;
-    let pageSize = 2;
+    let pageSize = 6;
     let totalPage = 1;
     let name = "";
     let sortedBy = "id";
@@ -78,12 +78,19 @@ $(document).ready(function () {
         sortedBy = $('#sorted-by').val();
         currentPage = 1;
         displayTablePage(currentPage);
-    })
+    });
 
     $('#sorted-type').on('change', function () {
         $('#data-table>tbody').empty();
         sortedType = $('#sorted-type').val();
         currentPage = 1;
         displayTablePage(currentPage);
-    })
+    });
+
+    $('#page-size').on('change', function () {
+        $('#data-table>tbody').empty();
+        pageSize = $('#page-size').val();
+        currentPage = 1;
+        displayTablePage(currentPage);
+    });
 });

@@ -74,13 +74,26 @@
                 </div>
 
                 <div class="row mr-2 mt-4">
-                    <div class="col-lg-4 col-md-3 col-xs-3 px-1">
+                    <div class="col-lg-3 col-md-12 px-1">
                         <h3 class="text-dark">Items</h3>
                     </div>
-                    <div class="col-lg-2 col-md-3 col-xs-3 px-1">
+                    <div class="col-lg-2 col-md-3 px-1">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <label class="input-group-text" for="sorted-by">Sort By</label>
+                                <label class="input-group-text" for="page-size">View</label>
+                            </div>
+                            <select class="custom-select" id="page-size">
+                                <option selected value="6">6</option>
+                                <option value="12">12</option>
+                                <option value="18">18</option>
+                                <option value="24">24</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 px-1">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="sorted-by">Sort</label>
                             </div>
                             <select class="custom-select" id="sorted-by">
                                 <option selected value="id">ID</option>
@@ -92,7 +105,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-3 col-xs-3 px-1">
+                    <div class="col-lg-2 col-md-3 px-1">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="sorted-type">Type</label>
@@ -103,7 +116,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-3 col-xs-3 px-1">
+                    <div class="col-lg-3 col-md-3 px-1">
                         <form onsubmit="return false">
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Item Name" aria-label="Item Name" id="table-search-name">
