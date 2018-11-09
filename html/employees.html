@@ -70,17 +70,57 @@
                 </div>
 
                 <div class="row mr-2 mt-4">
-                    <div class="col">
+                    <div class="col-lg-3 col-md-12 col-xs-3 px-1">
                         <h3 class="text-dark">Employees</h3>
                     </div>
-
-                    <div class="col-lg-4 col-md-5 col-xs-4 px-1">
+                    <div class="col-lg-2 col-md-3 col-xs-3 px-1">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Employee Name" aria-label="Employee Name" id="table-search-name">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" id="table-search-button">Search</button>
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="page-size">Show</label>
                             </div>
+                            <select class="custom-select" id="page-size">
+                                <option selected value="6">6</option>
+                                <option value="12">12</option>
+                                <option value="18">18</option>
+                                <option value="24">24</option>
+                            </select>
                         </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-xs-3 px-1">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="sorted-by">Sort</label>
+                            </div>
+                            <select class="custom-select" id="sorted-by">
+                                <option selected value="id">ID</option>
+                                <option value="name">Name</option>
+                                <option value="email">Email</option>
+                                <option value="position">Position</option>
+                                <option value="division">Division</option>
+                                <option value="superiorId">Superior ID</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-xs-3 px-1">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="sorted-type">Type</label>
+                            </div>
+                            <select class="custom-select" id="sorted-type">
+                                <option selected value="asc">Ascending</option>
+                                <option value="desc">Descending</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-xs-3 px-1">
+                        <form onsubmit="return false">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Employee Name" aria-label="Employee Name" id="table-search-name">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit" id="table-search-button">Search</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -136,9 +176,9 @@
                                             <label for="input-employee-name" class="col-sm-3 col-form-label">Employee Name</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" id="input-employee-name"
-                                                       placeholder="Employee Name" required>
+                                                       placeholder="Employee Name" required minlength="2" maxlength="40">
                                                 <div class="invalid-feedback">
-                                                    Please input Employee Name.
+                                                    Please input employee name.
                                                 </div>
                                             </div>
                                         </div>
@@ -158,7 +198,7 @@
                                         <div class="form-group row">
                                             <label for="datepicker" class="col-sm-3 col-form-label">Date of Birth</label>
                                             <div class="col-sm-8">
-                                                <input id="datepicker" width="276" required class="required">
+                                                <input id="datepicker" width="275" required class="required" placeholder="dd/mm/yyyy">
                                             </div>
                                             <div class="invalid-feedback">
                                                 Please choose Date of Birth.
@@ -167,9 +207,9 @@
                                         <div class="form-group row">
                                             <label for="input-email" class="col-sm-3 col-form-label">Email</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="input-email" placeholder="Email Address" required>
+                                                <input type="email" class="form-control" id="input-email" placeholder="Email Address" required>
                                                 <div class="invalid-feedback">
-                                                    Please input Employee Email.
+                                                    Please input a valid employee email.
                                                 </div>
                                             </div>
                                         </div>
@@ -179,7 +219,8 @@
                                                 <input type="password" class="form-control" id="input-password"
                                                        placeholder="Password" required>
                                                 <div class="invalid-feedback">
-                                                    Please input Password.
+                                                    Please input a valid password. <br>
+                                                    Minimum eight characters, at least one letter and one number.
                                                 </div>
                                             </div>
                                         </div>
@@ -189,7 +230,7 @@
                                                 <input type="text" class="form-control" id="input-position"
                                                        placeholder="Position" required>
                                                 <div class="invalid-feedback">
-                                                    Please input Employee Position.
+                                                    Please input employee position.
                                                 </div>
                                             </div>
                                         </div>
@@ -197,7 +238,6 @@
                                             <label for="input-division" class="col-sm-3 col-form-label">Division</label>
                                             <div class="col-sm-8">
                                                 <select class="custom-select" id="input-division" required>
-                                                    <option selected>Choose...</option>
                                                     <option value="IT">IT</option>
                                                     <option value="HRD">HRD</option>
                                                     <option value="Marketing">Marketing</option>

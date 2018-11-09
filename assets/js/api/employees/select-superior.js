@@ -1,7 +1,8 @@
 $(document).ready(function () {
 
-    let superiorPageNumber = 1;
-    let pageSize = 10;
+    let currentPage = 1;
+    let pageSize = 5;
+    let totalPage = 1;
 
     function setSuperiorModalAttributes() {
         $('#choose-superior-modal-label').text('Choose Superior');
@@ -9,10 +10,10 @@ $(document).ready(function () {
         $('#choose-superior-modal').modal('show');
     }
 
-    function displaySuperiorTablePage(superiorPageNumber){
-        $('#current-superior-page').text(superiorPageNumber);
+    function displaySuperiorTablePage(currentPage){
+        $('#current-superior-page').text(currentPage);
         $.ajax({
-            url : 'http://localhost:8080/bim/api/superiors?pageNumber=' + superiorPageNumber + '&pageSize=' + pageSize,
+            url : 'http://localhost:8080/bim/api/superiors?pageNumber=' + currentPage + '&pageSize=' + pageSize,
 
             type : 'GET',
             dataType : 'JSON',
@@ -29,6 +30,9 @@ $(document).ready(function () {
                     $("#choose-superior-table").append(record);
                 });
 
+                totalPage = data.paging.totalPage;
+                $('#total-superior-page').text(totalPage);
+
             },
             error : function (data) {
 
@@ -39,7 +43,7 @@ $(document).ready(function () {
     $('#choose-superior-id-button').click(function () {
         setSuperiorModalAttributes();
 
-        displaySuperiorTablePage(superiorPageNumber);
+        displaySuperiorTablePage(currentPage);
 
         $('#superior-tbody').on('click', '.row-select', function () {
             let SelectedSuperiorId = $(this).closest('tr').find('.id').html();
@@ -50,21 +54,18 @@ $(document).ready(function () {
 
     $('#table-superior-next-page-button').on('click',function () {
         $("#choose-superior-table>tbody").empty();
-        superiorPageNumber++;
-        console.log(superiorPageNumber);
-        displaySuperiorTablePage(superiorPageNumber);
+        if(currentPage !== totalPage){
+            currentPage++;
+        }
+        displaySuperiorTablePage(currentPage);
     });
 
     $('#table-superior-prev-page-button').on('click',function () {
         $("#choose-superior-table>tbody").empty();
-        if(superiorPageNumber!==1){
-            superiorPageNumber--;
-            displaySuperiorTablePage(superiorPageNumber);
-
+        if(currentPage!==1){
+            currentPage--;
         }
-        else if(superiorPageNumber==1){
-            displaySuperiorTablePage(superiorPageNumber);
-        }
+        displaySuperiorTablePage(currentPage);
     });
 
 });
