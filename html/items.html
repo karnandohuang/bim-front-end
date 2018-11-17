@@ -236,10 +236,15 @@
                                         <div class="form-group row">
                                             <label for="input-item-image" class="col-sm-3 col-form-label">Item Image</label>
                                             <div class="col-sm-7 custom-file ml-3 mr-4">
-                                                <input type="file" class="custom-file-input" id="input-item-image" required>
-                                                <label class="custom-file-label" for="input-item-image">Choose Image</label>
+                                                <input type="file" class="custom-file-input" id="input-item-image"
+                                                       accept="image/jpeg,image/png" required>
+                                                <label class="custom-file-label" for="input-item-image"
+                                                       id="input-item-image-label">Format: *.jpeg, *.png</label>
                                                 <div class="invalid-feedback">
                                                     Please Upload Item Image.
+                                                </div>
+                                                <div id="item-image-preview">
+                                                    <img src="" id="image-preview">
                                                 </div>
                                             </div>
 

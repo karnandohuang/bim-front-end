@@ -7,6 +7,7 @@ $(document).ready(function () {
         $("#input-item-sku").prop("readonly", false);
         $('.modal-save-button').prop('id', 'entry-item-button');
         $('#item-action-modal').modal('show');
+        $('#item-image-preview').prop('display', 'none');
     }
 
     function emptyEntryForm() {
@@ -21,6 +22,30 @@ $(document).ready(function () {
         $('#message-box .modal-body').text(message);
         $('#message-box').modal('show');
     }
+
+    // TODO: Preview Image
+    // function previewImage(e) {
+    //     $('#image-preview').attr('src', e.target.result);
+    //     $('#image-preview').css('max-width', '300px');
+    // }
+
+    //show image name
+    (function showImageName(){
+        $('#input-item-image').change(function () {
+            var fieldVal = $(this).val();
+            $('#input-item-image-label').empty();
+            fieldVal = fieldVal.replace("C:\\fakepath\\", "");
+
+            if (fieldVal !== undefined || fieldVal !== "") {
+                $('#input-item-image-label').text(fieldVal);
+            }
+
+            // TODO: Preview Image
+            // var reader = new FileReader();
+            // reader.onload = previewImage(this);
+            // reader.readAsDataURL(this.files[0]);
+        });
+    })();
 
     $('#entry-button').click(function () {
         emptyEntryForm();
@@ -37,34 +62,55 @@ $(document).ready(function () {
             let price = $('#input-item-price').val();
             let qty = $('#input-item-qty').val();
             let location = $('#input-item-location').val();
-            let imageUrl = $('#inputItemImage').val();
+            let imageFile = $('#input-item-image')[0].files[0];
 
-            let item = {
-                sku: sku,
-                name: name,
-                price: price,
-                location: location,
-                qty: qty,
-                imageUrl: imageUrl
-            };
+            var formData = new FormData();
+            formData.append('file', imageFile);
+            formData.append('sku', sku);
 
-            let itemJson = JSON.stringify(item);
-            console.log(itemJson);
             $.ajax({
-                url: "http://localhost:8080/bim/api/items",
+                url: "http://localhost:8080/bim/api/upload",
                 type: "POST",
-                dataType: "JSON",
-                contentType: "application/json",
+                data: formData,
+                enctype: 'multipart/form-data',
                 async: false,
-                data: itemJson,
-                success: function () {
-                    displayMessageBox("Success");
-                    $('.modal-footer').on('click', '#message-box-button', function () {
-                        window.location.reload();
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    let imageUrl = data.value.imagePath;
+                    let item = {
+                        sku: sku,
+                        name: name,
+                        price: price,
+                        location: location,
+                        qty: qty,
+                        imageUrl: imageUrl
+                    };
+
+                    let itemJson = JSON.stringify(item);
+
+                    $.ajax({
+                        url: "http://localhost:8080/bim/api/items",
+                        type: "POST",
+                        dataType: "JSON",
+                        contentType: "application/json",
+                        async: false,
+                        data: itemJson,
+                        success: function () {
+                            displayMessageBox("Success");
+                            $('.modal-footer').on('click', '#message-box-button', function () {
+                                window.location.reload();
+                            });
+                        },
+                        error: function () {
+                            displayMessageBox("Failed");
+                        }
                     });
                 },
                 error: function () {
-                    displayMessageBox("Failed");
+                    // alert(data.status);
+                    displayMessageBox("failed to upload image");
                 }
             });
         }
