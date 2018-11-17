@@ -1,12 +1,17 @@
 $(document).ready(function () {
 
     let currentPage = 1;
-    let pageSize = 7;
+    let pageSize = 6;
     let totalPage = 1;
+    let name = "";
+    let sortedBy = "id";
+    let sortedType = "asc";
 
-    function displayTableName(currentPage) {
+    function displayTablePage(currentPage) {
+        $('#current-page').text(currentPage);
         $.ajax({
-            url: 'http://localhost:8080/bim/api/items?pageNumber=' + currentPage + '&pageSize=' + pageSize,
+            url: 'http://localhost:8080/bim/api/items?name=' + name + '&pageNumber=' + currentPage +
+                '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
@@ -31,6 +36,8 @@ $(document).ready(function () {
                 });
 
                 totalPage = data.paging.totalPage;
+                if(totalPage===0)
+                    totalPage=1;
                 $('#total-page').text(totalPage);
             },
             error: function (data) {
@@ -39,7 +46,7 @@ $(document).ready(function () {
         });
     }
 
-    displayTableName(1);
+    displayTablePage(1);
 
     //send JSON containing page number to backend, and retrieve employee list according to page number
     $('#table-next-page-button').on('click',function () {
@@ -56,6 +63,34 @@ $(document).ready(function () {
         if(currentPage!==1){
             currentPage--;
         }
+        displayTablePage(currentPage);
+    });
+
+    $('#table-search-button').on('click', function () {
+        $('#data-table>tbody').empty();
+        name = $('#table-search-name').val();
+        currentPage = 1;
+        displayTablePage(1);
+    });
+
+    $('#sorted-by').on('change', function () {
+        $('#data-table>tbody').empty();
+        sortedBy = $('#sorted-by').val();
+        currentPage = 1;
+        displayTablePage(currentPage);
+    });
+
+    $('#sorted-type').on('change', function () {
+        $('#data-table>tbody').empty();
+        sortedType = $('#sorted-type').val();
+        currentPage = 1;
+        displayTablePage(currentPage);
+    });
+
+    $('#page-size').on('change', function () {
+        $('#data-table>tbody').empty();
+        pageSize = $('#page-size').val();
+        currentPage = 1;
         displayTablePage(currentPage);
     });
 });

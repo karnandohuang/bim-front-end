@@ -74,17 +74,57 @@
                 </div>
 
                 <div class="row mr-2 mt-4">
-                    <div class="col">
+                    <div class="col-lg-3 col-md-12 px-1">
                         <h3 class="text-dark">Items</h3>
                     </div>
-
-                    <div class="col-lg-4 col-md-5 col-xs-4 px-1">
+                    <div class="col-lg-2 col-md-3 px-1">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Item Name" aria-label="Item Name" id="table-search-name">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" id="table-search-button">Search</button>
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="page-size">View</label>
                             </div>
+                            <select class="custom-select" id="page-size">
+                                <option selected value="6">6</option>
+                                <option value="12">12</option>
+                                <option value="18">18</option>
+                                <option value="24">24</option>
+                            </select>
                         </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 px-1">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="sorted-by">Sort</label>
+                            </div>
+                            <select class="custom-select" id="sorted-by">
+                                <option selected value="id">ID</option>
+                                <option value="sku">SKU</option>
+                                <option value="name">Name</option>
+                                <option value="price">Price</option>
+                                <option value="location">Location</option>
+                                <option value="qty">Qty</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 px-1">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="sorted-type">Type</label>
+                            </div>
+                            <select class="custom-select" id="sorted-type">
+                                <option selected value="asc">Ascending</option>
+                                <option value="desc">Descending</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 px-1">
+                        <form onsubmit="return false">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Item Name" aria-label="Item Name" id="table-search-name">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit" id="table-search-button">Search</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -196,10 +236,15 @@
                                         <div class="form-group row">
                                             <label for="input-item-image" class="col-sm-3 col-form-label">Item Image</label>
                                             <div class="col-sm-7 custom-file ml-3 mr-4">
-                                                <input type="file" class="custom-file-input" id="input-item-image" required>
-                                                <label class="custom-file-label" for="input-item-image">Choose Image</label>
+                                                <input type="file" class="custom-file-input" id="input-item-image"
+                                                       accept="image/jpeg,image/png" required>
+                                                <label class="custom-file-label" for="input-item-image"
+                                                       id="input-item-image-label">Format: *.jpeg, *.png</label>
                                                 <div class="invalid-feedback">
                                                     Please Upload Item Image.
+                                                </div>
+                                                <div id="item-image-preview">
+                                                    <img src="" id="image-preview">
                                                 </div>
                                             </div>
 
