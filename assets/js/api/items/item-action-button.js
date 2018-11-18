@@ -7,6 +7,7 @@ $(document).ready(function () {
         $('.modal-title').text("Request Item");
         $("#request-table>tbody").empty();
         $('#item-action-modal').modal('show');
+        $('.modal-save-button').prop('id', 'request-item-button');
     }
 
     function setEditModalAttributes() {
@@ -64,20 +65,21 @@ $(document).ready(function () {
             displayMessageBox("You must select at least 1 item")
 
         } else{
-            if (this.id == 'request-button') {
+            if (this.id === 'request-button') {
                 setRequestModalAttributes();
 
                 let item = JSON.parse(idJson);
-                let quantities;
+                var quantities;
 
                 for(let i=0;i<item.length;i++){
-                    let tr = "<tr>";
-                    let td1 = "<td class='selected-id'>" + item[i].id + "</td>";
-                    let td2 = "<td class='selected-sku'>" + item[i].sku + "</td>";
-                    let td3 = "<td class='selected-name'>" + item[i].name + "</td>";
-                    let td4 = "<td class='selected-location'>" + item[i].location + "</td>";
+                    let tr = "<tr class='request-item-row'>";
+                    let td1 = "<td class='request-item-id'>" + item[i].id + "</td>";
+                    let td2 = "<td class='request-item-sku'>" + item[i].sku + "</td>";
+                    let td3 = "<td class='request-item-name'>" + item[i].name + "</td>";
+                    let td4 = "<td class='request-item-location'>" + item[i].location + "</td>";
 
                     let qty = parseInt(item[i].qty);
+                    quantities = null;
                     (function addQuantityOption() {
                         for(let i=1;i<=qty;i++){
                             quantities += '<option val=' + i + '>' + i + '</option>';
@@ -85,14 +87,51 @@ $(document).ready(function () {
                     })();
 
                     let td5 =
-                        "<td class='selected-qty'>" +
-                        "<form><select class='form-control'><option selected>Choose...</option>"
-                        + quantities + "</select></form></td></tr>";
+                        "<td class='request-item-qty'>" +
+                        "<form><select class='form-control'><option selected>Choose...</option>" +
+                        quantities + "</select></form></td></tr>";
 
                     $("#request-table").append(tr+td1+td2+td3+td4+td5);
                 }
 
-            } else if (this.id == 'edit-button') {
+                $('#request-item-button').on('click', function () {
+                    let item;
+                    $('.request-item-row').each(function () {
+                        let requestItemId = $(this).closest('tr').find('.request-item-id').html();
+                        let requestEmployeeId = "EM066"; //need to change it
+                        let requestItemQty = $(this).closest('tr').find('.request-item-qty select').val();
+
+                        item = {
+                            employeeId: requestEmployeeId,
+                            itemId: requestItemId,
+                            qty: requestItemQty
+                        };
+
+                        let requestItemJson = JSON.stringify(item);
+                        console.log(requestItemJson);
+
+                        $.ajax({
+                            url: "http://localhost:8080/bim/api/requests",
+                            type: "POST",
+                            dataType: "JSON",
+                            contentType: "application/json",
+                            data: requestItemJson,
+                            async: false,
+                            success: function () {
+                                displayMessageBox("Request Success");
+                                $('#item-action-modal').modal('hide');
+                                $('.modal-footer').on('click', '#message-box-button', function () {
+                                    window.location.reload();
+                                });
+                            },
+                            error: function () {
+                                displayMessageBox("Request Failed");
+                            }
+                        });
+                    });
+                });
+
+            } else if (this.id === 'edit-button') {
 
                 if (selectedItem.length > 1) {
                     displayMessageBox("You can only select 1 item to edit")
@@ -151,7 +190,7 @@ $(document).ready(function () {
                         });
                     }));
                 }
-            } else if (this.id == 'delete-button') {
+            } else if (this.id === 'delete-button') {
                 setDeleteModalAttributes();
 
                 let item = JSON.parse(idJson);
