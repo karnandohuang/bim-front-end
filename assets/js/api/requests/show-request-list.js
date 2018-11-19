@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     let currentPage = 1;
-    let pageSize = 7;
+    let pageSize = 10;
     let totalPage = 1;
 
     function displayTablePage(currentPage) {
@@ -9,10 +9,11 @@ $(document).ready(function () {
 
 
         $.ajax({
-            url: 'http://localhost:8080/bim/api/requests?pageNumber=1&pageSize=3',
+            url: 'http://localhost:8080/bim/api/requests?pageNumber=1&pageSize=100',
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
+            async: false,
             success: function (data) {
                 $(data.value.list).each(function (index, value) {
 
@@ -26,6 +27,7 @@ $(document).ready(function () {
                         "</td><td class='item-name'>" + value.itemName +
                         "</td><td class='qty'>" + value.request.qty +
                         "</td><td class='status'>" + value.request.status +
+                        "</td><td class='notes'>" + value.request.notes +
                         "</td></tr>";
 
                     $('#data-table').append(record);
