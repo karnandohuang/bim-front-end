@@ -1,6 +1,11 @@
 $(document).ready(function () {
     let idJson;
 
+    function displayMessageBox(message) {
+        $('#message-box .modal-body').text(message);
+        $('#message-box').modal('show');
+    }
+
     function setModalTableData(request) {
 
         for (let i = 0; i < request.length; i++) {
@@ -17,7 +22,52 @@ $(document).ready(function () {
         }
     }
 
-    //when pressing request button
+    function setApproveModalAttributes() {
+        $("#entry-edit-form").css("display", "none");
+        $("#request-div").css("display", "inline");
+        $('.modal-title').text("Approve Request(s)");
+        $('#action-modal').modal('show');
+        $("#reject-reason-box").css("display", "none");
+        $("#request-table>tbody").empty();
+        $('.modal-save-button').prop('id', 'approve-request-button');
+    }
+
+    function setRejectModalAttributes() {
+        $("#entry-edit-form").css("display", "none");
+        $("#request-div").css("display", "inline");
+        $('.modal-title').text("Reject Request(s)");
+        $('#action-modal').modal('show');
+        $("#request-table>tbody").empty();
+        $("#reject-reason-box").css("display", "block");
+        $('.modal-save-button').prop('id', 'reject-request-button');
+    }
+
+    function setHandoverModalAttributes() {
+        $("#entry-edit-form").css("display", "none");
+        $("#request-div").css("display", "inline");
+        $('.modal-title').text("Handover Request(s)");
+        $('#action-modal').modal('show');
+        $("#reject-reason-box").css("display", "none");
+        $("#request-table>tbody").empty();
+        $('.modal-save-button').prop('id', 'handover-request-button');
+    }
+
+    function getRequestIds(requestFromJson, ids, requiredStatus) {
+        for (let i = 0; i < requestFromJson.length; i++) {
+            if (requestFromJson[i].status === requiredStatus) {
+                let id = requestFromJson[i].id;
+                ids.push(id);
+            }
+            else {
+                ids = [];
+                displayMessageBox("All of the selected requests' status must be " + requiredStatus);
+                break;
+            }
+        }
+        return ids;
+    }
+
+//when pressing request button
     $('#approve-button, #reject-button, #handover-button').on('click', function () {
         let selectedRequest = [];
 
@@ -49,161 +99,128 @@ $(document).ready(function () {
 
         //if no request is selected
         if (!selectedRequest.length > 0) {
-            $('#message-box .modal-body').text("You must select at least 1 request");
-            $('#message-box').modal('show');
+            displayMessageBox("You must select at least 1 request");
 
         } else {
             if (this.id === 'approve-button') {
-                $("#entry-edit-form").css("display", "none");
-                $("#request-div").css("display", "inline");
-                $('.modal-title').text("Approve Request(s)");
-                $('#action-modal').modal('show');
-                $("#reject-reason-box").css("display", "none");
-                $("#request-table>tbody").empty();
-                $('.modal-save-button').prop('id', 'approve-request-button');
+                setApproveModalAttributes();
                 let requestFromJson = JSON.parse(idJson);
-
                 setModalTableData(requestFromJson);
 
                 let ids = [];
 
                 $('.modal-footer').one('click', '#approve-request-button', function () {
 
-                    for (let i = 0; i < requestFromJson.length; i++) {
-                        if (requestFromJson[i].status === 'Rejected') {
-                            alert("one of the request is already rejected!");
-                            ids = [];
-                            break;
-                        }
-                        let id = requestFromJson[i].id;
-                        ids.push(id);
+                    ids = getRequestIds(requestFromJson, ids, 'Pending');
+
+                    if(ids.length !== 0) {
+                        let request = {
+                            ids: ids,
+                            status: "Approved"
+                        };
+
+                        requestJson = JSON.stringify(request);
+
+                        console.log(requestJson);
+
+                        $.ajax({
+                            url: 'http://localhost:8080/bim/api/requests/changeStatus',
+                            type: 'PUT',
+                            async: false,
+                            dataType: 'JSON',
+                            contentType: 'application/json',
+                            data: requestJson,
+                            success: function () {
+                                displayMessageBox("Approve Success");
+                                $('.modal-footer').on('click', '#message-box-button', function () {
+                                    window.location.reload();
+                                });
+                            },
+                            error: function () {
+                                displayMessageBox("Approve Failed");
+                            }
+                        });
                     }
-
-                    let request = {
-                        ids: ids,
-                        status: "Approved"
-                    };
-
-                    requestJson = JSON.stringify(request);
-
-                    console.log(requestJson);
-
-                    $.ajax({
-                        url: 'http://localhost:8080/bim/api/requests/changeStatus',
-                        type: 'PUT',
-                        async: false,
-                        dataType: 'JSON',
-                        contentType: 'application/json',
-                        data: requestJson,
-                        success: function () {
-                            alert("success");
-                            window.location.reload();
-                        },
-                        error: function () {
-                            alert("approve failed");
-                        }
-                    });
-
                 });
 
-
             } else if (this.id === 'reject-button') {
-                $("#entry-edit-form").css("display", "none");
-                $("#request-div").css("display", "inline");
-                $('.modal-title').text("Reject Request(s)");
-                $('#action-modal').modal('show');
-                $("#request-table>tbody").empty();
-                $("#reject-reason-box").css("display", "block");
-                $('.modal-save-button').prop('id', 'reject-request-button');
+                setRejectModalAttributes();
                 let requestFromJson = JSON.parse(idJson);
-
                 setModalTableData(requestFromJson);
 
                 let ids = [];
 
                 $('.modal-footer').on('click', '#reject-request-button', function () {
                     let rejectReason = $('#reject-reason').val();
+                    ids = getRequestIds(requestFromJson, ids, 'Pending');
 
-                    for (let i = 0; i < requestFromJson.length; i++) {
-                        let id = requestFromJson[i].id;
+                    if(ids.length !== 0) {
+                        let request = {
+                            ids: ids,
+                            status: "Rejected",
+                            notes: rejectReason
+                        };
 
-                        ids.push(id);
+                        requestJson = JSON.stringify(request);
+                        console.log(requestJson);
+
+                        $.ajax({
+                            url: 'http://localhost:8080/bim/api/requests/changeStatus',
+                            type: 'PUT',
+                            dataType: 'JSON',
+                            async: false,
+                            contentType: 'application/json',
+                            data: requestJson,
+                            success: function () {
+                                displayMessageBox("Reject Request Success");
+                                $('.modal-footer').on('click', '#message-box-button', function () {
+                                    window.location.reload();
+                                });                        },
+                            error: function () {
+                                displayMessageBox("Reject Request Failed");
+                            }
+                        });
+
                     }
-
-                    let request = {
-                        ids: ids,
-                        status: "Rejected",
-                        notes: rejectReason
-                    };
-
-                    requestJson = JSON.stringify(request);
-                    console.log(requestJson);
-
-                    $.ajax({
-                        url: 'http://localhost:8080/bim/api/requests/changeStatus',
-                        type: 'PUT',
-                        dataType: 'JSON',
-                        async: false,
-                        contentType: 'application/json',
-                        data: requestJson,
-                        success: function () {
-                            alert("success");
-                            window.location.reload();
-                        },
-                        error: function () {
-                            alert("reject failed");
-                        }
-                    });
-
                 });
             } else if (this.id === 'handover-button') {
+                setHandoverModalAttributes();
 
-                $("#entry-edit-form").css("display", "none");
-                $("#request-div").css("display", "inline");
-                $('.modal-title').text("Handover Request(s)");
-                $('#action-modal').modal('show');
-                $("#reject-reason-box").css("display", "none");
-                $("#request-table>tbody").empty();
-                $('.modal-save-button').prop('id', 'handover-request-button');
                 let requestFromJson = JSON.parse(idJson);
-
                 setModalTableData(requestFromJson);
 
                 let ids = [];
 
-                $('.modal-footer').one('click', '#handover-request-button', function () {
-                    for (let i = 0; i < requestFromJson.length; i++) {
-                        if (requestFromJson[i].status === 'Approved') {
-                            let id = requestFromJson[i].id;
+                $('.modal-footer').on('click', '#handover-request-button', function () {
+                    ids = getRequestIds(requestFromJson, ids, 'Approved');
 
-                            ids.push(id);
-                        }
+                    if(ids.length !== 0){
+                        let request = {
+                            ids: ids,
+                            status: "Received"
+                        };
+
+                        requestJson = JSON.stringify(request);
+
+                        $.ajax({
+                            url: 'http://localhost:8080/bim/api/requests/changeStatus',
+                            type: 'PUT',
+                            dataType: 'JSON',
+                            async: false,
+                            contentType: 'application/json',
+                            data: requestJson,
+                            success: function () {
+                                displayMessageBox("Handover Success")
+                                $('.modal-footer').on('click', '#message-box-button', function () {
+                                    window.location.reload();
+                                });
+                            },
+                            error: function () {
+                                displayMessageBox("Handover Failed");
+                            }
+                        });
                     }
-
-                    let request = {
-                        ids: ids,
-                        status: "Received"
-                    };
-
-                    requestJson = JSON.stringify(request);
-
-                    $.ajax({
-                        url: 'http://localhost:8080/bim/api/requests/changeStatus',
-                        type: 'PUT',
-                        dataType: 'JSON',
-                        async: false,
-                        contentType: 'application/json',
-                        data: requestJson,
-                        success: function () {
-                            alert("success");
-                            window.location.reload();
-                        },
-                        error: function () {
-                            alert("handover failed");
-                        }
-                    });
                 });
-                alert("one of the request is already received / rejected!");
             }
         }
     });
