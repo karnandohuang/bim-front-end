@@ -23,34 +23,10 @@
 	</div>
 	<div class="container-fluid p-0 m-0">
 		<div class="row" id="page-row">
-			<div class="left-navbar col-sm-2 col-md-3 col-lg-3 col-xl-2 p-0 shadow">
-				<nav class="navbar navbar-dark bg-dark flex-row flex-nowrap align-items-start navbar-expand-sm pl-4 pr-1" id="left-nav">
-			  		<nav class="nav flex-column nav-pills nav-fill nav-justified col-12 text-right" aria-orientation="vertical">
-						<a class="navbar-brand pl-1 pb-5 pt-3" href="dashboard.html">
-			    				<img src="../assets/images/logo.png" width="175" alt="">
-			  			</a>
-						<a class="nav-link show-loading text-light font-weight-light" id="dashboard"><i class="fas fa-desktop"></i> Dashboard</a>
-						<a class="nav-link show-loading text-light font-weight-light" id="items"><i class="fas fa-archive"></i> Items</a>
-						<a class="nav-link show-loading active shadow font-weight-light" id="my-items"><i class="fas fa-box-open"></i> My Items</a>
-						<a class="nav-link show-loading text-light font-weight-light" id="employees"><i class="fas fa-user-friends"></i> Employees</a>
-						<a class="nav-link show-loading text-light font-weight-light" id="assignment-list"><i class="fas fa-tasks"></i> Assignment List</a>
-					</nav>
-				</nav>
-			</div>
+			<div class="left-navbar col-sm-2 col-md-3 col-lg-3 col-xl-2 p-0 shadow"></div>
+
 			<div class="col-sm-10 col-md-9 col-lg-9 col-xl-10 p-0">
-				<nav class="navbar navbar-light bg-light justify-content-end shadow-sm">
-					<ul class="nav pr-4">
-						<li class="nav-item dropdown">
-						    <a class="nav-link text-secondary" data-toggle="dropdown" id="#" role="button"
-                               aria-haspopup="true" aria-expanded="false">Hello, Admin <i class="fas fa-user-circle"></i></a>
-						    <div class="dropdown-menu dropdown-menu-right text-center">
-						      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePasswordModal"><i class="fas fa-cog"></i> Change Password</a>
-						      <div class="dropdown-divider"></div>
-						      <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-						    </div>
-						</li>
-					</ul>
-				</nav>
+				<div id="top-navbar"></div>
 
 				<div class="p-4">
 					<h3 class="text-dark">My Items</h3>
@@ -72,6 +48,17 @@
 							<tbody id="data-table">
 							</tbody>
 						</table>
+						<div class="row mx-2 justify-content-end" id="table-pagination-button">
+							<div class="col-lg-2 col-md-3 col-xs-4 text-right">
+								<p>Page : <label id="current-page">1</label> / <label id="total-page">1</label></p>
+							</div>
+							<div class="col-lg-2 col-md-3 col-xs-4 px-1">
+								<button type="button" class="btn btn-primary col-lg-12" id="table-prev-page-button">Previous</button>
+							</div>
+							<div class="col-lg-2 col-md-3 col-xs-4 px-1">
+								<button type="button" class="btn btn-primary col-lg-12" id="table-next-page-button">Next</button>
+							</div>
+						</div>
 					</div>
 					<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"
 						 aria-labelledby="changePasswordLabel" aria-hidden="true">
@@ -120,5 +107,8 @@
     <script src="../assets/js/loading.js"></script>
 	<script src="../assets/js/action-modal.js"></script>
 	<script src="../assets/js/api/my-items/show-my-items-list.js"></script>
+
+    <script src="../assets/components/js/my-items.js"></script>
+    <script src="../assets/components/js/top-navbar.js"></script>
 </body>
 </html>
