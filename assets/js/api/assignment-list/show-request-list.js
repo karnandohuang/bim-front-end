@@ -1,15 +1,17 @@
 $(document).ready(function () {
 
     let currentPage = 1;
-    let pageSize = 10;
+    let pageSize = 6;
     let totalPage = 1;
+    let sortedBy = "id";
+    let sortedType = "asc";
 
     function displayTablePage(currentPage) {
         $('#current-page').text(currentPage);
 
-
         $.ajax({
-            url: 'http://localhost:8080/bim/api/requests?pageNumber=1&pageSize=100',
+            url: 'http://localhost:8080/bim/api/requests?' + 'pageNumber=' + currentPage + '&pageSize=' + pageSize +
+                '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
@@ -58,6 +60,27 @@ $(document).ready(function () {
         if(currentPage!==1){
             currentPage--;
         }
+        displayTablePage(currentPage);
+    });
+
+    $('#sorted-by').on('change', function () {
+        $('#data-table>tbody').empty();
+        sortedBy = $('#sorted-by').val();
+        currentPage = 1;
+        displayTablePage(currentPage);
+    });
+
+    $('#sorted-type').on('change', function () {
+        $('#data-table>tbody').empty();
+        sortedType = $('#sorted-type').val();
+        currentPage = 1;
+        displayTablePage(currentPage);
+    });
+
+    $('#page-size').on('change', function () {
+        $('#data-table>tbody').empty();
+        pageSize = $('#page-size').val();
+        currentPage = 1;
         displayTablePage(currentPage);
     });
 });
