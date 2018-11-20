@@ -132,6 +132,7 @@ $(document).ready(function () {
                             data: requestJson,
                             success: function () {
                                 displayMessageBox("Approve Success");
+                                $('#action-modal').modal('hide');
                                 $('.modal-footer').on('click', '#message-box-button', function () {
                                     window.location.reload();
                                 });
@@ -173,6 +174,7 @@ $(document).ready(function () {
                             data: requestJson,
                             success: function () {
                                 displayMessageBox("Reject Request Success");
+                                $('#action-modal').modal('hide');
                                 $('.modal-footer').on('click', '#message-box-button', function () {
                                     window.location.reload();
                                 });                        },
@@ -210,7 +212,8 @@ $(document).ready(function () {
                             contentType: 'application/json',
                             data: requestJson,
                             success: function () {
-                                displayMessageBox("Handover Success")
+                                displayMessageBox("Handover Success");
+                                $('#action-modal').modal('hide');
                                 $('.modal-footer').on('click', '#message-box-button', function () {
                                     window.location.reload();
                                 });
