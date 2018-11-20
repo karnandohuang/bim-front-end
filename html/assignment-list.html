@@ -45,12 +45,51 @@
 					</div>
 
 					<div class="row mr-2 mt-4">
-						<div class="col">
-							<h3 class="text-dark">Assignment List</h3>
-						</div>
-
-						<div class="col-lg-4 col-md-5 col-xs-4 px-1">
-							<div class="input-group mb-3">
+                        <div class="col-lg-3 col-md-12 col-xs-3 px-1">
+                            <h3 class="text-dark">Assignment List</h3>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-xs-3 px-1">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="page-size">Show</label>
+                                </div>
+                                <select class="custom-select" id="page-size">
+                                    <option selected value="6">6</option>
+                                    <option value="12">12</option>
+                                    <option value="18">18</option>
+                                    <option value="24">24</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-xs-3 px-1">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="sorted-by">Sort</label>
+                                </div>
+                                <select class="custom-select" id="sorted-by">
+                                    <option selected value="id">Request ID</option>
+                                    <option value="employeeId">employee ID</option>
+                                    <option value="employeeName">Employee Name</option>
+                                    <option value="itemSKU">Item SKU</option>
+                                    <option value="itemName">Item Name</option>
+                                    <option value="qty">Quantity</option>
+                                    <option value="status">Status</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-xs-3 px-1">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="sorted-type">Type</label>
+                                </div>
+                                <select class="custom-select" id="sorted-type">
+                                    <option selected value="asc">Ascending</option>
+                                    <option value="desc">Descending</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-3 px-1">
+                            <div class="input-group mb-3">
 								<input type="text" class="form-control" placeholder="Item Name" aria-label="Item Name" id="table-search-name">
 								<div class="input-group-append">
 									<button class="btn btn-primary" type="button" id="table-search-button">Search</button>
@@ -79,6 +118,17 @@
 							<tbody>
 							</tbody>
 						</table>
+                        <div class="row mx-2 justify-content-end" id="table-pagination-button">
+                            <div class="col-lg-2 col-md-3 col-xs-4 text-right">
+                                <p>Page : <label id="current-page">1</label> / <label id="total-page">1</label></p>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-xs-4 px-1">
+                                <button type="button" class="btn btn-primary col-lg-12" id="table-prev-page-button">Previous</button>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-xs-4 px-1">
+                                <button type="button" class="btn btn-primary col-lg-12" id="table-next-page-button">Next</button>
+                            </div>
+                        </div>
 					</div>
 
 				</div>
