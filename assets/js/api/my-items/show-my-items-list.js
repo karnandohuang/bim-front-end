@@ -1,7 +1,8 @@
 $(document).ready(function () {
     let employeeId = "EM001";
+    let currentPage = 1;
     let pageNumber = 1;
-    let pageSize = 3;
+    let pageSize = 6;
 
     function displayTablePage(currentPage) {
         $('#current-page').text(currentPage);
