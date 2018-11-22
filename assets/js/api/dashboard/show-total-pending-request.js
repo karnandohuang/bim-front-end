@@ -2,13 +2,13 @@ $(document).ready(function () {
 
     function callCountAjax(employeeId, status, attributeName) {
         $.ajax({
-            url: 'http://localhost:8080/bim/api/requests/' + employeeId + '/' + status,
+            url: 'http://localhost:8080/bim/api/requests/count?' + 'id=' + employeeId + '&status=' + status,
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
             async: false,
             success: function (data) {
-                let count = data.value;
+                let count = data.value.requestCount;
 
                 $(attributeName).text(count);
             },
