@@ -34,8 +34,79 @@ $(document).ready(function () {
         $('#message-box').modal('show');
     }
 
+    function requestButtonOnClick() {
+        $('#request-item-button').on('click', function () {
+            let item;
+            $('.request-item-row').each(function () {
+                let requestItemId = $(this).closest('tr').find('.request-item-id').html();
+                let requestEmployeeId = "EM066"; //need to change it
+                let requestItemQty = $(this).closest('tr').find('.request-item-qty select').val();
+
+                item = {
+                    employeeId: requestEmployeeId,
+                    itemId: requestItemId,
+                    qty: requestItemQty
+                };
+
+                let requestItemJson = JSON.stringify(item);
+                console.log(requestItemJson);
+
+                $.ajax({
+                    url: "http://localhost:8080/bim/api/requests",
+                    type: "POST",
+                    dataType: "JSON",
+                    contentType: "application/json",
+                    data: requestItemJson,
+                    async: false,
+                    success: function () {
+                        displayMessageBox("Request Success");
+                        $('#item-action-modal').modal('hide');
+                        $('.modal-footer').on('click', '#message-box-button', function () {
+                            window.location.reload();
+                        });
+                    },
+                    error: function () {
+                        displayMessageBox("Request Failed");
+                    }
+                });
+            });
+        });
+    }
+
+    function deleteButtonOnClick(items, deleteItemJson) {
+        $('#delete-item-button').click(function () {
+            $('.delete-row').each(function () {
+                let deleteId = $(this).closest('tr').find('.delete-id').html();
+
+                items.push(deleteId);
+                console.log(items);
+            });
+
+            deleteItemJson.ids = items;
+            deleteItemJson = JSON.stringify(deleteItemJson);
+
+            $.ajax({
+                url: 'http://localhost:8080/bim/api/items',
+                type: 'DELETE',
+                contentType: 'application/json',
+                dataType: 'JSON',
+                data: deleteItemJson,
+                success: function () {
+                    displayMessageBox("delete success");
+                    $('#item-action-modal').modal('hide');
+                    $('.modal-footer').on('click', '#message-box-button', function () {
+                        window.location.reload();
+                    });
+                },
+                error: function () {
+                    displayMessageBox("delete failed");
+                }
+            });
+        });
+    }
+
 //when pressing action button
-    $('#request-button, #edit-button, #delete-button').click(function () {
+    $('#request-button, #delete-button').click(function () {
         let selectedItem = [];
 
         //get item data from selected table to JSON
@@ -94,103 +165,9 @@ $(document).ready(function () {
                     $("#request-table").append(tr+td1+td2+td3+td4+td5);
                 }
 
-                $('#request-item-button').on('click', function () {
-                    let item;
-                    $('.request-item-row').each(function () {
-                        let requestItemId = $(this).closest('tr').find('.request-item-id').html();
-                        let requestEmployeeId = "EM066"; //need to change it
-                        let requestItemQty = $(this).closest('tr').find('.request-item-qty select').val();
+                requestButtonOnClick();
 
-                        item = {
-                            employeeId: requestEmployeeId,
-                            itemId: requestItemId,
-                            qty: requestItemQty
-                        };
-
-                        let requestItemJson = JSON.stringify(item);
-                        console.log(requestItemJson);
-
-                        $.ajax({
-                            url: "http://localhost:8080/bim/api/requests",
-                            type: "POST",
-                            dataType: "JSON",
-                            contentType: "application/json",
-                            data: requestItemJson,
-                            async: false,
-                            success: function () {
-                                displayMessageBox("Request Success");
-                                $('#item-action-modal').modal('hide');
-                                $('.modal-footer').on('click', '#message-box-button', function () {
-                                    window.location.reload();
-                                });
-                            },
-                            error: function () {
-                                displayMessageBox("Request Failed");
-                            }
-                        });
-                    });
-                });
-
-            } else if (this.id === 'edit-button') {
-
-                if (selectedItem.length > 1) {
-                    displayMessageBox("You can only select 1 item to edit")
-                }
-                else {
-                    setEditModalAttributes();
-
-                    let item = JSON.parse(idJson);
-
-                    console.log(item);
-                    $('#input-item-id').val(item[0].id);
-                    $('#input-item-sku').val(item[0].sku);
-                    $('#input-item-name').val(item[0].name);
-                    $('#input-item-price').val(item[0].price);
-                    $('#input-item-qty').val(item[0].qty);
-                    $('#input-item-location').val(item[0].location);
-
-                    //send JSON to backend
-                    let itemJson;
-                    $('.modal-footer').on('click', '#edit-item-button', (function () {
-                        //get value from each text box
-                        let id = $('#input-item-id').val();
-                        let sku = $('#input-item-sku').val();
-                        let name = $('#input-item-name').val();
-                        let price = $('#input-item-price').val();
-                        let qty = $('#input-item-qty').val();
-                        let location = $('#input-item-location').val();
-
-                        let item = {
-                            id: id,
-                            sku: sku,
-                            name: name,
-                            price: price,
-                            location: location,
-                            qty: qty,
-                        };
-
-                        itemJson = JSON.stringify(item);
-
-                        $.ajax({
-                            url: 'http://localhost:8080/bim/api/items',
-                            type: 'PUT',
-                            dataType: 'JSON',
-                            contentType: 'application/json',
-                            data: itemJson,
-                            success: function () {
-                                displayMessageBox("Edit Success");
-                                $('#item-action-modal').modal('hide');
-                                $('.modal-footer').on('click', '#message-box-button', function () {
-                                    window.location.reload();
-                                });
-                            },
-                            error: function () {
-                                displayMessageBox("Edit Failed");
-                            }
-                        });
-                    }));
-                }
-            } else if (this.id === 'delete-button') {
+            }  else if (this.id === 'delete-button') {
                 setDeleteModalAttributes();
 
                 let item = JSON.parse(idJson);
@@ -208,35 +185,7 @@ $(document).ready(function () {
 
                 let deleteItemJson = {"ids": ""};
                 let items = [];
-                $('#delete-item-button').click(function () {
-                    $('.delete-row').each(function () {
-                        let deleteId = $(this).closest('tr').find('.delete-id').html();
-
-                        items.push(deleteId);
-                        console.log(items);
-                    });
-
-                    deleteItemJson.ids = items;
-                    deleteItemJson = JSON.stringify(deleteItemJson);
-
-                    $.ajax({
-                        url: 'http://localhost:8080/bim/api/items',
-                        type: 'DELETE',
-                        contentType: 'application/json',
-                        dataType: 'JSON',
-                        data: deleteItemJson,
-                        success: function () {
-                            displayMessageBox("delete success");
-                            $('#item-action-modal').modal('hide');
-                            $('.modal-footer').on('click', '#message-box-button', function () {
-                                window.location.reload();
-                            });
-                        },
-                        error: function () {
-                            displayMessageBox("delete failed");
-                        }
-                    });
-                });
+                deleteButtonOnClick(items, deleteItemJson);
             }
         }
     });

@@ -27,9 +27,11 @@ $(document).ready(function () {
                         "</td><td class='price'>" + value.price +
                         "</td><td class='location'>" + value.location +
                         "</td><td class='qty'>" + value.qty +
-                        "</td><td>" +
-                        "<button type=\"button\" class=\"btn btn-info btn-block p-0 m-0\" " +
-                        "onclick='window.print()'>Print</button>" +
+                        "</td><td class='p-1 text-center'>" +
+                        "<button type=\"button\" class=\"btn btn-success px-2 mx-1 edit-button\">" +
+                        "<i class=\"fas fa-edit\"></i></button>" +
+                        "<button type=\"button\" class=\"btn btn-info px-2 mx-1\" " +
+                        "onclick='window.print()'><i class=\"fas fa-print\"></i></button>" +
                         "</td></tr>";
 
                     $('#data-table').append(record);
