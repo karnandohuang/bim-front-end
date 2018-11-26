@@ -63,10 +63,10 @@ $(document).ready(function () {
     });
 
     $('#table-search-button').on('click', function () {
-       name = $('#table-search-name').val();
-       $('#data-table>tbody').empty();
-       currentPage = 1;
-       displayTablePage(currentPage);
+        name = $('#table-search-name').val();
+        $('#data-table>tbody').empty();
+        currentPage = 1;
+        displayTablePage(currentPage);
     });
 
     $('#sorted-by').on('change', function () {

@@ -31,6 +31,8 @@ $(document).ready(function () {
                 });
 
                 totalPage = data.paging.totalPage;
+                if(totalPage===0)
+                    totalPage=1;
                 $('#total-superior-page').text(totalPage);
 
             },

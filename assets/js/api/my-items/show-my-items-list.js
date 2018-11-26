@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    let employeeId = "EM001";
+    let employeeId = "EM066";
     let currentPage = 1;
-    let pageNumber = 1;
+    let totalPage = 1;
     let pageSize = 6;
 
     function displayTablePage(currentPage) {
@@ -9,13 +9,13 @@ $(document).ready(function () {
 
 
         $.ajax({
-        url: 'http://localhost:8080/bim/api/requests/employee?employeeId=' + employeeId + '&pageNumber=' + pageNumber +
-        '&pageSize=' + pageSize,
-        type: 'GET',
-        dataType: 'JSON',
-        contentType: 'application/json',
-        success: function (data) {
-            $(data.value).each(function (index, value) {
+            url: 'http://localhost:8080/bim/api/requests/employee?employeeId=' + employeeId + '&pageNumber=' + currentPage +
+                '&pageSize=' + pageSize ,
+            type: 'GET',
+            dataType: 'JSON',
+            contentType: 'application/json',
+            success: function (data) {
+                $(data.value).each(function (index, value) {
 
                     let record =
                         "<tr class='row-select'>" +
@@ -33,14 +33,17 @@ $(document).ready(function () {
                         "</td></tr>";
 
                     $('#data-table').append(record);
-                }
-            );
-        },
-        error: function (data) {
+                    totalPage = data.paging.totalPage;
+                    if(totalPage===0)
+                        totalPage = 1;
+                    $('#total-page').text(totalPage);
+                });
+            },
+            error: function (data) {
 
-        }
-    });
-}
+            }
+        });
+    }
     displayTablePage(1);
 
     //send JSON containing page number to backend, and retrieve request list according to page number
@@ -55,6 +58,7 @@ $(document).ready(function () {
 
     $('#table-prev-page-button').on('click',function () {
         $("#data-table>tbody").empty();
+
         if(currentPage!==1){
             currentPage--;
         }

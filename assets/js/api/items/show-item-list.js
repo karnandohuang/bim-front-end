@@ -33,12 +33,11 @@ $(document).ready(function () {
                         "</td></tr>";
 
                     $('#data-table').append(record);
+                    totalPage = data.paging.totalPage;
+                    if(totalPage===0)
+                        totalPage=1;
+                    $('#total-page').text(totalPage);
                 });
-
-                totalPage = data.paging.totalPage;
-                if(totalPage===0)
-                    totalPage=1;
-                $('#total-page').text(totalPage);
             },
             error: function (data) {
 
