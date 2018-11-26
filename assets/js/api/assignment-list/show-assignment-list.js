@@ -46,7 +46,7 @@ $(document).ready(function () {
     displayTablePage(1);
 
     //send JSON containing page number to backend, and retrieve request list according to page number
-    $('#table-next-page-button').on('click',function () {
+    $(document).on('click', '#table-next-page-button',function () {
         $("#data-table>tbody").empty();
 
         if(currentPage !== totalPage){
@@ -55,7 +55,7 @@ $(document).ready(function () {
         displayTablePage(currentPage);
     });
 
-    $('#table-prev-page-button').on('click',function () {
+    $(document).on('click', '#table-next-page-button',function () {
         $("#data-table>tbody").empty();
         if(currentPage!==1){
             currentPage--;
