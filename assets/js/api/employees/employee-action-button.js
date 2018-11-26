@@ -53,66 +53,7 @@ $(document).ready(function () {
             displayMessageBox("You must select at least 1 employee");
         }
         else{
-            if(this.id == 'edit-button'){
-                if(selectedEmployee.length > 1){
-                    displayMessageBox("You can only select 1 employee to edit");
-                } else {
-                    let employee = JSON.parse(employeeJson);
-                    $('#input-employee-id').val(employee[0].id);
-                    $('#input-employee-name').val(employee[0].name);
-                    $('#input-superior-id').val(employee[0].superiorId);
-                    $('#input-email').val(employee[0].email);
-                    $('#input-position').val(employee[0].position);
-                    $('#input-division').val(employee[0].division);
-
-                    setEditModalAttributes();
-
-                    $('.modal-footer').on('click', '#edit-employee-button', function () {
-
-                        let id = $('#input-employee-id').val();
-                        let name = $('#input-employee-name').val();
-                        let superiorId = $('#input-superior-id').val();
-                        let dob = $('#datepicker').val();
-                        let email = $('#input-email').val();
-                        let position = $('#input-position').val();
-                        let division = $('#input-division').val();
-
-                        // TODO : add edit AJAX send API
-
-                        var employee = {
-                            id: id,
-                            name: name,
-                            superiorId: superiorId,
-                            //the API PUT does not accept json without password field
-                            dob: dob,
-                            email: email,
-                            position: position,
-                            division: division
-                        };
-
-                        var employeeJson = JSON.stringify(employee);
-                        console.log(employeeJson);
-                        $.ajax({
-                            url: "http://localhost:8080/bim/api/employees",
-                            type: "PUT",
-                            dataType: "JSON",
-                            contentType: "application/json",
-                            data: employeeJson,
-                            success: function () {
-                                displayMessageBox("Successfully edited employee information");
-                                $('#employee-action-modal').modal('hide');
-                                $('.modal-footer').on('click', '#message-box-button', function () {
-                                    window.location.reload();
-                                });
-                            },
-                            error: function () {
-                                displayMessageBox("Failed to edit employee information");
-                            }
-                        });
-                    });
-                }
-
-            } else if(this.id == 'delete-button'){
+            if(this.id == 'delete-button'){
                 setDeleteModalAttributes();
 
                 let employee = JSON.parse(employeeJson);
