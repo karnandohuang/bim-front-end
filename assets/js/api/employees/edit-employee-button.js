@@ -44,15 +44,19 @@ $(document).ready(function () {
             dataType: "JSON",
             contentType: "application/json",
             data: employeeJson,
-            success: function () {
-                displayMessageBox("Successfully edited employee information");
-                $('#employee-action-modal').modal('hide');
-                $('.modal-footer').on('click', '#message-box-button', function () {
-                    window.location.reload();
-                });
+            success: function (response, status, jqXHR) {
+                if(response.success === true) {
+                    displayMessageBox("Successfully edited employee information");
+                    $('#employee-action-modal').modal('hide');
+                    $('.modal-footer').on('click', '#message-box-button', function () {
+                        window.location.reload();
+                    });
+                } else {
+                    displayMessageBox("Failed to edit employee information" + " (" + response.errorMessage + ")");
+                }
             },
-            error: function () {
-                displayMessageBox("Failed to edit employee information");
+            error: function (response, status, jqXHR) {
+                displayMessageBox("Failed to edit employee information" + " (" + status + ")");
             }
         });
     }

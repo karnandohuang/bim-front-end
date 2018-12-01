@@ -90,15 +90,19 @@ $(document).ready(function () {
                         contentType: 'application/json',
                         dataType: 'JSON',
                         data: deleteEmployeeJson,
-                        success: function () {
-                            displayMessageBox("Delete Success");
-                            $('#employee-action-modal').modal('hide');
-                            $('.modal-footer').on('click', '#message-box-button', function () {
-                                window.location.reload();
-                            });
+                        success: function (response, status, jqXHR) {
+                            if(response.success === true) {
+                                displayMessageBox("Delete Success");
+                                $('#employee-action-modal').modal('hide');
+                                $('.modal-footer').on('click', '#message-box-button', function () {
+                                    window.location.reload();
+                                });
+                            } else {
+                                displayMessageBox("Delete Failed " + "(" + response.errorMessage + ")");
+                            }
                         },
-                        error: function () {
-                            displayMessageBox("Delete Failed");
+                        error: function (response, status, jqXHR) {
+                            displayMessageBox("Delete Failed"+ "(" + status + ")");
                         }
                     });
                 })

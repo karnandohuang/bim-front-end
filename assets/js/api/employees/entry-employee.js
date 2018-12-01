@@ -37,15 +37,19 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             data: employeeJson,
             async:false,
-            success: function () {
-                displayMessageBox("Successfully added new employee");
-                $('#employee-action-modal').modal('hide');
-                $('.modal-footer').on('click', '#message-box-button', function () {
-                    window.location.reload();
-                });
+            success: function (response, status, jqXHR) {
+                if(response.success === true) {
+                    displayMessageBox("Successfully added new employee");
+                    $('#employee-action-modal').modal('hide');
+                    $('.modal-footer').on('click', '#message-box-button', function () {
+                        window.location.reload();
+                    });
+                } else {
+                    displayMessageBox("Failed to add new employee. " + " (" + response.errorMessage + ")");
+                }
             },
-            error: function () {
-                displayMessageBox("Failed to add new employee");
+            error: function (response, status, jqXHR) {
+                displayMessageBox("Failed to add new employee" + " (" + status + ")");
             }
         });
     }

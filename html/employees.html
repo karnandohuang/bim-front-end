@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard</title>
+    <title>Employees</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/base_style.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -36,60 +36,7 @@
                     </div>
                 </div>
 
-                <div class="row mr-2 mt-4">
-                    <div class="col-lg-3 col-md-12 col-xs-3 px-1">
-                        <h3 class="text-dark">Employees</h3>
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-xs-3 px-1">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="page-size">Show</label>
-                            </div>
-                            <select class="custom-select" id="page-size">
-                                <option selected value="6">6</option>
-                                <option value="12">12</option>
-                                <option value="18">18</option>
-                                <option value="24">24</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-xs-3 px-1">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="sorted-by">Sort</label>
-                            </div>
-                            <select class="custom-select" id="sorted-by">
-                                <option selected value="id">ID</option>
-                                <option value="name">Name</option>
-                                <option value="email">Email</option>
-                                <option value="position">Position</option>
-                                <option value="division">Division</option>
-                                <option value="superiorId">Superior ID</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-xs-3 px-1">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="sorted-type">Type</label>
-                            </div>
-                            <select class="custom-select" id="sorted-type">
-                                <option selected value="asc">Ascending</option>
-                                <option value="desc">Descending</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-xs-3 px-1">
-                        <form onsubmit="return false">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Employee Name" aria-label="Employee Name" id="table-search-name">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit" id="table-search-button">Search</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                <div class="title-and-sort-div"></div>
 
                 <div class="table-responsive">
                     <table class="table table-hover" id="data-table">
@@ -113,12 +60,15 @@
                     <div id="table-pagination-div"></div>
                 </div>
 
-                <div class="modal fade actionModal" id="employee-action-modal" tabindex="-1" role="dialog"
+                <div class="modal fade" id="employee-action-modal" tabindex="-1" role="dialog"
                      aria-labelledby="employee-action-label" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="employee-action-label"></h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             <div class="modal-body">
                                 <div class="container-fluid">
@@ -165,9 +115,9 @@
                                         <div class="form-group row">
                                             <label for="input-email" class="col-sm-3 col-form-label">Email</label>
                                             <div class="col-sm-8">
-                                                <input type="email" class="form-control" id="input-email" placeholder="Email Address" required>
+                                                <input type="text" class="form-control" id="input-email" placeholder="address@gdn-commerce.com" required>
                                                 <div class="invalid-feedback">
-                                                    Please input a valid employee email.
+                                                    Please input a valid employee email. <br> format : "address@gdn-commerce.com"
                                                 </div>
                                             </div>
                                         </div>
@@ -178,7 +128,7 @@
                                                        placeholder="Password" required>
                                                 <div class="invalid-feedback">
                                                     Please input a valid password. <br>
-                                                    Minimum eight characters, all alphabets.
+                                                    Minimum eight characters, at least one uppercase letter, one lowercase letter and one number.
                                                     <!--TODO: Change regex-->
                                                 </div>
                                             </div>
@@ -246,10 +196,30 @@
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="choose-superior-modal-label"></h4>
+                                <div class="col-6">
+                                    <h4 class="modal-title" id="choose-superior-modal-label"></h4>
+                                </div>
+
+                                <div class="col-1">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                             </div>
                             <div class="modal-body m-0 pt-0 pl-2 pr-2">
                                 <div class="container-fluid">
+                                    <div class="row justify-content-end">
+                                        <div class="col-5 pt-3">
+                                            <form onsubmit="return false">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" placeholder="Superior Name" aria-label="Superior Name" id="table-search-superior">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-primary" type="submit" id="table-search-superior-button">Search</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                     <div class="table-responsive" id="choose-superior-modal-div">
                                         <table class="table table-hover" id="choose-superior-table">
                                             <thead>
@@ -261,7 +231,7 @@
                                                 <th scope="col">Division</th>
                                             </tr>
                                             </thead>
-                                            <tbody id="superior-tbody">
+                                            <tbody id="superior-tbody" style="cursor: pointer">
                                             </tbody>
                                         </table>
                                     </div>
@@ -302,17 +272,19 @@
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <script>
     $('#datepicker').datepicker({
+        format: 'dd/mm/yyyy',
         uiLibrary: 'bootstrap4'
     }).on('change', function () {
         $(this).valid;
     });
 </script>
 
-<script src="../assets/components/js/employees.js"></script>
+<script src="../assets/components/js/left-navbar/employees.js"></script>
 <script src="../assets/components/js/top-navbar.js"></script>
 <script src="../assets/components/js/change-password.js"></script>
 <script src="../assets/components/js/message-box.js"></script>
 <script src="../assets/components/js/table-pagination-button.js"></script>
+<script src="../assets/components/js/table-title-and-sort/employees-table-title-and-sort.js"></script>
 
 <script src="../assets/js/api/employees/show-employee-list.js"></script>
 <script src="../assets/js/api/employees/entry-employee.js"></script>

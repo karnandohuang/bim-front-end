@@ -18,26 +18,37 @@ $(document).ready(function () {
             type : 'GET',
             dataType : 'JSON',
             contentType:'application/json',
-            success : function (data) {
-                $(data.value.list).each(function (index, value) {
-                    var record = "<tr class='row-select'>" +
-                        "<td class='id'>"+ value.id +
-                        "</td><td class='name'>" + value.name +
-                        "</td><td class='email'>" + value.email +
-                        "</td><td class='position'>" + value.position +
-                        "</td><td class='division'>" + value.division + "</td></tr>";
+            success : function (response, status, jqXHR) {
+                if(response.paging.totalRecords > 0) {
 
-                    $("#choose-superior-table").append(record);
-                });
+                    $(response.value.list).each(function (index, value) {
+                        var record = "<tr class='row-select'>" +
+                            "<td class='id'>"+ value.id +
+                            "</td><td class='name'>" + value.name +
+                            "</td><td class='email'>" + value.email +
+                            "</td><td class='position'>" + value.position +
+                            "</td><td class='division'>" + value.division + "</td></tr>";
 
-                totalPage = data.paging.totalPage;
-                if(totalPage===0)
-                    totalPage=1;
-                $('#total-superior-page').text(totalPage);
+                        $("#choose-superior-table").append(record);
+                    });
 
+                    totalPage = response.paging.totalPage;
+                    if(totalPage===0)
+                        totalPage=1;
+                    $('#total-superior-page').text(totalPage);
+
+                } else {
+                    let record = "<tr><td colspan='100' class='text-center p-4'><h3>No Data Available</h3></td></tr>"
+                    $('#choose-superior-table').append(record);
+                }
             },
-            error : function (data) {
-
+            error: function (response, status, jqXHR) {
+                let record =
+                    "<tr><td colspan='100' class='text-center p-4'>" +
+                    "<h3>Error Retrieving Data</h3>" +
+                    "<button class='btn btn-primary' onclick='window.location.reload()'>Reload</button>" +
+                    "</td></tr>";
+                $('#choose-superior-table').append(record);
             }
         });
     }

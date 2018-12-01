@@ -2,29 +2,26 @@ $(document).ready(function () {
     let idJson;
 
     function setRequestModalAttributes() {
-        $("#entry-edit-form").css("display", "none");
-        $("#request-div").css("display", "inline");
-        $('.modal-title').text("Request Item");
         $("#request-table>tbody").empty();
-        $('#item-action-modal').modal('show');
-        $('.modal-save-button').prop('id', 'request-item-button');
-    }
+        $("#request-div").css("display", "inline");
+        $("#entry-edit-form").css("display", "none");
+        $("#item-information-div").css("display", "none");
 
-    function setEditModalAttributes() {
-        $("#entry-edit-form").css("display", "inline");
-        $("#request-div").css("display", "none");
-        $("#input-item-id-row").css("display", "");
-        $('.modal-title').text("Edit Item");
-        $('.modal-save-button').prop('id', 'edit-item-button');
+        $('.modal-title').text("Request Item");
+        $('.modal-save-button').css("display", "block");
+        $('.modal-save-button').prop('id', 'request-item-button');
         $('#item-action-modal').modal('show');
     }
 
     function setDeleteModalAttributes() {
-        $('.modal-title').text("Delete Item");
         $("#request-table>tbody").empty();
         $("#entry-edit-form").css("display", "none");
+        $("#item-information-div").css("display", "none");
         $("#request-div").css("display", "");
         $("#input-item-id-row").css("display", "none");
+
+        $('.modal-title').text("Delete Item");
+        $('.modal-save-button').css("display", "block");
         $('.modal-save-button').prop('id', 'delete-item-button');
         $('#item-action-modal').modal('show');
     }
@@ -48,27 +45,32 @@ $(document).ready(function () {
                     qty: requestItemQty
                 };
 
-                let requestItemJson = JSON.stringify(item);
-                console.log(requestItemJson);
+            });
 
-                $.ajax({
-                    url: "http://localhost:8080/bim/api/requests",
-                    type: "POST",
-                    dataType: "JSON",
-                    contentType: "application/json",
-                    data: requestItemJson,
-                    async: false,
-                    success: function () {
+            let requestItemJson = JSON.stringify(item);
+            console.log(requestItemJson);
+            $.ajax({
+                url: "http://localhost:8080/bim/api/requests",
+                type: "POST",
+                dataType: "JSON",
+                contentType: "application/json",
+                data: requestItemJson,
+                async: false,
+                success: function (response, status, jqXHR) {
+                    if(response.success === true){
                         displayMessageBox("Request Success");
                         $('#item-action-modal').modal('hide');
                         $('.modal-footer').on('click', '#message-box-button', function () {
                             window.location.reload();
                         });
-                    },
-                    error: function () {
-                        displayMessageBox("Request Failed");
+                    }else {
+                        displayMessageBox("Request Failed" + " (" + response.errorMessage + ")");
                     }
-                });
+
+                },
+                error: function (response, status, jqXHR) {
+                    displayMessageBox("Request Failed" + " (" + status + ")");
+                }
             });
         });
     }
@@ -91,15 +93,19 @@ $(document).ready(function () {
                 contentType: 'application/json',
                 dataType: 'JSON',
                 data: deleteItemJson,
-                success: function () {
-                    displayMessageBox("delete success");
-                    $('#item-action-modal').modal('hide');
-                    $('.modal-footer').on('click', '#message-box-button', function () {
-                        window.location.reload();
-                    });
+                success: function (response) {
+                    if(response.success === true) {
+                        displayMessageBox("delete success");
+                        $('#item-action-modal').modal('hide');
+                        $('.modal-footer').on('click', '#message-box-button', function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        displayMessageBox("delete failed" + " (" + response.errorMessage + ")");
+                    }
                 },
-                error: function () {
-                    displayMessageBox("delete failed");
+                error: function (response, status, jqXHR) {
+                    displayMessageBox("delete failed" + " (" + status + ")");
                 }
             });
         });

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Dashboard</title>
+	<title>Assignment List</title>
 	<link rel="stylesheet" type="text/css" href="../assets/css/base_style.css">
 	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -24,11 +24,11 @@
 					<div class="row pt-1 pl-1 pr-4">
 						<div class="col-3 px-2">
 							<button type="button" class="btn btn-success btn-block" data-toggle="modal" id="approve-button">
-								Approve Request</button>
+								Approve Assignment</button>
 						</div>
 						<div class="col-3 px-2">
 							<button type="button" class="btn btn-danger btn-block" data-toggle="modal" id="reject-button">
-								Reject Request</button>
+								Reject Assignment</button>
 						</div>
 						<div class="col-3 px-2">
 							<button type="button" class="btn btn-primary btn-block" data-toggle="modal" id="handover-button">
@@ -36,68 +36,16 @@
 						</div>
 					</div>
 
-					<div class="row mr-2 mt-4">
-                        <div class="col-lg-3 col-md-12 col-xs-3 px-1">
-                            <h3 class="text-dark">Assignment List</h3>
-                        </div>
-                        <div class="col-lg-2 col-md-3 col-xs-3 px-1">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="page-size">Show</label>
-                                </div>
-                                <select class="custom-select" id="page-size">
-                                    <option selected value="6">6</option>
-                                    <option value="12">12</option>
-                                    <option value="18">18</option>
-                                    <option value="24">24</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-3 col-xs-3 px-1">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="sorted-by">Sort</label>
-                                </div>
-                                <select class="custom-select" id="sorted-by">
-                                    <option selected value="id">Request ID</option>
-                                    <option value="employeeId">employee ID</option>
-                                    <option value="employeeName">Employee Name</option>
-                                    <option value="itemSKU">Item SKU</option>
-                                    <option value="itemName">Item Name</option>
-                                    <option value="qty">Quantity</option>
-                                    <option value="status">Status</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-3 col-xs-3 px-1">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="sorted-type">Type</label>
-                                </div>
-                                <select class="custom-select" id="sorted-type">
-                                    <option selected value="asc">Ascending</option>
-                                    <option value="desc">Descending</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-xs-3 px-1">
-                            <div class="input-group mb-3">
-								<input type="text" class="form-control" placeholder="Item Name" aria-label="Item Name" id="table-search-name">
-								<div class="input-group-append">
-									<button class="btn btn-primary" type="button" id="table-search-button">Search</button>
-								</div>
-							</div>
-						</div>
-					</div>
+                    <div class="title-and-sort-div"></div>
 
-					<div class="table-responsive">
+                    <div class="table-responsive">
 						<table class="table table-hover" id="data-table">
 							<thead>
 							<tr>
 								<th scope="col" class="pl-3">
 									<input class="form-check-input position-static m-0 select-all" type="checkbox" value="">
 								</th>
-								<th scope="col">Request ID</th>
+								<th scope="col">Assignment ID</th>
 								<th scope="col">Employee ID</th>
 								<th scope="col">Employee Name</th>
 								<th scope="col">Item SKU</th>
@@ -114,8 +62,8 @@
 					</div>
 
 				</div>
-				<div class="modal actionModal fade" id="action-modal" tabindex="-1" role="dialog"
-					 aria-labelledby="AcceptRequestLabel" aria-hidden="true">
+				<div class="modal fade" id="action-modal" tabindex="-1" role="dialog"
+					 aria-hidden="true">
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -127,10 +75,10 @@
 							<div class="modal-body">
 								<div class="container-fluid">
 									<div class="table-responsive">
-										<table class="table table-hover" id="request-table">
+										<table class="table table-hover" id="assignment-table">
 											<thead>
 											<tr>
-												<th scope="col">Request ID</th>
+												<th scope="col">Assignment ID</th>
 												<th scope="col">Employee ID</th>
 												<th scope="col">Employee Name</th>
 												<th scope="col">Item SKU</th>
@@ -160,20 +108,6 @@
 					</div>
 				</div>
 
-				<div class="modal fade" id="message-box" tabindex="-1" role="dialog"
-					 aria-labelledby="message-box-label" aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-
-							<div class="modal-body mt-3 mb-2">
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-primary px-4" data-dismiss="modal" id="message-box-button">Ok</button>
-							</div>
-						</div>
-					</div>
-				</div>
-
                 <div id="change-password-div"></div>
                 <div id="message-box-div"></div>
             </div>
@@ -185,14 +119,15 @@
     <script src="../assets/js/loading.js"></script>
     <script src="../assets/js/action-modal.js"></script>
 
-    <script src="../assets/components/js/assignment-list.js"></script>
+    <script src="../assets/components/js/left-navbar/assignment-list.js"></script>
     <script src="../assets/components/js/top-navbar.js"></script>
     <script src="../assets/components/js/change-password.js"></script>
     <script src="../assets/components/js/message-box.js"></script>
     <script src="../assets/components/js/table-pagination-button.js"></script>
+	<script src="../assets/components/js/table-title-and-sort/assignment-table-title-and-sort.js"></script>
 
-    <script src="../assets/js/api/assignment-list/show-assignment-list.js"></script>
-	<script src="../assets/js/api/assignment-list/request-action-button.js"></script>
+	<script src="../assets/js/api/assignment-list/show-assignment-list.js"></script>
+	<script src="../assets/js/api/assignment-list/assignment-action-button.js"></script>
     <script src="../assets/js/api/checkbox.js"></script>
 
 </body>

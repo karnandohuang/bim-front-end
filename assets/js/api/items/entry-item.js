@@ -1,13 +1,16 @@
 $(document).ready(function () {
     function setEntryItemAttributes() {
-        $('.modal-title').text("Entry Item");
         $("#input-item-id-row").css("display", "none");
         $("#entry-edit-form").css("display", "inline");
+        $("#item-information-div").css("display", "none");
         $("#request-div").css("display", "none");
         $("#input-item-sku").prop("readonly", false);
+        $('#item-image-preview').prop('display', 'none');
+
+        $('.modal-title').text("Entry Item");
+        $('.modal-save-button').css("display", "block");
         $('.modal-save-button').prop('id', 'entry-item-button');
         $('#item-action-modal').modal('show');
-        $('#item-image-preview').prop('display', 'none');
     }
 
     function emptyEntryForm() {
@@ -47,6 +50,24 @@ $(document).ready(function () {
         });
     })();
 
+    function imagePreview(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image-preview')
+                    .attr('src', e.target.result)
+                    .height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $('#input-item-image').on('change', function () {
+        imagePreview(this);
+    });
+
     $('#entry-button').click(function () {
         emptyEntryForm();
         setEntryItemAttributes();
@@ -57,7 +78,6 @@ $(document).ready(function () {
         let form = $("#entry-edit-form");
 
         if(form[0].checkValidity()) {
-            let sku = $('#input-item-sku').val();
             let name = $('#input-item-name').val();
             let price = $('#input-item-price').val();
             let qty = $('#input-item-qty').val();
@@ -77,40 +97,48 @@ $(document).ready(function () {
                 processData: false,
                 contentType: false,
                 cache: false,
-                success: function (data) {
-                    let imageUrl = data.value.imagePath;
-                    let item = {
-                        sku: sku,
-                        name: name,
-                        price: price,
-                        location: location,
-                        qty: qty,
-                        imageUrl: imageUrl
-                    };
+                success: function (response) {
 
-                    let itemJson = JSON.stringify(item);
+                    if(response.success === true){
 
-                    $.ajax({
-                        url: "http://localhost:8080/bim/api/items",
-                        type: "POST",
-                        dataType: "JSON",
-                        contentType: "application/json",
-                        async: false,
-                        data: itemJson,
-                        success: function () {
-                            displayMessageBox("Success");
-                            $('.modal-footer').on('click', '#message-box-button', function () {
-                                window.location.reload();
-                            });
-                        },
-                        error: function () {
-                            displayMessageBox("Failed");
-                        }
-                    });
+                        let imageUrl = response.value.imagePath;
+                        let item = {
+                            name: name,
+                            price: price,
+                            location: location,
+                            qty: qty,
+                            imageUrl: imageUrl
+                        };
+
+                        let itemJson = JSON.stringify(item);
+
+                        $.ajax({
+                            url: "http://localhost:8080/bim/api/items",
+                            type: "POST",
+                            dataType: "JSON",
+                            contentType: "application/json",
+                            async: false,
+                            data: itemJson,
+                            success: function (response, status, jqXHR) {
+                                if(response.success === true) {
+                                    displayMessageBox("Success");
+                                    $('.modal-footer').on('click', '#message-box-button', function () {
+                                        window.location.reload();
+                                    });
+                                }
+                                else { displayMessageBox("Failed. " + "(" + response.errorMessage + ")"); }
+                            },
+                            error: function () {
+                                displayMessageBox("Failed");
+                            }
+                        });
+
+                    } else {
+                        displayMessageBox("failed to upload image. " + "(" + response.errorMessage + ")");
+                    }
                 },
-                error: function () {
-                    // alert(data.status);
-                    displayMessageBox("failed to upload image");
+                error: function (response, status, jqXHR) {
+                    displayMessageBox("failed to upload image. " + "(" + status + ")");
                 }
             });
         }

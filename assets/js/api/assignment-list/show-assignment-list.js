@@ -16,36 +16,50 @@ $(document).ready(function () {
             dataType: 'JSON',
             contentType: 'application/json',
             async: false,
-            success: function (data) {
-                $(data.value.list).each(function (index, value) {
+            success: function (response, status, jqXHR) {
+                if(response.paging.totalRecords > 0) {
+                    $(response.value.list).each(function (index, value) {
 
-                    let record =
-                        "<tr class='row-select'><td class='select'>" +
-                        '<input class="form-check-input position-static ml-1" type="checkbox" value="">' +
-                        "</td><td class='request-id'>" + value.request.id +
-                        "</td><td class='employee-id'>" + value.request.employeeId +
-                        "</td><td class='employee-name'>" + value.employeeName +
-                        "</td><td class='item-sku'>" + value.itemSKU +
-                        "</td><td class='item-name'>" + value.itemName +
-                        "</td><td class='qty'>" + value.request.qty +
-                        "</td><td class='status'>" + value.request.status +
-                        "</td><td class='notes'>" + value.request.notes +
-                        "</td></tr>";
+                        let record =
+                            "<tr class='row-select'><td class='select'>" +
+                            '<input class="form-check-input position-static ml-1" type="checkbox" value="">' +
+                            "</td><td class='assignment-id'>" + value.assignment.id +
+                            "</td><td class='employee-id'>" + value.assignment.employeeId +
+                            "</td><td class='employee-name'>" + value.employeeName +
+                            "</td><td class='item-sku'>" + value.itemSKU +
+                            "</td><td class='item-name'>" + value.itemName +
+                            "</td><td class='qty'>" + value.assignment.qty +
+                            "</td><td class='status'>" + value.assignment.status +
+                            "</td><td class='notes'>" + value.assignment.notes +
+                            "</td></tr>";
 
+                        $('#data-table').append(record);
+                    });
+                    totalPage = response.paging.totalPage;
+                    if(totalPage===0)
+                        totalPage=1;
+                    $('#total-page').text(totalPage);
+
+                }else {
+                    let record = "<tr><td colspan='100' class='text-center p-4'><h3>No Data Available</h3></td></tr>";
                     $('#data-table').append(record);
-                });
-                totalPage = data.paging.totalPage;
-                $('#total-page').text(totalPage);
+                }
             },
-            error: function (data) {
+            error: function (response, status, jqXHR) {
+                let record =
+                    "<tr><td colspan='100' class='text-center p-4'>" +
+                    "<h3>Error Retrieving Data</h3>" +
+                    "<button class='btn btn-primary' onclick='window.location.reload()'>Reload</button>" +
+                    "</td></tr>";
 
+                $('#data-table').append(record);
             }
         });
     }
 
     displayTablePage(1);
 
-    //send JSON containing page number to backend, and retrieve request list according to page number
+    //send JSON containing page number to backend, and retrieve assignment list according to page number
     $(document).on('click', '#table-next-page-button',function () {
         $("#data-table>tbody").empty();
 
@@ -63,21 +77,21 @@ $(document).ready(function () {
         displayTablePage(currentPage);
     });
 
-    $('#sorted-by').on('change', function () {
+    $(document).on('change', '#sorted-by', function () {
         $('#data-table>tbody').empty();
         sortedBy = $('#sorted-by').val();
         currentPage = 1;
         displayTablePage(currentPage);
     });
 
-    $('#sorted-type').on('change', function () {
+    $(document).on('change', '#sorted-type', function () {
         $('#data-table>tbody').empty();
         sortedType = $('#sorted-type').val();
         currentPage = 1;
         displayTablePage(currentPage);
     });
 
-    $('#page-size').on('change', function () {
+    $(document).on('change', '#page-size', function () {
         $('#data-table>tbody').empty();
         pageSize = $('#page-size').val();
         currentPage = 1;

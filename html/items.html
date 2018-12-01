@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard</title>
+    <title>Items</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/base_style.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -36,60 +36,7 @@
                     </div>
                 </div>
 
-                <div class="row mr-2 mt-4">
-                    <div class="col-lg-3 col-md-12 px-1">
-                        <h3 class="text-dark">Items</h3>
-                    </div>
-                    <div class="col-lg-2 col-md-3 px-1">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="page-size">View</label>
-                            </div>
-                            <select class="custom-select" id="page-size">
-                                <option selected value="6">6</option>
-                                <option value="12">12</option>
-                                <option value="18">18</option>
-                                <option value="24">24</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 px-1">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="sorted-by">Sort</label>
-                            </div>
-                            <select class="custom-select" id="sorted-by">
-                                <option selected value="id">ID</option>
-                                <option value="sku">SKU</option>
-                                <option value="name">Name</option>
-                                <option value="price">Price</option>
-                                <option value="location">Location</option>
-                                <option value="qty">Qty</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 px-1">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="sorted-type">Type</label>
-                            </div>
-                            <select class="custom-select" id="sorted-type">
-                                <option selected value="asc">Ascending</option>
-                                <option value="desc">Descending</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 px-1">
-                        <form onsubmit="return false">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Item Name" aria-label="Item Name" id="table-search-name">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit" id="table-search-button">Search</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                <div class="title-and-sort-div"></div>
 
                 <div class="table-responsive">
                     <table class="table table-hover" id="data-table">
@@ -114,7 +61,7 @@
                     <div id="table-pagination-div"></div>
                 </div>
 
-                <div class="modal actionModal fade" id="item-action-modal" tabindex="-1" role="dialog"
+                <div class="modal action-modal fade" id="item-action-modal" tabindex="-1" role="dialog"
                      aria-labelledby="item-action-label" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -136,15 +83,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="input-item-sku" class="col-sm-3 col-form-label">Item SKU</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="input-item-sku" placeholder="SKU Number" required>
-                                                <div class="invalid-feedback">
-                                                    Please input item SKU.
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!--<div class="form-group row">-->
+                                            <!--<label for="input-item-sku" class="col-sm-3 col-form-label">Item SKU</label>-->
+                                            <!--<div class="col-sm-8">-->
+                                                <!--<input type="text" class="form-control" id="input-item-sku" placeholder="SKU Number" required>-->
+                                                <!--<div class="invalid-feedback">-->
+                                                    <!--Please input item SKU.-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
                                         <div class="form-group row">
                                             <label for="input-item-name" class="col-sm-3 col-form-label">Item Name</label>
                                             <div class="col-sm-8">
@@ -190,18 +137,24 @@
                                             <label for="input-item-image" class="col-sm-3 col-form-label">Item Image</label>
                                             <div class="col-sm-7 custom-file ml-3 mr-4">
                                                 <input type="file" class="custom-file-input" id="input-item-image"
-                                                       accept="image/jpeg,image/png" required>
+                                                       accept="image/jpeg,image/png,image/jpg" required>
                                                 <label class="custom-file-label" for="input-item-image"
                                                        id="input-item-image-label">Format: *.jpeg, *.png</label>
                                                 <div class="invalid-feedback">
                                                     Please Upload Item Image.
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" style="height: 200px;">
+                                            <label for="input-item-image" class="col-sm-3 col-form-label">Image Preview</label>
+                                            <div class="col-sm-8">
                                                 <div id="item-image-preview">
-                                                    <img src="" id="image-preview">
+                                                    <img src="../assets/images/image-preview.png" id="image-preview"
+                                                         height="200px">
                                                 </div>
                                             </div>
-
                                         </div>
+
                                         <input type="submit" id="submit-form" value="submit" style="display: none;">
 
                                     </form>
@@ -219,6 +172,42 @@
                                             <tbody>
                                             </tbody>
                                         </table>
+                                    </div>
+
+                                    <div id="item-information-div" style="display: none;">
+                                        <div class="row">
+                                            <div class="col-5 px-2">
+                                                <div class="card">
+                                                    <div class="card-body p-2">
+                                                        <img src="../assets/images/no-image-available.png" class="rounded img-fluid"
+                                                             alt="Image Not Available"
+                                                             id="item-info-image">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-7 px-2">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item active">
+                                                        <h3 id="item-info-name" class="m-0"></h3>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        SKU : <span id="item-info-sku"></span>
+
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        Price : <span id="item-info-price"></span>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        Qty : <span id="item-info-qty"></span>
+
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        Location : <span id="item-info-location"></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                 </div>
@@ -244,11 +233,12 @@
 <script src="../assets/js/bootstrap/bootstrap.js"></script>
 <script src="../assets/js/loading.js"></script>
 
-<script src="../assets/components/js/items.js"></script>
+<script src="../assets/components/js/left-navbar/items.js"></script>
 <script src="../assets/components/js/top-navbar.js"></script>
 <script src="../assets/components/js/change-password.js"></script>
 <script src="../assets/components/js/message-box.js"></script>
 <script src="../assets/components/js/table-pagination-button.js"></script>
+<script src="../assets/components/js/table-title-and-sort/items-table-title-and-sort.js"></script>
 
 <script src="../assets/js/api/checkbox.js"></script>
 <script src="../assets/js/api/items/show-item-list.js"></script>
@@ -256,5 +246,6 @@
 <script src="../assets/js/api/items/entry-item.js"></script>
 <script src="../assets/js/api/items/item-form-validation.js"></script>
 <script src="../assets/js/api/items/edit-item-button.js"></script>
+<script src="../assets/js/api/items/info-item-button.js"></script>
 </body>
 </html>

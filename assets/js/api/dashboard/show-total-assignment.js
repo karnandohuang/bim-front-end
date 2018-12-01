@@ -8,9 +8,12 @@ $(document).ready(function () {
             contentType: 'application/json',
             async: false,
             success: function (data) {
-                let count = data.value.requestCount;
-
-                $(attributeName).text(count);
+                let count = data.value.assignmentCount;
+                if(count >= 9999){
+                    $(attributeName).text("> 9999");
+                } else{
+                    $(attributeName).text(count);
+                }
             },
             error: function () {
             }

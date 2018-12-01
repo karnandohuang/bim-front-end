@@ -1,14 +1,13 @@
 $(document).ready(function () {
 
-    function setEditModalAttributes() {
-        $("#entry-edit-form").css("display", "inline");
+    function setInfoModalAttributes() {
+        $("#item-information-div").css("display", "");
+        $("#entry-edit-form").css("display", "none");
         $("#request-div").css("display", "none");
-        $("#input-item-id-row").css("display", "");
-        $("#item-information-div").css("display", "none");
+        $("#input-item-id-row").css("display", "none");
+        $('.modal-save-button').css("display", "none");
 
-        $('.modal-title').text("Edit Item");
-        $('.modal-save-button').css("display", "block");
-        $('.modal-save-button').prop('id', 'edit-item-button');
+        $('.modal-title').text("Item Information");
         $('#item-action-modal').modal('show');
     }
 
@@ -17,19 +16,20 @@ $(document).ready(function () {
         $('#message-box').modal('show');
     }
 
-    function getItemJson(itemIdToBeEdited) {
+    function getItemJson(itemId) {
         $.ajax({
-            url: 'http://localhost:8080/bim/api/items/' + itemIdToBeEdited,
+            url: 'http://localhost:8080/bim/api/items/' + itemId,
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
             success: function (response, status, jqXHR) {
-                $('#input-item-id').val(response.value.value.id);
-                $('#input-item-sku').val(response.value.value.sku);
-                $('#input-item-name').val(response.value.value.name);
-                $('#input-item-price').val(response.value.value.price);
-                $('#input-item-qty').val(response.value.value.qty);
-                $('#input-item-location').val(response.value.value.location);
+                $('#item-info-id').text(response.value.value.id);
+                $('#item-info-sku').text(response.value.value.sku);
+                $('#item-info-name').text(response.value.value.name);
+                $('#item-info-price').text(response.value.value.price);
+                $('#item-info-qty').text(response.value.value.qty);
+                $('#item-info-location').text(response.value.value.location);
+                $('#item-info-image').prop('src', response.value.value.imageUrl);
             },
             error: function (response, status, jqXHR) {
 
@@ -45,15 +45,11 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: itemJson,
             success: function (response, status, jqXHR) {
-                if(response.success === true) {
-                    displayMessageBox("Edit Success");
-                    $('#item-action-modal').modal('hide');
-                    $('.modal-footer').on('click', '#message-box-button', function () {
-                        window.location.reload();
-                    });
-                } else {
-                    displayMessageBox("Edit Failed" + " (" + response.errorMessage + ")");
-                }
+                displayMessageBox("Edit Success");
+                $('#item-action-modal').modal('hide');
+                $('.modal-footer').on('click', '#message-box-button', function () {
+                    window.location.reload();
+                });
             },
             error: function (response, status, jqXHR) {
                 displayMessageBox("Edit Failed" + " (" + status + ")");
@@ -61,8 +57,8 @@ $(document).ready(function () {
         });
     }
 
-    $(document).on('click', '.edit-button', function () {
-        setEditModalAttributes();
+    $(document).on('click', '.info-button', function () {
+        setInfoModalAttributes();
 
         let itemIdToBeEdited = $(this).closest('tr').find('.id').html();
         getItemJson(itemIdToBeEdited);

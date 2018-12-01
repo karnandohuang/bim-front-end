@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap/bootstrap.min.css">
+</head>
+<body>
+
+<div class="row mr-2 mt-4" id="table-title-and-sort">
+    <div class="col-lg-3 col-md-12 px-1">
+        <h3 class="text-dark" id="table-title"></h3>
+    </div>
+    <div class="col-lg-2 col-md-3 px-1">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="page-size">View</label>
+            </div>
+            <select class="custom-select" id="page-size">
+                <option selected value="6">6</option>
+                <option value="12">12</option>
+                <option value="18">18</option>
+                <option value="24">24</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-3 px-1">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="sorted-by">Sort</label>
+            </div>
+            <select class="custom-select" id="sorted-by">
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-3 px-1">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="sorted-type">Type</label>
+            </div>
+            <select class="custom-select" id="sorted-type">
+                <option selected value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 px-1">
+        <form onsubmit="return false">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Item Name" aria-label="Item Name" id="table-search-name">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit" id="table-search-button">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="../assets/js/bootstrap/bootstrap.js"></script>
+</body>
+</html>
