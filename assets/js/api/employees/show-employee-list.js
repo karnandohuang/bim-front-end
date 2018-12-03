@@ -9,6 +9,8 @@ $(document).ready(function () {
 
     function displayTablePage(currentPage){
         $('#current-page').text(currentPage);
+        $('#table-prev-page-button').attr('disabled', false);
+        $('#table-next-page-button').attr('disabled', false);
 
         $.ajax({
             url : 'http://localhost:8080/bim/api/employees?name=' + name + '&pageNumber=' + currentPage +
@@ -40,6 +42,15 @@ $(document).ready(function () {
                     if(totalPage===0)
                         totalPage=1;
                     $('#total-page').text(totalPage);
+
+                    if((currentPage === 1) && (currentPage === totalPage)) {
+                        $('#table-prev-page-button').attr('disabled', true);
+                        $('#table-next-page-button').attr('disabled', true);
+                    } else if(currentPage === 1){
+                        $('#table-prev-page-button').attr('disabled', true);
+                    } else if(currentPage === totalPage){
+                        $('#table-next-page-button').attr('disabled', true);
+                    }
 
                 } else{
                     let record = "<tr><td colspan='100' class='text-center p-4'><h3>No Data Available</h3></td></tr>";

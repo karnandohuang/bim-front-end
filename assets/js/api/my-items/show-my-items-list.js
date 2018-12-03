@@ -1,12 +1,13 @@
 $(document).ready(function () {
-    let employeeId = "EM066";
+    let employeeId = "EM068";
     let currentPage = 1;
     let totalPage = 1;
     let pageSize = 6;
 
     function displayTablePage(currentPage) {
         $('#current-page').text(currentPage);
-
+        $('#table-prev-page-button').attr('disabled', false);
+        $('#table-next-page-button').attr('disabled', false);
 
         $.ajax({
             url: 'http://localhost:8080/bim/api/requests/employee?employeeId=' + employeeId + '&pageNumber=' + currentPage +
@@ -20,9 +21,8 @@ $(document).ready(function () {
 
                         let record =
                             "<tr class='row-select'>" +
-                            "<td class='sku'>" + value.requestId +
+                            "<td class='assignment-id'>" + value.assignmentId +
                             "<td class='sku'>" + value.item.id +
-                            "<td class='sku'>" + value.item.sku +
                             "</td><td class='name'>" + value.item.name +
                             "</td><td class='price'>" + value.item.price +
                             "</td><td class='location'>" + value.item.location +
@@ -34,11 +34,21 @@ $(document).ready(function () {
                             "</td></tr>";
 
                         $('#data-table').append(record);
-                        totalPage = response.paging.totalPage;
-                        if(totalPage===0)
-                            totalPage = 1;
-                        $('#total-page').text(totalPage);
                     });
+
+                    totalPage = response.paging.totalPage;
+                    if(totalPage===0)
+                        totalPage = 1;
+                    $('#total-page').text(totalPage);
+
+                    if((currentPage === 1) && (currentPage === totalPage)) {
+                        $('#table-prev-page-button').attr('disabled', true);
+                        $('#table-next-page-button').attr('disabled', true);
+                    } else if(currentPage === 1){
+                        $('#table-prev-page-button').attr('disabled', true);
+                    } else if(currentPage === totalPage){
+                        $('#table-next-page-button').attr('disabled', true);
+                    }
 
                 }else {
                     let record = "<tr><td colspan='100' class='text-center p-4'><h3>No Data Available</h3></td></tr>"

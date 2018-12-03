@@ -3,6 +3,7 @@ $(document).ready(function () {
     let currentPage = 1;
     let pageSize = 5;
     let totalPage = 1;
+    let name = "";
 
     function setSuperiorModalAttributes() {
         $('#choose-superior-modal-label').text('Choose Superior');
@@ -13,7 +14,8 @@ $(document).ready(function () {
     function displaySuperiorTablePage(currentPage){
         $('#current-superior-page').text(currentPage);
         $.ajax({
-            url : 'http://localhost:8080/bim/api/superiors?pageNumber=' + currentPage + '&pageSize=' + pageSize,
+            url : 'http://localhost:8080/bim/api/employees?pageNumber=' + currentPage + '&pageSize=' + pageSize +
+            '&name=' + name,
 
             type : 'GET',
             dataType : 'JSON',
@@ -81,4 +83,10 @@ $(document).ready(function () {
         displaySuperiorTablePage(currentPage);
     });
 
+    $(document).on('click', '#table-search-superior-button', function () {
+        name = $('#table-search-superior').val();
+        $("#choose-superior-table>tbody").empty();
+        currentPage = 1;
+        displaySuperiorTablePage(currentPage);
+    });
 });

@@ -8,6 +8,8 @@ $(document).ready(function () {
 
     function displayTablePage(currentPage) {
         $('#current-page').text(currentPage);
+        $('#table-prev-page-button').attr('disabled', false);
+        $('#table-next-page-button').attr('disabled', false);
 
         $.ajax({
             url: 'http://localhost:8080/bim/api/requests?' + 'pageNumber=' + currentPage + '&pageSize=' + pageSize +
@@ -15,7 +17,6 @@ $(document).ready(function () {
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
-            async: false,
             success: function (response, status, jqXHR) {
                 if(response.paging.totalRecords > 0) {
                     $(response.value.list).each(function (index, value) {
@@ -24,10 +25,10 @@ $(document).ready(function () {
                             "<tr class='row-select'><td class='select'>" +
                             '<input class="form-check-input position-static ml-1" type="checkbox" value="">' +
                             "</td><td class='assignment-id'>" + value.assignment.id +
-                            "</td><td class='employee-id'>" + value.assignment.employeeId +
-                            "</td><td class='employee-name'>" + value.employeeName +
-                            "</td><td class='item-sku'>" + value.itemSKU +
-                            "</td><td class='item-name'>" + value.itemName +
+                            "</td><td class='employee-id'>" + value.assignment.employee.id +
+                            "</td><td class='employee-name'>" + value.assignment.employee.name +
+                            "</td><td class='item-id'>" + value.assignment.item.id +
+                            "</td><td class='item-name'>" + value.assignment.item.name +
                             "</td><td class='qty'>" + value.assignment.qty +
                             "</td><td class='status'>" + value.assignment.status +
                             "</td><td class='notes'>" + value.assignment.notes +
@@ -39,6 +40,15 @@ $(document).ready(function () {
                     if(totalPage===0)
                         totalPage=1;
                     $('#total-page').text(totalPage);
+
+                    if((currentPage === 1) && (currentPage === totalPage)) {
+                        $('#table-prev-page-button').attr('disabled', true);
+                        $('#table-next-page-button').attr('disabled', true);
+                    } else if(currentPage === 1){
+                        $('#table-prev-page-button').attr('disabled', true);
+                    } else if(currentPage === totalPage){
+                        $('#table-next-page-button').attr('disabled', true);
+                    }
 
                 }else {
                     let record = "<tr><td colspan='100' class='text-center p-4'><h3>No Data Available</h3></td></tr>";
@@ -69,7 +79,7 @@ $(document).ready(function () {
         displayTablePage(currentPage);
     });
 
-    $(document).on('click', '#table-next-page-button',function () {
+    $(document).on('click', '#table-prev-page-button',function () {
         $("#data-table>tbody").empty();
         if(currentPage!==1){
             currentPage--;

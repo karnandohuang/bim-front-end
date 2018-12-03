@@ -36,7 +36,7 @@ $(document).ready(function () {
             let item;
             $('.request-item-row').each(function () {
                 let requestItemId = $(this).closest('tr').find('.request-item-id').html();
-                let requestEmployeeId = "EM066"; //need to change it
+                let requestEmployeeId = "EM068"; //need to change it
                 let requestItemQty = $(this).closest('tr').find('.request-item-qty select').val();
 
                 item = {
@@ -44,7 +44,6 @@ $(document).ready(function () {
                     itemId: requestItemId,
                     qty: requestItemQty
                 };
-
             });
 
             let requestItemJson = JSON.stringify(item);
@@ -118,7 +117,6 @@ $(document).ready(function () {
         //get item data from selected table to JSON
         $('.row-select input:checked').each(function () {
             let selectedId = $(this).closest('tr').find('.id').html();
-            let selectedSku = $(this).closest('tr').find('.sku').html();
             let selectedName = $(this).closest('tr').find('.name').html();
             let selectedPrice = $(this).closest('tr').find('.price').html();
             let selectedLocation = $(this).closest('tr').find('.location').html();
@@ -126,7 +124,6 @@ $(document).ready(function () {
 
             let item = {
                 id: selectedId,
-                sku: selectedSku,
                 name: selectedName,
                 price: selectedPrice,
                 location: selectedLocation,
@@ -151,9 +148,8 @@ $(document).ready(function () {
                 for(let i=0;i<item.length;i++){
                     let tr = "<tr class='request-item-row'>";
                     let td1 = "<td class='request-item-id'>" + item[i].id + "</td>";
-                    let td2 = "<td class='request-item-sku'>" + item[i].sku + "</td>";
-                    let td3 = "<td class='request-item-name'>" + item[i].name + "</td>";
-                    let td4 = "<td class='request-item-location'>" + item[i].location + "</td>";
+                    let td2 = "<td class='request-item-name'>" + item[i].name + "</td>";
+                    let td3 = "<td class='request-item-location'>" + item[i].location + "</td>";
 
                     let qty = parseInt(item[i].qty);
                     quantities = null;
@@ -163,12 +159,12 @@ $(document).ready(function () {
                         }
                     })();
 
-                    let td5 =
+                    let td4 =
                         "<td class='request-item-qty'>" +
                         "<form><select class='form-control'><option selected>Choose...</option>" +
                         quantities + "</select></form></td></tr>";
 
-                    $("#request-table").append(tr+td1+td2+td3+td4+td5);
+                    $("#request-table").append(tr+td1+td2+td3+td4);
                 }
 
                 requestButtonOnClick();
@@ -181,12 +177,11 @@ $(document).ready(function () {
                 for(let i=0;i<item.length;i++) {
                     let tr = "<tr class='delete-row'>";
                     let td1 = "<td class='delete-id'>" + item[i].id + "</td>";
-                    let td2 = "<td class='delete-sku'>" + item[i].sku + "</td>";
-                    let td3 = "<td class='delete-name'>" + item[i].name + "</td>";
-                    let td4 = "<td class='delete-location'>" + item[i].location + "</td>";
-                    let td5 = "<td class='delete-qty'>" + item[i].qty + "</td></tr>";
+                    let td2 = "<td class='delete-name'>" + item[i].name + "</td>";
+                    let td3 = "<td class='delete-location'>" + item[i].location + "</td>";
+                    let td4 = "<td class='delete-qty'>" + item[i].qty + "</td></tr>";
 
-                    $("#request-table").append(tr+td1+td2+td3+td4+td5);
+                    $("#request-table").append(tr+td1+td2+td3+td4);
                 }
 
                 let deleteItemJson = {"ids": ""};

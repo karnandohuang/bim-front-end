@@ -30,6 +30,7 @@ $(document).ready(function () {
                 $('#input-item-price').val(response.value.value.price);
                 $('#input-item-qty').val(response.value.value.qty);
                 $('#input-item-location').val(response.value.value.location);
+                $('#input-item-image').val(response.value.value.imageUrl);
             },
             error: function (response, status, jqXHR) {
 
