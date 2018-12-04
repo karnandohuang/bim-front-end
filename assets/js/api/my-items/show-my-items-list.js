@@ -3,6 +3,8 @@ $(document).ready(function () {
     let currentPage = 1;
     let totalPage = 1;
     let pageSize = 6;
+    let sortedBy = "id";
+    let sortedType = "asc";
 
     function displayTablePage(currentPage) {
         $('#current-page').text(currentPage);
@@ -11,7 +13,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: 'http://localhost:8080/bim/api/requests/employee?employeeId=' + employeeId + '&pageNumber=' + currentPage +
-                '&pageSize=' + pageSize ,
+                '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
@@ -28,9 +30,9 @@ $(document).ready(function () {
                             "</td><td class='location'>" + value.item.location +
                             "</td><td class='qty'>" + value.item.qty +
                             "</td><td class='status'>" + value.status +
-                            "</td><td>" +
-                            "<button type=\"button\" class=\"btn btn-info btn-block p-0 m-0\" " +
-                            "onclick='window.print()'>Print</button>" +
+                            "</td><td class='p-1 text-center'>" +
+                            "<button type=\"button\" class=\"btn btn-secondary px-2 mx-1 print-button\" " +
+                            "onclick='window.print()''><i class=\"fas fa-print\"></i></button>" +
                             "</td></tr>";
 
                         $('#data-table').append(record);
@@ -84,6 +86,34 @@ $(document).ready(function () {
         if(currentPage!==1){
             currentPage--;
         }
+        displayTablePage(currentPage);
+    });
+
+    // $(document).on('click', '#table-search-button', function () {
+    //     name = $('#table-search-name').val();
+    //     $('#data-table>tbody').empty();
+    //     currentPage = 1;
+    //     displayTablePage(currentPage);
+    // });
+
+    $(document).on('change', '#sorted-by', function () {
+        $('#data-table>tbody').empty();
+        sortedBy = $('#sorted-by').val();
+        currentPage = 1;
+        displayTablePage(currentPage);
+    });
+
+    $(document).on('change', '#sorted-type', function () {
+        $('#data-table>tbody').empty();
+        sortedType = $('#sorted-type').val();
+        currentPage = 1;
+        displayTablePage(currentPage);
+    });
+
+    $(document).on('change', '#page-size', function () {
+        $('#data-table>tbody').empty();
+        pageSize = $('#page-size').val();
+        currentPage = 1;
         displayTablePage(currentPage);
     });
 });

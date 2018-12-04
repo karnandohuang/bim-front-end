@@ -24,13 +24,13 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (response, status, jqXHR) {
                 $('#item-info-id').text(response.value.value.id);
-                $('#item-info-sku').text(response.value.value.sku);
                 $('#item-info-name').text(response.value.value.name);
                 $('#item-info-price').text(response.value.value.price);
                 $('#item-info-qty').text(response.value.value.qty);
                 $('#item-info-location').text(response.value.value.location);
-                console.log(response.value.value.imageUrl);
-                $('#item-info-image').prop('src', response.value.value.imageUrl);
+
+                if(response.value.value.imageUrl !== "null")
+                    $('#item-info-image').prop('src', ('file://' + response.value.value.imageUrl));
             },
             error: function (response, status, jqXHR) {
 

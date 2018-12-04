@@ -24,11 +24,11 @@ $(document).ready(function () {
             }
         });
 
-        $('#data-table>tbody').on('click', 'tr', function (event) {
-            if (event.target.type !== 'checkbox') {
-                $(':checkbox', this).trigger('click');
-            }
-        });
+        // $('#data-table>tbody').on('click', 'tr', function (event) {
+        //     if (event.target.type !== 'checkbox') {
+        //         $(':checkbox', this).trigger('click');
+        //     }
+        // });
 
     }
 );

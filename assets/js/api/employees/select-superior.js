@@ -67,6 +67,13 @@ $(document).ready(function () {
         })
     });
 
+    $('#choose-no-superior').on('click', function () {
+        let selectedSuperiorId = "";
+        $('#input-superior-id').val(selectedSuperiorId);
+        $('#choose-superior-modal').modal('hide');
+
+    });
+
     $('#table-superior-next-page-button').on('click',function () {
         $("#choose-superior-table>tbody").empty();
         if(currentPage !== totalPage){

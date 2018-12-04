@@ -1,19 +1,37 @@
 $(document).ready(function () {
 
-    function callCountAjax(employeeId, status, attributeName) {
+    function callCountAjax(employeeId) {
         $.ajax({
-            url: 'http://localhost:8080/bim/api/requests/count?' + 'employeeId=' + employeeId + '&status=' + status,
+            url: 'http://localhost:8080/bim/api/requests/count?' + 'employeeId=' + employeeId,
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
             async: false,
             success: function (response) {
                 if(response.success === true){
-                    let count = response.value.assignmentCount;
-                    if(count >= 9999){
-                        $(attributeName).text("> 9999");
-                    } else{
-                        $(attributeName).text(count);
+
+                    let pendingAssignmentCount = response.value.listOfCount.pendingAssignmentCount;
+                    console.log(pendingAssignmentCount);
+                    let pendingHandoverCount = response.value.listOfCount.pendingHandoverCount;
+                    console.log(pendingHandoverCount);
+                    let receivedCount = response.value.listOfCount.receivedCount;
+
+                    if(pendingAssignmentCount >= 9999) {
+                        $('#total-pending-request').text("> 9999");
+                    }else{
+                        $('#total-pending-request').text(pendingAssignmentCount);
+                    }
+
+                    if(pendingHandoverCount >= 9999) {
+                        $('#total-pending-handover').text("> 9999");
+                    }else{
+                        $('#total-pending-handover').text(pendingHandoverCount);
+                    }
+
+                    if(receivedCount >= 9999) {
+                        $('#total-my-items').text("> 9999");
+                    }else{
+                        $('#total-my-items').text(receivedCount);
                     }
                 }
             },
@@ -24,8 +42,6 @@ $(document).ready(function () {
 
     var employeeId = "EM068";
 
-    callCountAjax(employeeId, "Pending", '#total-pending-request');
-    callCountAjax(employeeId, "Approved", '#total-pending-handover');
-    callCountAjax(employeeId, "Received", '#total-my-items');
+    callCountAjax(employeeId);
 
 });

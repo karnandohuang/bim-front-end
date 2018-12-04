@@ -5,6 +5,7 @@ $(document).ready(function () {
         $("#request-div").css("display", "none");
         $("#input-item-id-row").css("display", "");
         $("#item-information-div").css("display", "none");
+        $("#input-item-image").removeAttr("required");
 
         $('.modal-title').text("Edit Item");
         $('.modal-save-button').css("display", "block");
@@ -30,7 +31,6 @@ $(document).ready(function () {
                 $('#input-item-price').val(response.value.value.price);
                 $('#input-item-qty').val(response.value.value.qty);
                 $('#input-item-location').val(response.value.value.location);
-                $('#input-item-image').val(response.value.value.imageUrl);
             },
             error: function (response, status, jqXHR) {
 
@@ -38,7 +38,7 @@ $(document).ready(function () {
         });
     }
 
-    function sendEditedJson(itemJson) {
+    function sendEditedItemJson(itemJson, imageFile) {
         $.ajax({
             url: 'http://localhost:8080/bim/api/items',
             type: 'PUT',
@@ -46,12 +46,42 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: itemJson,
             success: function (response, status, jqXHR) {
-                if(response.success === true) {
-                    displayMessageBox("Edit Success");
-                    $('#item-action-modal').modal('hide');
-                    $('.modal-footer').on('click', '#message-box-button', function () {
-                        window.location.reload();
-                    });
+                if (response.success === true) {
+
+                    if (imageFile.length === 0) {
+                        displayMessageBox("Success");
+                        $('.modal-footer').on('click', '#message-box-button', function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        var formData = new FormData();
+                        formData.append('file', imageFile);
+                        formData.append('itemId', response.value.value.id);
+
+                        $.ajax({
+                            url: "http://localhost:8080/bim/api/upload",
+                            type: "POST",
+                            data: formData,
+                            enctype: 'multipart/form-data',
+                            async: false,
+                            processData: false,
+                            contentType: false,
+                            cache: false,
+                            success: function (response, status, jqXHR) {
+                                if (response.success === true) {
+                                    displayMessageBox("Success");
+                                    $('.modal-footer').on('click', '#message-box-button', function () {
+                                        window.location.reload();
+                                    });
+                                } else {
+                                    displayMessageBox("Failed to upload image. " + "(" + response.errorMessage + ")");
+                                }
+                            },
+                            error: function (response, status, jqXHR) {
+                                displayMessageBox("Failed to upload image. " + "(" + status + ")");
+                            }
+                        });
+                    }
                 } else {
                     displayMessageBox("Edit Failed" + " (" + response.errorMessage + ")");
                 }
@@ -78,6 +108,7 @@ $(document).ready(function () {
             let price = $('#input-item-price').val();
             let qty = $('#input-item-qty').val();
             let location = $('#input-item-location').val();
+            let imageFile = $('#input-item-image')[0].files[0];
 
             let item = {
                 id: id,
@@ -89,7 +120,7 @@ $(document).ready(function () {
             };
 
             itemJson = JSON.stringify(item);
-            sendEditedJson(itemJson);
+            sendEditedItemJson(itemJson, imageFile);
         }));
     });
 });

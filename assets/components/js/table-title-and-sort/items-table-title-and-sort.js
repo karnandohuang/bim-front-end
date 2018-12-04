@@ -1,11 +1,10 @@
 $(document).ready(function () {
     let sort = {
         'id':"ID",
-        'sku' : "SKU",
         'name' : "Name",
         'price' : "Price",
         'location' : "Location",
-        'qty' : 'qty'
+        'qty' : 'Qty'
     };
 
     (function(){

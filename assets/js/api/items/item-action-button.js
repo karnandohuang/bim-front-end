@@ -32,7 +32,8 @@ $(document).ready(function () {
     }
 
     function requestButtonOnClick() {
-        $('#request-item-button').on('click', function () {
+        $(document).on('click', '#request-item-button', function () {
+
             let item;
             $('.request-item-row').each(function () {
                 let requestItemId = $(this).closest('tr').find('.request-item-id').html();
@@ -47,7 +48,7 @@ $(document).ready(function () {
             });
 
             let requestItemJson = JSON.stringify(item);
-            console.log(requestItemJson);
+
             $.ajax({
                 url: "http://localhost:8080/bim/api/requests",
                 type: "POST",
@@ -74,17 +75,20 @@ $(document).ready(function () {
         });
     }
 
-    function deleteButtonOnClick(items, deleteItemJson) {
-        $('#delete-item-button').click(function () {
+    function deleteButtonOnClick() {
+        let items = [];
+        let deleteItemJson = {"ids": ""};
+
+        $(document).on('click', '#delete-item-button', function () {
             $('.delete-row').each(function () {
                 let deleteId = $(this).closest('tr').find('.delete-id').html();
 
                 items.push(deleteId);
-                console.log(items);
             });
 
             deleteItemJson.ids = items;
             deleteItemJson = JSON.stringify(deleteItemJson);
+            console.log(deleteItemJson);
 
             $.ajax({
                 url: 'http://localhost:8080/bim/api/items',
@@ -184,9 +188,7 @@ $(document).ready(function () {
                     $("#request-table").append(tr+td1+td2+td3+td4);
                 }
 
-                let deleteItemJson = {"ids": ""};
-                let items = [];
-                deleteButtonOnClick(items, deleteItemJson);
+                deleteButtonOnClick();
             }
         }
     });

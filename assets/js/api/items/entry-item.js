@@ -6,6 +6,7 @@ $(document).ready(function () {
         $("#request-div").css("display", "none");
         $("#input-item-sku").prop("readonly", false);
         $('#item-image-preview').prop('display', 'none');
+        $("#input-item-image").attr("required", true);
 
         $('.modal-title').text("Entry Item");
         $('.modal-save-button').css("display", "block");
@@ -63,6 +64,58 @@ $(document).ready(function () {
         setEntryItemAttributes();
     });
 
+    function uploadImageJson(formData) {
+        $.ajax({
+            url: "http://localhost:8080/bim/api/upload",
+            type: "POST",
+            data: formData,
+            enctype: 'multipart/form-data',
+            async: false,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (response, status, jqXHR) {
+                if (response.success === true) {
+                    displayMessageBox("Success");
+                    $('.modal-footer').on('click', '#message-box-button', function () {
+                        window.location.reload();
+                    });
+                } else {
+                    displayMessageBox("Failed to upload image. " + "(" + response.errorMessage + ")");
+                }
+            },
+            error: function (response, status, jqXHR) {
+                displayMessageBox("Failed to upload image. " + "(" + status + ")");
+            }
+        });
+    }
+
+    function sendItemJson(itemJson, imageFile) {
+        $.ajax({
+            url: "http://localhost:8080/bim/api/items",
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/json",
+            async: false,
+            data: itemJson,
+            success: function (response, status, jqXHR) {
+                if (response.success === true) {
+
+                    var formData = new FormData();
+                    formData.append('file', imageFile);
+                    formData.append('itemId', response.value.value.id);
+                    uploadImageJson(formData);
+                }
+                else {
+                    displayMessageBox("Failed to entry item. " + "(" + response.errorMessage + ")");
+                }
+            },
+            error: function (response, status, jqXHR) {
+                displayMessageBox("Failed to entry item. " + "(" + status + ")");
+            }
+        });
+    }
+
     $('.modal-footer').on('click', '#entry-item-button', (function () {
         $('#submit-form').click();
         let form = $("#entry-edit-form");
@@ -81,108 +134,9 @@ $(document).ready(function () {
                 qty: qty,
                 imageUrl : "null"
             };
+
             let itemJson = JSON.stringify(item);
-
-            $.ajax({
-                url: "http://localhost:8080/bim/api/items",
-                type: "POST",
-                dataType: "JSON",
-                contentType: "application/json",
-                async: false,
-                data: itemJson,
-                success: function (response, status, jqXHR) {
-                    if(response.success === true) {
-
-                        var formData = new FormData();
-                        formData.append('file', imageFile);
-                        formData.append('itemId', response.value.value.id);
-
-                        $.ajax({
-                            url: "http://localhost:8080/bim/api/upload",
-                            type: "POST",
-                            data: formData,
-                            enctype: 'multipart/form-data',
-                            async: false,
-                            processData: false,
-                            contentType: false,
-                            cache: false,
-                            success: function (response, status, jqXHR) {
-                                if(response.success === true) {
-                                    displayMessageBox("Success");
-                                    $('.modal-footer').on('click', '#message-box-button', function () {
-                                        window.location.reload();
-                                    });
-                                } else {
-                                    displayMessageBox("Failed to upload image. " + "(" + response.errorMessage + ")");
-                                }
-                            },
-                            error: function (response, status, jqXHR) {
-                                displayMessageBox("Failed to upload image. " + "(" + status + ")");
-                            }
-                        });
-                    }
-                    else {
-                        displayMessageBox("Failed to entry item. " + "(" + response.errorMessage + ")");
-                    }
-                },
-                error: function (response, status, jqXHR) {
-                    displayMessageBox("Failed to entry item. " + "(" + status + ")");
-                }
-            });
-
-            // $.ajax({
-            //     url: "http://localhost:8080/bim/api/upload",
-            //     type: "POST",
-            //     data: formData,
-            //     enctype: 'multipart/form-data',
-            //     async: false,
-            //     processData: false,
-            //     contentType: false,
-            //     cache: false,
-            //     success: function (response) {
-            //
-            //         if(response.success === true){
-            //
-            //             let imageUrl = response.value.imagePath;
-            //             let item = {
-            //                 name: name,
-            //                 price: price,
-            //                 location: location,
-            //                 qty: qty,
-            //                 imageUrl: imageUrl
-            //             };
-            //
-            //             let itemJson = JSON.stringify(item);
-            //
-            //             $.ajax({
-            //                 url: "http://localhost:8080/bim/api/items",
-            //                 type: "POST",
-            //                 dataType: "JSON",
-            //                 contentType: "application/json",
-            //                 async: false,
-            //                 data: itemJson,
-            //                 success: function (response, status, jqXHR) {
-            //                     if(response.success === true) {
-            //                         displayMessageBox("Success");
-            //                         $('.modal-footer').on('click', '#message-box-button', function () {
-            //                             window.location.reload();
-            //                         });
-            //                     }
-            //                     else { displayMessageBox("Failed. " + "(" + response.errorMessage + ")"); }
-            //                 },
-            //                 error: function () {
-            //                     displayMessageBox("Failed");
-            //                 }
-            //             });
-            //
-            //         } else {
-            //             displayMessageBox("failed to upload image. " + "(" + response.errorMessage + ")");
-            //         }
-            //     },
-            //     error: function (response, status, jqXHR) {
-            //         displayMessageBox("failed to upload image. " + "(" + status + ")");
-            //     }
-            // });
+            sendItemJson(itemJson, imageFile);
         }
     }));
 });

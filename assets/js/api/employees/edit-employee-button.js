@@ -7,6 +7,7 @@ $(document).ready(function () {
         $("#table-modal-div").css("display", 'none');
         $('#employee-id-row').css('display', '');
         $('#employee-password-row').css('display', 'none');
+        $("#input-password").removeAttr("required");
         $('.modal-save-button').prop('id', 'edit-employee-button');
         $('#employee-action-modal').modal('show');
     }
@@ -67,29 +68,39 @@ $(document).ready(function () {
         let employeeToBeEdited = $(this).closest('tr').find('.id').html();
         getEmployeeJson(employeeToBeEdited);
 
-        $('.modal-footer').on('click', '#edit-employee-button', function () {
+        $(document).on('click', '#edit-employee-button', function () {
 
-            let id = $('#input-employee-id').val();
-            let name = $('#input-employee-name').val();
-            let superiorId = $('#input-superior-id').val();
-            let dob = $('#datepicker').val();
-            let email = $('#input-email').val();
-            let position = $('#input-position').val();
-            let division = $('#input-division').val();
+            $('#submit-form').click();
+            let form = $("#entry-edit-form");
+            console.log(form[0].checkValidity());
 
-            var employee = {
-                id: id,
-                name: name,
-                superiorId: superiorId,
-                dob: dob,
-                email: email,
-                position: position,
-                division: division
-            };
+            if(form[0].checkValidity()) {
+                let id = $('#input-employee-id').val();
+                let name = $('#input-employee-name').val();
+                let superiorId = $('#input-superior-id').val();
+                let dob = $('#datepicker').val();
+                let email = $('#input-email').val();
+                let position = $('#input-position').val();
+                let division = $('#input-division').val();
 
-            var employeeJson = JSON.stringify(employee);
-            console.log(employeeJson);
-            sendEditedEmployeeJson(employeeJson);
+                if(superiorId === "")
+                    superiorId = "null";
+
+                var employee = {
+                    id: id,
+                    name: name,
+                    superiorId: superiorId,
+                    dob: dob,
+                    email: email,
+                    position: position,
+                    division: division
+                };
+
+                var employeeJson = JSON.stringify(employee);
+                console.log(employeeJson);
+                sendEditedEmployeeJson(employeeJson);
+            }
+
         });
     });
 });
