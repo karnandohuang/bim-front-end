@@ -18,6 +18,8 @@ $(document).ready(function () {
                 for(let s in sort){
                     $('#sorted-by').append($('<option>', {value: s, text: sort[s]}))
                 }
+
+                $('#search-box').css("display", "none");
             });
     })();
 });

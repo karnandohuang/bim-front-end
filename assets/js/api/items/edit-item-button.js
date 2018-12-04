@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    let imageUrl;
+
     function setEditModalAttributes() {
         $("#entry-edit-form").css("display", "inline");
         $("#request-div").css("display", "none");
@@ -31,6 +33,7 @@ $(document).ready(function () {
                 $('#input-item-price').val(response.value.value.price);
                 $('#input-item-qty').val(response.value.value.qty);
                 $('#input-item-location').val(response.value.value.location);
+                imageUrl = response.value.value.imageUrl;
             },
             error: function (response, status, jqXHR) {
 
@@ -39,7 +42,7 @@ $(document).ready(function () {
     }
 
     function sendEditedItemJson(itemJson, imageFile) {
-        $.ajax({
+            $.ajax({
             url: 'http://localhost:8080/bim/api/items',
             type: 'PUT',
             dataType: 'JSON',
@@ -48,7 +51,7 @@ $(document).ready(function () {
             success: function (response, status, jqXHR) {
                 if (response.success === true) {
 
-                    if (imageFile.length === 0) {
+                    if ($('#input-item-image')[0].files.length === 0) {
                         displayMessageBox("Success");
                         $('.modal-footer').on('click', '#message-box-button', function () {
                             window.location.reload();
@@ -117,6 +120,7 @@ $(document).ready(function () {
                 price: price,
                 location: location,
                 qty: qty,
+                imageUrl : imageUrl
             };
 
             itemJson = JSON.stringify(item);

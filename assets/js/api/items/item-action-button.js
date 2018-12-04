@@ -34,20 +34,27 @@ $(document).ready(function () {
     function requestButtonOnClick() {
         $(document).on('click', '#request-item-button', function () {
 
-            let item;
+            let item = [];
             $('.request-item-row').each(function () {
                 let requestItemId = $(this).closest('tr').find('.request-item-id').html();
-                let requestEmployeeId = "EM068"; //need to change it
                 let requestItemQty = $(this).closest('tr').find('.request-item-qty select').val();
 
-                item = {
-                    employeeId: requestEmployeeId,
-                    itemId: requestItemId,
+                let itemData = {
+                    id: requestItemId,
                     qty: requestItemQty
                 };
+
+                item.push(itemData);
             });
 
-            let requestItemJson = JSON.stringify(item);
+            let requestEmployeeId = "EM068"; //need to change it
+
+            let request = {
+                employeeId : requestEmployeeId,
+                items : item,
+            };
+
+            let requestItemJson = JSON.stringify(request);
 
             $.ajax({
                 url: "http://localhost:8080/bim/api/requests",
@@ -88,7 +95,6 @@ $(document).ready(function () {
 
             deleteItemJson.ids = items;
             deleteItemJson = JSON.stringify(deleteItemJson);
-            console.log(deleteItemJson);
 
             $.ajax({
                 url: 'http://localhost:8080/bim/api/items',
