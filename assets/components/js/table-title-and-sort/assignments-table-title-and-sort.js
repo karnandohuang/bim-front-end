@@ -12,16 +12,13 @@ $(document).ready(function () {
     (function(){
         $('.title-and-sort-div').load('../assets/components/html/table-title-and-sort.html #table-title-and-sort',
             function () {
-
-                $('#table-title').text('Assignment List');
-
+                $('#table-title').text('Assignments');
                 for(let s in sort){
                     $('#sorted-by').append($('<option>', {value: s, text: sort[s]}))
                 }
 
                 //hide search box
                 $('#search-box').css("display", "none");
-
             });
     })();
 });

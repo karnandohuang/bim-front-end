@@ -5,7 +5,7 @@
     var passwordRegex = "(^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$)";
     $('#input-password').prop('pattern', passwordRegex);
 
-    var emailRegex = "(^[a-z0-9](\.?[a-z0-9]){4,}@gdn-commerce\.com$)";
+    var emailRegex = "(^[a-z0-9](\.?[a-z0-9]){2,}@gdn-commerce\.com$)";
     $('#input-email').prop('pattern', emailRegex);
 
     var nameRegex = "([a-zA-Z ]{1,30}$)";

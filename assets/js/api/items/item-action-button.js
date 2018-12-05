@@ -1,6 +1,4 @@
 $(document).ready(function () {
-    let idJson;
-
     function setRequestModalAttributes() {
         $("#request-table>tbody").empty();
         $("#request-div").css("display", "inline");
@@ -32,7 +30,7 @@ $(document).ready(function () {
     }
 
     function requestButtonOnClick() {
-        $(document).on('click', '#request-item-button', function () {
+        $(document).off().on('click', '#request-item-button', function () {
 
             let item = [];
             $('.request-item-row').each(function () {
@@ -43,7 +41,6 @@ $(document).ready(function () {
                     id: requestItemId,
                     qty: requestItemQty
                 };
-
                 item.push(itemData);
             });
 
@@ -55,7 +52,6 @@ $(document).ready(function () {
             };
 
             let requestItemJson = JSON.stringify(request);
-
             $.ajax({
                 url: "http://localhost:8080/bim/api/requests",
                 type: "POST",
@@ -73,7 +69,6 @@ $(document).ready(function () {
                     }else {
                         displayMessageBox("Request Failed" + " (" + response.errorMessage + ")");
                     }
-
                 },
                 error: function (response, status, jqXHR) {
                     displayMessageBox("Request Failed" + " (" + status + ")");
@@ -83,18 +78,16 @@ $(document).ready(function () {
     }
 
     function deleteButtonOnClick() {
-        let items = [];
-        let deleteItemJson = {"ids": ""};
+        $(document).off().on('click', '#delete-item-button', function () {
+            let items = [];
 
-        $(document).on('click', '#delete-item-button', function () {
             $('.delete-row').each(function () {
                 let deleteId = $(this).closest('tr').find('.delete-id').html();
-
                 items.push(deleteId);
             });
 
-            deleteItemJson.ids = items;
-            deleteItemJson = JSON.stringify(deleteItemJson);
+            let deleteItemData = {"ids": items};
+            let deleteItemJson = JSON.stringify(deleteItemData);
 
             $.ajax({
                 url: 'http://localhost:8080/bim/api/items',
@@ -142,8 +135,6 @@ $(document).ready(function () {
             selectedItem.push(item);
         });
 
-        idJson = JSON.stringify(selectedItem);
-
         //if no item is selected
         if(!selectedItem.length>0){
             displayMessageBox("You must select at least 1 item")
@@ -152,16 +143,15 @@ $(document).ready(function () {
             if (this.id === 'request-button') {
                 setRequestModalAttributes();
 
-                let item = JSON.parse(idJson);
                 var quantities;
 
-                for(let i=0;i<item.length;i++){
+                for(let i=0;i<selectedItem.length;i++){
                     let tr = "<tr class='request-item-row'>";
-                    let td1 = "<td class='request-item-id'>" + item[i].id + "</td>";
-                    let td2 = "<td class='request-item-name'>" + item[i].name + "</td>";
-                    let td3 = "<td class='request-item-location'>" + item[i].location + "</td>";
+                    let td1 = "<td class='request-item-id'>" + selectedItem[i].id + "</td>";
+                    let td2 = "<td class='request-item-name'>" + selectedItem[i].name + "</td>";
+                    let td3 = "<td class='request-item-location'>" + selectedItem[i].location + "</td>";
 
-                    let qty = parseInt(item[i].qty);
+                    let qty = parseInt(selectedItem[i].qty);
                     quantities = null;
                     (function addQuantityOption() {
                         for(let i=1;i<=qty;i++){
@@ -182,19 +172,17 @@ $(document).ready(function () {
             }  else if (this.id === 'delete-button') {
                 setDeleteModalAttributes();
 
-                let item = JSON.parse(idJson);
-
-                for(let i=0;i<item.length;i++) {
+                for(let i=0;i<selectedItem.length;i++) {
                     let tr = "<tr class='delete-row'>";
-                    let td1 = "<td class='delete-id'>" + item[i].id + "</td>";
-                    let td2 = "<td class='delete-name'>" + item[i].name + "</td>";
-                    let td3 = "<td class='delete-location'>" + item[i].location + "</td>";
-                    let td4 = "<td class='delete-qty'>" + item[i].qty + "</td></tr>";
+                    let td1 = "<td class='delete-id'>" + selectedItem[i].id + "</td>";
+                    let td2 = "<td class='delete-name'>" + selectedItem[i].name + "</td>";
+                    let td3 = "<td class='delete-location'>" + selectedItem[i].location + "</td>";
+                    let td4 = "<td class='delete-qty'>" + selectedItem[i].qty + "</td></tr>";
 
                     $("#request-table").append(tr+td1+td2+td3+td4);
                 }
-
                 deleteButtonOnClick();
+
             }
         }
     });

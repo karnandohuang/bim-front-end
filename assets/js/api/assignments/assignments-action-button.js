@@ -1,5 +1,6 @@
+let API_PATH_CHANGE_ASSIGNMENT_STATUS = 'http://localhost:8080/bim/api/requests/changeStatus';
+
 $(document).ready(function () {
-    let idJson;
 
     function displayMessageBox(message) {
         $('#message-box .modal-body').text(message);
@@ -52,10 +53,10 @@ $(document).ready(function () {
         }
     }
 
-    function getAssignmentIds(assignmentFromJson, ids, requiredStatus) {
-        for (let i = 0; i < assignmentFromJson.length; i++) {
-            if (assignmentFromJson[i].status === requiredStatus) {
-                let id = assignmentFromJson[i].id;
+    function getAssignmentIds(selectedAssignment, ids, requiredStatus) {
+        for (let i = 0; i < selectedAssignment.length; i++) {
+            if (selectedAssignment[i].status === requiredStatus) {
+                let id = selectedAssignment[i].id;
                 ids.push(id);
             }
             else {
@@ -67,10 +68,9 @@ $(document).ready(function () {
         return ids;
     }
 
-    let ASSIGNMENT_API_URL = 'http://localhost:8080/bim/api/requests/changeStatus';
     function changeStatusAjax(actionName, jsonData){
         $.ajax({
-            url: ASSIGNMENT_API_URL,
+            url: API_PATH_CHANGE_ASSIGNMENT_STATUS,
             type: 'PUT',
             dataType: 'JSON',
             async: false,
@@ -96,8 +96,9 @@ $(document).ready(function () {
 //when pressing assignment button
     $('#approve-button, #reject-button, #handover-button').on('click', function () {
         let selectedAssignment = [];
+        let assignmentJson;
 
-        //get assignment data from table to JSON
+        //get assignment data from table
         $('.row-select input:checked').each(function () {
             let selectedAssignmentId = $(this).closest('tr').find('.assignment-id').html();
             let selectedEmployeeId = $(this).closest('tr').find('.employee-id').html();
@@ -106,7 +107,6 @@ $(document).ready(function () {
             let selectedItemName = $(this).closest('tr').find('.item-name').html();
             let selectedQty = $(this).closest('tr').find('.qty').html();
             let selectedStatus = $(this).closest('tr').find('.status').html();
-
 
             let assignment = {
                 id: selectedAssignmentId,
@@ -118,8 +118,6 @@ $(document).ready(function () {
                 status: selectedStatus
             };
             selectedAssignment.push(assignment);
-
-            idJson = JSON.stringify(selectedAssignment);
         });
 
         //if no assignment is selected
@@ -129,37 +127,30 @@ $(document).ready(function () {
         } else {
             if (this.id === 'approve-button') {
                 setApproveModalAttributes();
-                let assignmentFromJson = JSON.parse(idJson);
-                setModalTableData(assignmentFromJson);
-
+                setModalTableData(selectedAssignment);
                 let ids = [];
 
                 $('.modal-footer').one('click', '#approve-assignment-button', function () {
-
-                    ids = getAssignmentIds(assignmentFromJson, ids, 'Pending');
+                    ids = getAssignmentIds(selectedAssignment, ids, 'Pending');
 
                     if(ids.length !== 0) {
                         let assignment = {
                             ids: ids,
                             status: "Approved"
                         };
-
                         assignmentJson = JSON.stringify(assignment);
-                        console.log(assignmentJson);
                         changeStatusAjax("Approve", assignmentJson);
                     }
                 });
 
             } else if (this.id === 'reject-button') {
                 setRejectModalAttributes();
-                let assignmentFromJson = JSON.parse(idJson);
-                setModalTableData(assignmentFromJson);
-
+                setModalTableData(selectedAssignment);
                 let ids = [];
 
-                $('.modal-footer').on('click', '#reject-assignment-button', function () {
+                $('.modal-footer').off().on('click', '#reject-assignment-button', function () {
                     let rejectReason = $('#reject-reason').val();
-                    ids = getAssignmentIds(assignmentFromJson, ids, 'Pending');
+                    ids = getAssignmentIds(selectedAssignment, ids, 'Pending');
 
                     if(ids.length !== 0) {
                         let assignment = {
@@ -167,29 +158,23 @@ $(document).ready(function () {
                             status: "Rejected",
                             notes: rejectReason
                         };
-
                         assignmentJson = JSON.stringify(assignment);
                         changeStatusAjax("Reject", assignmentJson);
-
                     }
                 });
             } else if (this.id === 'handover-button') {
                 setHandoverModalAttributes();
-
-                let assignmentFromJson = JSON.parse(idJson);
-                setModalTableData(assignmentFromJson);
-
+                setModalTableData(selectedAssignment);
                 let ids = [];
 
-                $('.modal-footer').on('click', '#handover-assignment-button', function () {
-                    ids = getAssignmentIds(assignmentFromJson, ids, 'Approved');
+                $('.modal-footer').off().on('click', '#handover-assignment-button', function () {
+                    ids = getAssignmentIds(selectedAssignment, ids, 'Approved');
 
                     if(ids.length !== 0){
                         let assignment = {
                             ids: ids,
                             status: "Received"
                         };
-
                         assignmentJson = JSON.stringify(assignment);
                         changeStatusAjax("Handover", assignmentJson);
                     }

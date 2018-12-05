@@ -9,8 +9,8 @@ $(document).ready(function () {
 
     function displayTablePage(currentPage){
         $('#current-page').text(currentPage);
-        $('#table-prev-page-button').attr('disabled', false);
-        $('#table-next-page-button').attr('disabled', false);
+        $('#table-prev-page-button').prop('disabled', false);
+        $('#table-next-page-button').prop('disabled', false);
 
         $.ajax({
             url : 'http://localhost:8080/bim/api/employees?name=' + name + '&pageNumber=' + currentPage +
@@ -44,12 +44,12 @@ $(document).ready(function () {
                     $('#total-page').text(totalPage);
 
                     if((currentPage === 1) && (currentPage === totalPage)) {
-                        $('#table-prev-page-button').attr('disabled', true);
-                        $('#table-next-page-button').attr('disabled', true);
+                        $('#table-prev-page-button').prop('disabled', true);
+                        $('#table-next-page-button').prop('disabled', true);
                     } else if(currentPage === 1){
-                        $('#table-prev-page-button').attr('disabled', true);
+                        $('#table-prev-page-button').prop('disabled', true);
                     } else if(currentPage === totalPage){
-                        $('#table-next-page-button').attr('disabled', true);
+                        $('#table-next-page-button').prop('disabled', true);
                     }
 
                 } else{

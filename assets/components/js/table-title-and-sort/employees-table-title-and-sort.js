@@ -13,6 +13,7 @@ $(document).ready(function () {
             function () {
 
                 $('#table-title').text('Employees');
+                $('#table-search-name').prop('placeholder', 'Employee Name');
 
                 for(let s in sort){
                     $('#sorted-by').append($('<option>', {value: s, text: sort[s]}))

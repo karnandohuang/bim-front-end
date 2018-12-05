@@ -27,8 +27,8 @@
                                 id="entry-button">Entry Employee</button>
                     </div>
                     <!--<div class="col-3 px-1">-->
-                        <!--<button type="button" class="btn btn-primary btn-block" data-toggle="modal"-->
-                                <!--id="edit-button">Edit Employee</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-block" data-toggle="modal"-->
+                    <!--id="edit-button">Edit Employee</button>-->
                     <!--</div>-->
                     <div class="col-3 px-1">
                         <button type="button" class="btn btn-danger btn-block" data-toggle="modal"
@@ -106,7 +106,7 @@
                                         <div class="form-group row">
                                             <label for="datepicker" class="col-sm-3 col-form-label">Date of Birth</label>
                                             <div class="col-sm-8">
-                                                <input id="datepicker" width="275" required class="required" placeholder="dd/mm/yyyy">
+                                                <input id="datepicker" width="275" required class="required" placeholder="dd/mm/yyyy" readonly>
                                             </div>
                                             <div class="invalid-feedback">
                                                 Please choose Date of Birth.
@@ -274,12 +274,16 @@
 <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <script>
+    var today;
+    today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     $('#datepicker').datepicker({
         format: 'dd/mm/yyyy',
-        uiLibrary: 'bootstrap4'
+        uiLibrary: 'bootstrap4',
+        maxDate: today,
+        value: '01/01/2000',
     }).on('change', function () {
-        $(this).valid;
-    });
+            $(this).valid;
+        });
 </script>
 
 <script src="../assets/components/js/left-navbar/employees.js"></script>

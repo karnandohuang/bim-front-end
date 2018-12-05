@@ -9,9 +9,11 @@ $(document).ready(function () {
 
     function displayTablePage(currentPage) {
         $('#current-page').text(currentPage);
-        $('#table-prev-page-button').attr('disabled', false);
-        $('#table-next-page-button').attr('disabled', false);
+        $('#table-prev-page-button').prop('disabled', false);
+        $('#table-next-page-button').prop('disabled', false);
 
+        // $('#table-prev-page-button').removeClass('disabled');
+        // $('#table-next-page-button').removeClass('disabled');
         $.ajax({
             url: 'http://localhost:8080/bim/api/items?name=' + name + '&pageNumber=' + currentPage +
                 '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
@@ -48,13 +50,27 @@ $(document).ready(function () {
                     $('#total-page').text(totalPage);
 
                     if((currentPage === 1) && (currentPage === totalPage)) {
-                        $('#table-prev-page-button').attr('disabled', true);
-                        $('#table-next-page-button').attr('disabled', true);
+                        $('#table-prev-page-button').prop('disabled', true);
+                        $('#table-next-page-button').prop('disabled', true);
                     } else if(currentPage === 1){
-                        $('#table-prev-page-button').attr('disabled', true);
+                        $('#table-prev-page-button').prop('disabled', true);
                     } else if(currentPage === totalPage){
-                        $('#table-next-page-button').attr('disabled', true);
+                        $('#table-next-page-button').prop('disabled', true);
                     }
+
+                    // let pageNumbers;
+                    // (function appendPageNumber() {
+                    //     pageNumbers += '<li class="page-item"><a class="page-link" href="#">First</a></li>';
+                    //     pageNumbers += '<li class="page-item" id="table-prev-page-button"><a class="page-link" href="#">Prev</a></li>;'
+                    //     for(let i=1;i<=totalPage;i++){
+                    //         pageNumbers += '<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>';
+                    //     }
+                    //     pageNumbers += '<li class="page-item" id="table-next-page-button"><a class="page-link" href="#">Next</a></li>';
+                    //     pageNumbers += '<li class="page-item"><a class="page-link" href="#">Last</a></li>\n';
+                    // })();
+                    //
+                    //
+                    // $('.pagination').append();
 
                 } else{
                     let record = "<tr><td colspan='100' class='text-center p-4'><h3>No Data Available</h3></td></tr>";

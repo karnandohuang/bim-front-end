@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    let idJson;
 
     function setEditModalAttributes() {
         $('.modal-title').text("Edit Employee");
@@ -72,7 +71,6 @@ $(document).ready(function () {
 
             $('#submit-form').click();
             let form = $("#entry-edit-form");
-            console.log(form[0].checkValidity());
 
             if(form[0].checkValidity()) {
                 let id = $('#input-employee-id').val();
@@ -97,10 +95,8 @@ $(document).ready(function () {
                 };
 
                 var employeeJson = JSON.stringify(employee);
-                console.log(employeeJson);
                 sendEditedEmployeeJson(employeeJson);
             }
-
         });
     });
 });

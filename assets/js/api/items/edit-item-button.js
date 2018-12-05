@@ -1,3 +1,5 @@
+let API_PATH_UPLOAD_IMAGE = "http://localhost:8080/bim/api/upload";
+let API_PATH_EDIT_ITEM = 'http://localhost:8080/bim/api/items';
 $(document).ready(function () {
 
     let imageUrl;
@@ -20,9 +22,9 @@ $(document).ready(function () {
         $('#message-box').modal('show');
     }
 
-    function getItemJson(itemIdToBeEdited) {
+    function getItemJson(itemId) {
         $.ajax({
-            url: 'http://localhost:8080/bim/api/items/' + itemIdToBeEdited,
+            url: 'http://localhost:8080/bim/api/items/' + itemId,
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
@@ -41,9 +43,35 @@ $(document).ready(function () {
         });
     }
 
+    function uploadImageAjax(formData) {
+        $.ajax({
+            url: API_PATH_UPLOAD_IMAGE,
+            type: "POST",
+            data: formData,
+            enctype: 'multipart/form-data',
+            async: false,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (response, status, jqXHR) {
+                if (response.success === true) {
+                    displayMessageBox("Success");
+                    $('.modal-footer').on('click', '#message-box-button', function () {
+                        window.location.reload();
+                    });
+                } else {
+                    displayMessageBox("Failed to upload image. " + "(" + response.errorMessage + ")");
+                }
+            },
+            error: function (response, status, jqXHR) {
+                displayMessageBox("Failed to upload image. " + "(" + status + ")");
+            }
+        });
+    }
+
     function sendEditedItemJson(itemJson, imageFile) {
             $.ajax({
-            url: 'http://localhost:8080/bim/api/items',
+            url: API_PATH_EDIT_ITEM,
             type: 'PUT',
             dataType: 'JSON',
             contentType: 'application/json',
@@ -60,30 +88,7 @@ $(document).ready(function () {
                         var formData = new FormData();
                         formData.append('file', imageFile);
                         formData.append('itemId', response.value.value.id);
-
-                        $.ajax({
-                            url: "http://localhost:8080/bim/api/upload",
-                            type: "POST",
-                            data: formData,
-                            enctype: 'multipart/form-data',
-                            async: false,
-                            processData: false,
-                            contentType: false,
-                            cache: false,
-                            success: function (response, status, jqXHR) {
-                                if (response.success === true) {
-                                    displayMessageBox("Success");
-                                    $('.modal-footer').on('click', '#message-box-button', function () {
-                                        window.location.reload();
-                                    });
-                                } else {
-                                    displayMessageBox("Failed to upload image. " + "(" + response.errorMessage + ")");
-                                }
-                            },
-                            error: function (response, status, jqXHR) {
-                                displayMessageBox("Failed to upload image. " + "(" + status + ")");
-                            }
-                        });
+                        uploadImageAjax(formData);
                     }
                 } else {
                     displayMessageBox("Edit Failed" + " (" + response.errorMessage + ")");
@@ -103,7 +108,7 @@ $(document).ready(function () {
 
         //send JSON to backend
         let itemJson;
-        $('.modal-footer').on('click', '#edit-item-button', (function () {
+        $('.modal-footer').off().on('click', '#edit-item-button', (function () {
             //get value from each text box
             let id = $('#input-item-id').val();
             let sku = $('#input-item-sku').val();

@@ -23,7 +23,6 @@ $(document).ready(function () {
         $('#message-box').modal('show');
     }
 
-
     $('#entry-button').click(function () {
         EmptyEntryForm();
         setEntryModalAttributes();
@@ -54,7 +53,7 @@ $(document).ready(function () {
         });
     }
 
-    $('.modal-footer').on('click', '#entry-employee-button', function () {
+    $('.modal-footer').off().on('click', '#entry-employee-button', function () {
         $('#submit-form').click();
         let form = $("#entry-edit-form");
 

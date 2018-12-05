@@ -37,7 +37,6 @@ $(document).ready(function () {
             if (fieldVal !== undefined || fieldVal !== "") {
                 $('#input-item-image-label').text(fieldVal);
             }
-
         });
     })();
 
@@ -50,7 +49,6 @@ $(document).ready(function () {
                     .attr('src', e.target.result)
                     .height(200);
             };
-
             reader.readAsDataURL(input.files[0]);
         }
     }
@@ -59,7 +57,7 @@ $(document).ready(function () {
         imagePreview(this);
     });
 
-    $('#entry-button').click(function () {
+    $(document).on('click', '#entry-button', function () {
         emptyEntryForm();
         setEntryItemAttributes();
     });
@@ -116,7 +114,7 @@ $(document).ready(function () {
         });
     }
 
-    $('.modal-footer').on('click', '#entry-item-button', (function () {
+    $('.modal-footer').off().on('click', '#entry-item-button', (function () {
         $('#submit-form').click();
         let form = $("#entry-edit-form");
 

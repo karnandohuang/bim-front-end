@@ -11,9 +11,7 @@ $(document).ready(function () {
                 if(response.success === true){
 
                     let pendingAssignmentCount = response.value.listOfCount.pendingAssignmentCount;
-                    console.log(pendingAssignmentCount);
                     let pendingHandoverCount = response.value.listOfCount.pendingHandoverCount;
-                    console.log(pendingHandoverCount);
                     let receivedCount = response.value.listOfCount.receivedCount;
 
                     if(pendingAssignmentCount >= 9999) {
