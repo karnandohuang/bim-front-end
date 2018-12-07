@@ -75,6 +75,7 @@ $(document).ready(function () {
             success: function (response, status, jqXHR) {
                 if (response.success === true) {
                     displayMessageBox("Success");
+                    $('#item-action-modal').modal('hide');
                     $('.modal-footer').on('click', '#message-box-button', function () {
                         window.location.reload();
                     });
@@ -114,7 +115,7 @@ $(document).ready(function () {
         });
     }
 
-    $('.modal-footer').off().on('click', '#entry-item-button', (function () {
+    $('.modal-footer').on('click', '#entry-item-button', (function () {
         $('#submit-form').click();
         let form = $("#entry-edit-form");
 
@@ -136,5 +137,7 @@ $(document).ready(function () {
             let itemJson = JSON.stringify(item);
             sendItemJson(itemJson, imageFile);
         }
+
+        $('.modal-footer').off('click', '#entry-item-button');
     }));
 });

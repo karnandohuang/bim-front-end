@@ -56,6 +56,7 @@ $(document).ready(function () {
             success: function (response, status, jqXHR) {
                 if (response.success === true) {
                     displayMessageBox("Success");
+                    $('#item-action-modal').modal('hide');
                     $('.modal-footer').on('click', '#message-box-button', function () {
                         window.location.reload();
                     });
@@ -80,6 +81,7 @@ $(document).ready(function () {
                 if (response.success === true) {
 
                     if ($('#input-item-image')[0].files.length === 0) {
+                        $('#item-action-modal').modal('hide');
                         displayMessageBox("Success");
                         $('.modal-footer').on('click', '#message-box-button', function () {
                             window.location.reload();
@@ -108,7 +110,7 @@ $(document).ready(function () {
 
         //send JSON to backend
         let itemJson;
-        $('.modal-footer').off().on('click', '#edit-item-button', (function () {
+        $('.modal-footer').on('click', '#edit-item-button', (function () {
             //get value from each text box
             let id = $('#input-item-id').val();
             let sku = $('#input-item-sku').val();
@@ -130,6 +132,8 @@ $(document).ready(function () {
 
             itemJson = JSON.stringify(item);
             sendEditedItemJson(itemJson, imageFile);
+
+            $('.modal-footer').off('click', '#edit-item-button');
         }));
     });
 });

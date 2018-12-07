@@ -148,7 +148,7 @@ $(document).ready(function () {
                 setModalTableData(selectedAssignment);
                 let ids = [];
 
-                $('.modal-footer').off().on('click', '#reject-assignment-button', function () {
+                $('.modal-footer').on('click', '#reject-assignment-button', function () {
                     let rejectReason = $('#reject-reason').val();
                     ids = getAssignmentIds(selectedAssignment, ids, 'Pending');
 
@@ -161,13 +161,15 @@ $(document).ready(function () {
                         assignmentJson = JSON.stringify(assignment);
                         changeStatusAjax("Reject", assignmentJson);
                     }
+
+                    $('.modal-footer').off('click', '#reject-assignment-button');
                 });
             } else if (this.id === 'handover-button') {
                 setHandoverModalAttributes();
                 setModalTableData(selectedAssignment);
                 let ids = [];
 
-                $('.modal-footer').off().on('click', '#handover-assignment-button', function () {
+                $('.modal-footer').on('click', '#handover-assignment-button', function () {
                     ids = getAssignmentIds(selectedAssignment, ids, 'Approved');
 
                     if(ids.length !== 0){
@@ -178,6 +180,8 @@ $(document).ready(function () {
                         assignmentJson = JSON.stringify(assignment);
                         changeStatusAjax("Handover", assignmentJson);
                     }
+
+                    $('.modal-footer').off('click', '#handover-assignment-button');
                 });
             }
         }

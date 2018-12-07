@@ -97,6 +97,8 @@ $(document).ready(function () {
                 var employeeJson = JSON.stringify(employee);
                 sendEditedEmployeeJson(employeeJson);
             }
+
+            $(document).off('click', '#edit-employee-button');
         });
     });
 });
