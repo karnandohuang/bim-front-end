@@ -37,8 +37,8 @@ $(document).ready(function () {
                             "<i class=\"fas fa-edit\"></i></button>" +
                             "<button type=\"button\" class=\"btn btn-info px-2 mx-1 info-button\">" +
                             "<i class=\"fas fa-info-circle\"></i></button>" +
-                            "<button type=\"button\" class=\"btn btn-secondary px-2 mx-1 print-button\" " +
-                            "onclick='window.print()''><i class=\"fas fa-print\"></i></button>" +
+                            "<button type=\"button\" class=\"btn btn-secondary px-2 mx-1 print-button\">" +
+                            "<i class=\"fas fa-print\"></i></button>" +
                             "</td></tr>";
 
                         $('#data-table').append(record);

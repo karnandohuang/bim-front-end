@@ -17,13 +17,13 @@
 				</div>
 				<h4 class="text-center m-4 font-weight-normal">Login</h4>
 				<div class="content m-4">
-					<form class="form-group" method="POST" action="">
+					<form class="form-group" onsubmit="return false">
 						<div class="row m-2">
 							<div class="email col-md-3 text-right">
 								<label for="email" class="col-form-label">Email  </label>
 							</div>
 							<div class="email-input col-md-9">
-								<input class="form-control" id="email" type="email" name="email" placeholder="Enter your email" required >
+								<input class="form-control" id="email" type="text" name="email" placeholder="Enter your email" required >
 							</div>
 						</div>
 						<div class="row m-2">
@@ -42,7 +42,7 @@
 						</div>
 						<div class="text-center m-2">
 							<div class="row col-md-4 offset-md-3">
-								<button type="submit" class="login-btn btn btn-primary btn-block">LOGIN</button>
+								<button type="submit" class="login-btn btn btn-primary btn-block" id="login-button">LOGIN</button>
 							</div>
 						</div>
 					</form>
@@ -50,7 +50,9 @@
 			</div>
 		</div>
 	</div>
-	<script src="../assets/js/bootstrap/bootstrap.min.js"></script>
-	<script src="../assets/js/login.js"></script>
+
+    <script src="../assets/js/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../assets/js/bootstrap/bootstrap.js"></script>
+	<script src="../assets/js/api/login/login.js"></script>
 </body>
 </html>
