@@ -17,6 +17,10 @@ $(document).ready(function () {
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+                console.log(xhr.getAllResponseHeaders());
+            },
             success: function (response, status, jqXHR) {
                 if(response.paging.totalRecords > 0) {
                     $(response.value.list).each(function (index, value) {

@@ -1,58 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login</title>
-	<link rel="stylesheet" type="text/css" href="../assets/css/base_style.css">
-	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap/bootstrap.min.css">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/base_style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/login.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/loading.css">
 
-	<link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon/favicon-32x32.png">
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="login-container row justify-content-center align-items-center ">
-			<div class="login-box col-sm-8 col-md-7 col-lg-5 col-xl-4 p-0 rounded shadow">
-				<div class="logo bg-primary text-center rounded-top">
-					<img src="../assets/images/logo.png" width="200px" class="img-fluid m-4">
-				</div>
-				<h4 class="text-center m-4 font-weight-normal">Login</h4>
-				<div class="content m-4">
-					<form class="form-group" onsubmit="return false">
-						<div class="row m-2">
-							<div class="email col-md-3 text-right">
-								<label for="email" class="col-form-label">Email  </label>
-							</div>
-							<div class="email-input col-md-9">
-								<input class="form-control" id="email" type="text" name="email" placeholder="Enter your email" required >
-							</div>
-						</div>
-						<div class="row m-2">
-							<div class="password col-md-3 text-right">
-								<label for="password" class="col-form-label">Password   </label>
-							</div>
-							<div class="password-input col-md-9">
-								<input class="form-control" id="password" type="password" name="password" placeholder="Password" required>
-							</div>
-						</div>
-						<div class="text-center custom-control custom-checkbox m-3 ">
-							<div class="row col-md-9 offset-md-3">
-								<input type="checkbox" class="custom-control-input" id="rememberMe">
-								<label class="custom-control-label" for="rememberMe">Remember Me</label>
-							</div>
-						</div>
-						<div class="text-center m-2">
-							<div class="row col-md-4 offset-md-3">
-								<button type="submit" class="login-btn btn btn-primary btn-block" id="login-button">LOGIN</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+<div id="progress" class="waiting"></div>
+<div class="container-fluid">
+    <div class="login-container row justify-content-center align-items-center ">
+        <div class="login-box col col-sm-8 col-md-7 col-lg-5 col-xl-4 p-0 rounded shadow">
+            <div class="logo bg-primary text-center rounded-top">
+                <img src="../assets/images/logo.png" width="200px" class="img-fluid m-4">
+            </div>
+            <h4 class="text-center m-4 font-weight-normal">Login</h4>
 
-    <script src="../assets/js/jquery/jquery-3.3.1.min.js"></script>
-    <script src="../assets/js/bootstrap/bootstrap.js"></script>
-	<script src="../assets/js/api/auth/login.js"></script>
+            <div class="content m-4">
+                <form class="form-group" onsubmit="return false">
+                    <div class="row m-2 justify-content-center failed-login-alert" style="display: none;">
+                        <div class="col-12">
+                            <div class="card border-danger mb-4" style="max-width: 24rem;">
+                                <div class="card-body text-danger">
+                                    <p class="card-text">
+                                        your email or password was incorrect. please try again.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="email col-md-3 text-right">
+                            <label for="email" class="col-form-label">Email  </label>
+                        </div>
+                        <div class="email-input col-md-9">
+                            <input class="form-control" id="email" type="text" name="email" placeholder="Enter your email" required >
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="password col-md-3 text-right">
+                            <label for="password" class="col-form-label">Password   </label>
+                        </div>
+                        <div class="password-input col-md-9">
+                            <input class="form-control" id="password" type="password" name="password" placeholder="Password" required>
+                        </div>
+                    </div>
+                    <div class="text-center custom-control custom-checkbox m-3 ">
+                        <div class="row col-md-9 offset-md-3">
+                            <input type="checkbox" class="custom-control-input" id="rememberMe">
+                            <label class="custom-control-label" for="rememberMe">Remember Me</label>
+                        </div>
+                    </div>
+                    <div class="text-center m-2">
+                        <div class="row col-md-4 offset-md-3">
+                            <button type="submit" class="login-btn btn btn-primary btn-block" id="login-button">LOGIN</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/js/jquery/jquery-3.3.1.min.js"></script>
+<script src="../assets/js/bootstrap/bootstrap.js"></script>
+<script src="../assets/js/loading.js"></script>
+
+<script src="../assets/js/api/auth/login.js"></script>
 </body>
 </html>

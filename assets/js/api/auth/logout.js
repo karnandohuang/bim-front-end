@@ -27,30 +27,8 @@ $(document).ready(function () {
     }
 
     $(document).on('click', '#logout-button', function () {
-        // make_header_auth();
-        // var API_PATH_LOGOUT = "http://localhost:8080/bim/api/logout";
-
         localStorage.removeItem('token');
+        document.cookie = 'USERCOOKIE' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;path=/';
         window.location = 'login.html';
-        // $.ajax({
-        //     type: "GET",
-        //     url: API_PATH_LOGOUT,
-        //     dataType: 'json',
-        //     crossDomain: true,
-        //     headers: {
-        //         'Authorization': make_header_auth()
-        //     },
-        //     contentType: 'application/json',
-        //     // xhrFields: {withCredentials: true},
-        //     success: function (response, status, xhr){
-        //         alert("logout success");
-        //         localStorage.removeItem('token');
-        //         window.redirect = '/dashboard.html';
-        //     },
-        //     error: function (response, status, xhr) {
-        //         alert("error");
-        //     }
-        // });
-
     });
 });
