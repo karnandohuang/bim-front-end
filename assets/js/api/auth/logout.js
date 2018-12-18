@@ -27,27 +27,30 @@ $(document).ready(function () {
     }
 
     $(document).on('click', '#logout-button', function () {
-        make_header_auth();
-        var API_PATH_LOGOUT = "http://localhost:8080/bim/api/logout";
+        // make_header_auth();
+        // var API_PATH_LOGOUT = "http://localhost:8080/bim/api/logout";
 
-        $.ajax({
-            type: "GET",
-            url: API_PATH_LOGOUT,
-            dataType: 'json',
-            crossDomain: true,
-            headers: {
-                'Authorization': make_header_auth()
-            },
-            contentType: 'application/json',
-            // xhrFields: {withCredentials: true},
-            success: function (response, status, xhr){
-                alert("logout success");
-                window.redirect = '/dashboard.html';
-            },
-            error: function (response, status, xhr) {
-                alert("error");
-            }
-        });
+        localStorage.removeItem('token');
+        window.location = 'login.html';
+        // $.ajax({
+        //     type: "GET",
+        //     url: API_PATH_LOGOUT,
+        //     dataType: 'json',
+        //     crossDomain: true,
+        //     headers: {
+        //         'Authorization': make_header_auth()
+        //     },
+        //     contentType: 'application/json',
+        //     // xhrFields: {withCredentials: true},
+        //     success: function (response, status, xhr){
+        //         alert("logout success");
+        //         localStorage.removeItem('token');
+        //         window.redirect = '/dashboard.html';
+        //     },
+        //     error: function (response, status, xhr) {
+        //         alert("error");
+        //     }
+        // });
 
     });
 });

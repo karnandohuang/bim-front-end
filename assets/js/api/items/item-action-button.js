@@ -59,6 +59,9 @@ $(document).ready(function () {
                 contentType: "application/json",
                 data: requestItemJson,
                 async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"));
+                },
                 success: function (response, status, jqXHR) {
                     if(response.success === true){
                         displayMessageBox("Request Success");

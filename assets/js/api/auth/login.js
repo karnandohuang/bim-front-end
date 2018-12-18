@@ -14,7 +14,6 @@ $(document).ready(function () {
         };
 
         console.log(EMAIL + PASSWORD);
-        console.log(data);
 
         var login_json = JSON.stringify(data);
 
@@ -29,15 +28,15 @@ $(document).ready(function () {
             type: "POST",
             url: API_PATH_LOGIN,
             dataType: 'json',
-            crossDomain: true,
             contentType: 'application/json',
             // xhrFields: {withCredentials: true},
             data: login_json,
             success: function (response, status, xhr){
                 setCookie("USERCOOKIE", response.value.token, 1);
-
+                localStorage.setItem("token", response.value.token);
                 alert('Login Success!');
-                window.redirect = 'http://localhost';
+                // window.redirect.href = 'http://localhost';
+                window.location = "dashboard.html";
             },
             error: function (response, status, xhr) {
                 alert("error");
