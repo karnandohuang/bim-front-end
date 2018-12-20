@@ -15,7 +15,9 @@ $(document).ready(function () {
     }
 
     function deleteButtonOnClick() {
-        $('.modal-footer').on('click', '#delete-employee-button', function () {
+        $('.modal-footer').on('click', '#delete-employee-button', function (e) {
+            e.stopPropagation();
+
             let employees = [];
 
             $('.delete-row').each(function () {
@@ -51,8 +53,6 @@ $(document).ready(function () {
                     displayMessageBox("Delete Failed" + "(" + status + ")");
                 }
             });
-
-            $('.modal-footer').off('click', '#delete-employee-button');
         })
     }
 

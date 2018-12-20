@@ -20,9 +20,12 @@ function getCookie(cname) {
     }
 })();
 
-$(document).ready(function () {
+$(document).ready(function (e) {
     // (function setName(){
-    //     alert($('#top-nav').find('#user-name').text());
+    //     alert($(document).find('#user-name').text());
     //     $('#top-navbar').find('#user-name').html('aaa');
     // })();
+    $(document).parents('#left-navbar').find('#employees').hide();
+
+    //check user role and hide certain buttons
 });

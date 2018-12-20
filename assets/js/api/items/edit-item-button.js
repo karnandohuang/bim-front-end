@@ -114,7 +114,9 @@ $(document).ready(function () {
         });
     }
 
-    $(document).on('click', '.edit-button', function () {
+    $(document).on('click', '.edit-button', function (e) {
+        e.stopPropagation();
+
         setEditModalAttributes();
 
         let itemIdToBeEdited = $(this).closest('tr').find('.id').html();
@@ -144,8 +146,6 @@ $(document).ready(function () {
 
             itemJson = JSON.stringify(item);
             sendEditedItemJson(itemJson, imageFile);
-
-            $('.modal-footer').off('click', '#edit-item-button');
         }));
     });
 });

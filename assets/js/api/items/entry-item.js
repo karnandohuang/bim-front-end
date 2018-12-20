@@ -123,7 +123,9 @@ $(document).ready(function () {
         });
     }
 
-    $('.modal-footer').on('click', '#entry-item-button', (function () {
+    $('.modal-footer').on('click', '#entry-item-button', (function (e) {
+        e.stopPropagation();
+
         $('#submit-form').click();
         let form = $("#entry-edit-form");
 
@@ -145,7 +147,5 @@ $(document).ready(function () {
             let itemJson = JSON.stringify(item);
             sendItemJson(itemJson, imageFile);
         }
-
-        $('.modal-footer').off('click', '#entry-item-button');
     }));
 });

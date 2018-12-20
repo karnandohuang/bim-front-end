@@ -57,7 +57,9 @@ $(document).ready(function () {
         });
     }
 
-    $('.modal-footer').on('click', '#entry-employee-button', function () {
+    $('.modal-footer').on('click', '#entry-employee-button', function (e) {
+        e.stopPropagation();
+
         $('#submit-form').click();
         let form = $("#entry-edit-form");
 
@@ -85,7 +87,5 @@ $(document).ready(function () {
             let employeeJson = JSON.stringify(employee);
             sendEntryEmployeeJson(employeeJson);
         }
-
-        $('.modal-footer').off('click', '#entry-employee-button');
     });
 });

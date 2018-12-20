@@ -22,6 +22,9 @@ $(document).ready(function () {
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+            },
             success: function (data) {
                 $('#input-employee-id').val(data.value.value.id);
                 $('#input-employee-name').val(data.value.value.name);
@@ -45,7 +48,6 @@ $(document).ready(function () {
             contentType: "application/json",
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-                // console.log(xhr.getAllResponseHeaders());
             },
             data: employeeJson,
             success: function (response, status, jqXHR) {
@@ -65,7 +67,8 @@ $(document).ready(function () {
         });
     }
 
-    $(document).on('click', '.edit-button', function () {
+    $(document).on('click', '.edit-button', function (e) {
+        e.stopPropagation();
         setEditModalAttributes();
 
         let employeeToBeEdited = $(this).closest('tr').find('.id').html();
@@ -101,8 +104,6 @@ $(document).ready(function () {
                 var employeeJson = JSON.stringify(employee);
                 sendEditedEmployeeJson(employeeJson);
             }
-
-            $(document).off('click', '#edit-employee-button');
         });
     });
 });

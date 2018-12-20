@@ -42,7 +42,9 @@ $(document).ready(function () {
         });
     }
 
-    $(document).on('click', '.info-button', function () {
+    $(document).on('click', '.info-button', function (e) {
+        e.stopPropagation();
+
         setInfoModalAttributes();
 
         let itemIdToBeEdited = $(this).closest('tr').find('.id').html();

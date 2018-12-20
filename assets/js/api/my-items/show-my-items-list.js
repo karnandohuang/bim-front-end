@@ -12,11 +12,14 @@ $(document).ready(function () {
         $('#table-next-page-button').prop('disabled', false);
 
         $.ajax({
-            url: 'http://localhost:8080/bim/api/requests/employee?employeeId=' + employeeId + '&pageNumber=' + currentPage +
+            url: 'http://localhost:8080/bim/api/requests/employee?pageNumber=' + currentPage +
                 '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+            },
             success: function (response, status, jqXHR) {
                 if(response.paging.totalRecords > 0) {
                     $(response.value).each(function (index, value) {

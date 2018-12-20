@@ -30,7 +30,8 @@ $(document).ready(function () {
     }
 
     function requestButtonOnClick() {
-        $(document).on('click', '#request-item-button', function () {
+        $(document).on('click', '#request-item-button', function (e) {
+            e.stopPropagation();
 
             let item = [];
             $('.request-item-row').each(function () {
@@ -77,12 +78,13 @@ $(document).ready(function () {
                     displayMessageBox("Request Failed" + " (" + status + ")");
                 }
             });
-            $(document).off('click', '#request-item-button');
         });
     }
 
     function deleteButtonOnClick() {
-        $(document).on('click', '#delete-item-button', function () {
+        $(document).on('click', '#delete-item-button', function (e) {
+            e.stopPropagation();
+
             let items = [];
 
             $('.delete-row').each(function () {
@@ -93,7 +95,6 @@ $(document).ready(function () {
             let deleteItemData = {"ids": items};
             let deleteItemJson = JSON.stringify(deleteItemData);
 
-            alert();
             $.ajax({
                 url: 'http://localhost:8080/bim/api/items',
                 type: 'DELETE',
@@ -119,12 +120,13 @@ $(document).ready(function () {
                     displayMessageBox("delete failed" + " (" + status + ")");
                 }
             });
-            $(document).off('click', '#delete-item-button');
         });
     }
 
 //when pressing action button
-    $('#request-button, #delete-button').on('click', function () {
+    $('#request-button, #delete-button').on('click', function (e) {
+        e.stopPropagation();
+
         let selectedItem = [];
 
         //get item data from selected table to JSON
