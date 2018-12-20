@@ -45,18 +45,6 @@ $(document).ready(function () {
             contentType: 'application/json',
             crossDomain: true,
             crossOrigin: true,
-            // headers: {
-            //     'Authorization': make_header_auth(),
-            //     "accept": "application/json",
-            //     // "Access-Control-Allow-Headers": "*",
-            //     "Access-Control-Allow-Origin":"*"
-            // },
-            // headers: {
-            //     'Authorization': make_header_auth()
-            // },
-            // beforeSend: function(xhr) {
-            //     xhr.setRequestHeader('Authorization', make_header_auth());
-            // },
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
             },

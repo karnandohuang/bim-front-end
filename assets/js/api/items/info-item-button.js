@@ -21,6 +21,10 @@ $(document).ready(function () {
             url: 'http://localhost:8080/bim/api/items/' + itemId,
             type: 'GET',
             dataType: 'JSON',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+                // console.log(xhr.getAllResponseHeaders());
+            },
             contentType: 'application/json',
             success: function (response, status, jqXHR) {
                 $('#item-info-id').text(response.value.value.id);

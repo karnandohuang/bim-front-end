@@ -35,6 +35,10 @@ $(document).ready(function () {
             dataType: "JSON",
             contentType: "application/json; charset=utf-8",
             data: employeeJson,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+                // console.log(xhr.getAllResponseHeaders());
+            },
             async:false,
             success: function (response, status, jqXHR) {
                 if(response.success === true) {

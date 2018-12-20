@@ -43,6 +43,10 @@ $(document).ready(function () {
             type: "PUT",
             dataType: "JSON",
             contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+                // console.log(xhr.getAllResponseHeaders());
+            },
             data: employeeJson,
             success: function (response, status, jqXHR) {
                 if(response.success === true) {

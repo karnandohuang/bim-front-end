@@ -99,6 +99,10 @@ $(document).ready(function () {
                 type: 'DELETE',
                 contentType: 'application/json',
                 dataType: 'JSON',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+                    // console.log(xhr.getAllResponseHeaders());
+                },
                 data: deleteItemJson,
                 success: function (response) {
                     if(response.success === true) {

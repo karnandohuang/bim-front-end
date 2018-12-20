@@ -68,6 +68,10 @@ $(document).ready(function () {
             type: "POST",
             data: formData,
             enctype: 'multipart/form-data',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+                // console.log(xhr.getAllResponseHeaders());
+            },
             async: false,
             processData: false,
             contentType: false,
@@ -96,6 +100,10 @@ $(document).ready(function () {
             dataType: "JSON",
             contentType: "application/json",
             async: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+                // console.log(xhr.getAllResponseHeaders());
+            },
             data: itemJson,
             success: function (response, status, jqXHR) {
                 if (response.success === true) {

@@ -19,7 +19,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-                console.log(xhr.getAllResponseHeaders());
+                // console.log(xhr.getAllResponseHeaders());
             },
             success: function (response, status, jqXHR) {
                 if(response.paging.totalRecords > 0) {

@@ -28,6 +28,10 @@ $(document).ready(function () {
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+                // console.log(xhr.getAllResponseHeaders());
+            },
             success: function (response, status, jqXHR) {
                 $('#input-item-id').val(response.value.value.id);
                 $('#input-item-sku').val(response.value.value.sku);
@@ -53,6 +57,10 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             cache: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+                // console.log(xhr.getAllResponseHeaders());
+            },
             success: function (response, status, jqXHR) {
                 if (response.success === true) {
                     displayMessageBox("Success");
@@ -71,11 +79,15 @@ $(document).ready(function () {
     }
 
     function sendEditedItemJson(itemJson, imageFile) {
-            $.ajax({
+        $.ajax({
             url: API_PATH_EDIT_ITEM,
             type: 'PUT',
             dataType: 'JSON',
             contentType: 'application/json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+                // console.log(xhr.getAllResponseHeaders());
+            },
             data: itemJson,
             success: function (response, status, jqXHR) {
                 if (response.success === true) {
