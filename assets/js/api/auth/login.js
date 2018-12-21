@@ -77,6 +77,7 @@ $(document).ready(function () {
 
                     setCookie("USERCOOKIE", response.value.token, 1);
                     localStorage.setItem("token", response.value.token);
+                    localStorage.setItem("role", response.value.role);
 
                     redirect();
                 }

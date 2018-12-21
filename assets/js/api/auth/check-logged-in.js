@@ -20,12 +20,26 @@ function getCookie(cname) {
     }
 })();
 
+(function hideAttributesBasedOnRole() {
+    if(localStorage.getItem('role') === "ADMIN"){
+        //dashboard
+        $('#total-my-items-card').css('display','none');
+
+    } else if(localStorage.getItem('role') === "SUPERIOR" || localStorage.getItem('role') === "EMPLOYEE"){
+        //items page
+        $('#entry-button').css('display','none');
+        $('#delete-button').css('display','none');
+    }
+})();
+
+(function pageAuthorization () {
+
+})();
+
 $(document).ready(function (e) {
     // (function setName(){
     //     alert($(document).find('#user-name').text());
     //     $('#top-navbar').find('#user-name').html('aaa');
     // })();
-    $(document).parents('#left-navbar').find('#employees').hide();
-
-    //check user role and hide certain buttons
+    // $(document).parents('#left-navbar').find('#employees').hide();
 });

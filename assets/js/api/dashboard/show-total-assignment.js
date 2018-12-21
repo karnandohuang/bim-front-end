@@ -8,7 +8,6 @@ $(document).ready(function () {
             contentType: 'application/json',
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-                console.log(xhr.getAllResponseHeaders());
             },
             async: false,
             success: function (response) {
