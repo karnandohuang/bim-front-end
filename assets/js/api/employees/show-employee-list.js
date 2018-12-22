@@ -6,15 +6,25 @@ $(document).ready(function () {
     let name = "";
     let sortedBy = "id";
     let sortedType = "asc";
+    var PATH = "-";
+
+
 
     function displayTablePage(currentPage){
         $('#current-page').text(currentPage);
         $('#table-prev-page-button').prop('disabled', false);
         $('#table-next-page-button').prop('disabled', false);
 
+        if(localStorage.getItem('role')!=="ADMIN")
+            PATH = 'superiors';
+        else if(localStorage.getItem('role')!=="SUPERIOR")
+            PATH = 'employees';
+
+        let API_PATH_GET_EMPLOYEE = 'http://localhost:8080/bim/api/' + PATH + '?name=' + name + '&pageNumber=' + currentPage +
+            '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType;
+
         $.ajax({
-            url : 'http://localhost:8080/bim/api/employees?name=' + name + '&pageNumber=' + currentPage +
-                '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
+            url : API_PATH_GET_EMPLOYEE,
             type : 'GET',
             dataType : 'JSON',
             contentType:'application/json',

@@ -25,10 +25,13 @@ function getCookie(cname) {
         //dashboard
         $('#total-my-items-card').css('display','none');
 
+        //items page
+        $('#request-button-div').css('display','none');
+
     } else if(localStorage.getItem('role') === "SUPERIOR" || localStorage.getItem('role') === "EMPLOYEE"){
         //items page
-        $('#entry-button').css('display','none');
-        $('#delete-button').css('display','none');
+        $('#entry-button-div').css('display','none');
+        $('#delete-button-div').css('display','none');
     }
 })();
 
