@@ -1,3 +1,5 @@
+var date = Math.floor(Date.now() / 1000);
+
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -14,10 +16,17 @@ function getCookie(cname) {
     return "";
 }
 
+function displayMessageBox(message) {
+    $('#message-box .modal-body').text(message);
+    $('#message-box').modal('show');
+}
+
 (function isLoggedIn() {
     if(getCookie("USERCOOKIE") === ""){
         window.location.replace('login.html');
     }
+    //if session is over 2 hours and status code is 500
+    //should display pop up to redirect to login page
 })();
 
 (function hideAttributesBasedOnRole() {
@@ -39,7 +48,21 @@ function getCookie(cname) {
 
 })();
 
-$(document).ready(function (e) {
+$(document).ready(function () {
+
+    $(window).on('load',function(){
+        (function checkSession() {
+            if(date >= localStorage.getItem('ts')){
+                displayMessageBox("Your session has expired. Please login to continue.");
+                $('#message-box-div').on('click', '#message-box-button', function () {
+                    localStorage.clear();
+                    document.cookie = 'USERCOOKIE' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;path=/';
+                    window.location.replace('login.html');
+                });
+            }
+        })();
+    });
+
     // (function setName(){
     //     alert($(document).find('#user-name').text());
     //     $('#top-navbar').find('#user-name').html('aaa');

@@ -5,6 +5,7 @@ $(document).ready(function () {
     let totalPage = 1;
     let sortedBy = "id";
     let sortedType = "asc";
+    let filter="";
 
     function displayTablePage(currentPage) {
         $('#current-page').text(currentPage);
@@ -12,7 +13,7 @@ $(document).ready(function () {
         $('#table-next-page-button').prop('disabled', false);
 
         $.ajax({
-            url: 'http://localhost:8080/bim/api/requests?' + 'pageNumber=' + currentPage + '&pageSize=' + pageSize +
+            url: 'http://localhost:8080/bim/api/requests?' + 'filterStatus='  + filter + '&pageNumber=' + currentPage + '&pageSize=' + pageSize +
                 '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
             type: 'GET',
             dataType: 'JSON',

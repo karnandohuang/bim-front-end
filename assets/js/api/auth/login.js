@@ -1,4 +1,4 @@
-var cookie = document.cookie;
+var date = Math.floor(Date.now() / 1000);
 
 $(document).ready(function () {
     var loginBox = $('.login-box');
@@ -13,7 +13,6 @@ $(document).ready(function () {
                 $("#progress").css("width",  _percent+"%");
             },
             complete: function() {
-                // $("#progress").addClass("done");
                 window.location.replace('dashboard.html');
             }
         });
@@ -48,19 +47,39 @@ $(document).ready(function () {
         }
     })();
 
+    function successCardColor() {
+        $('#card-border').addClass('border-success');
+        $('#card-text').addClass('text-success');
+        $('#card-border').removeClass('border-danger');
+        $('#card-text').removeClass('text-danger');
+    }
+
+    function failCardColor() {
+        $('#card-border').addClass('border-danger');
+        $('#card-text').addClass('text-danger');
+        $('#card-border').removeClass('border-success');
+        $('#card-text').removeClass('text-success');
+        $('.login-alert').css('display', 'block');
+    }
+
+    function displayLoginAlert(message, status) {
+        $('.card-text').html(message);
+        if(status==='success')
+            successCardColor();
+        else
+            failCardColor();
+    }
+
     $('#login-button').on('click', function (){
+        var API_PATH_LOGIN = "http://localhost:8080/bim/api/login";
+
         let EMAIL = $('#email').val();
         let PASSWORD = $('#password').val();
 
-        var API_PATH_LOGIN = "http://localhost:8080/bim/api/login";
         var data = {
             email : EMAIL,
             password : PASSWORD
         };
-
-        console.log(EMAIL + PASSWORD);
-        console.log(data);
-
         var login_json = JSON.stringify(data);
 
         $.ajax({
@@ -73,20 +92,21 @@ $(document).ready(function () {
             data: login_json,
             success: function (response, status, xhr){
                 if(response.success === true){
-                    $('.failed-login-alert').css('display', 'none');
+                    displayLoginAlert('Login Success', 'success');
 
                     setCookie("USERCOOKIE", response.value.token, 1);
                     localStorage.setItem("token", response.value.token);
                     localStorage.setItem("role", response.value.role);
+                    localStorage.setItem("ts", date + (60 * 60 * 2));
 
                     redirect();
                 }
                 else{
-                    $('.failed-login-alert').css('display', 'block');
+                    displayLoginAlert('Your email or password is incorrect. please try again.', 'fail');
                 }
             },
             error: function (response, status, xhr) {
-                $('.failed-login-alert').css('display', 'block');
+                displayLoginAlert('Your email or password is incorrect. please try again.', 'fail');
             }
         });
 
