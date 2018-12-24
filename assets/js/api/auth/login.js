@@ -59,15 +59,16 @@ $(document).ready(function () {
         $('#card-text').addClass('text-danger');
         $('#card-border').removeClass('border-success');
         $('#card-text').removeClass('text-success');
-        $('.login-alert').css('display', 'block');
     }
 
     function displayLoginAlert(message, status) {
         $('.card-text').html(message);
-        if(status==='success')
+        if(status===true)
             successCardColor();
         else
             failCardColor();
+
+        $('.login-alert').css('display', 'block');
     }
 
     $('#login-button').on('click', function (){
@@ -92,7 +93,7 @@ $(document).ready(function () {
             data: login_json,
             success: function (response, status, xhr){
                 if(response.success === true){
-                    displayLoginAlert('Login Success', 'success');
+                    displayLoginAlert('<i class="fas fa-check-circle"></i> Login Successful.', true);
 
                     setCookie("USERCOOKIE", response.value.token, 1);
                     localStorage.setItem("token", response.value.token);
@@ -102,11 +103,11 @@ $(document).ready(function () {
                     redirect();
                 }
                 else{
-                    displayLoginAlert('Your email or password is incorrect. please try again.', 'fail');
+                    displayLoginAlert('<i class="fas fa-times-circle"></i> Your email or password is incorrect. please try again.', false);
                 }
             },
             error: function (response, status, xhr) {
-                displayLoginAlert('Your email or password is incorrect. please try again.', 'fail');
+                displayLoginAlert('<i class="fas fa-times-circle"></i> Your email or password is incorrect. please try again.', false);
             }
         });
 
