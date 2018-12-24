@@ -10,14 +10,14 @@ $(document).ready(function () {
             url: 'http://localhost:8080/bim/api/items/pdf/' + itemId,
             type: 'GET',
             contentType: 'application/pdf',
-            responseType: 'arraybuffer',
+            // responseType: 'arraybuffer',
             success: function (response, status, jqXHR) {
                 var file = new Blob([response], {type: 'application/pdf'});
                 console.log(file);
                 var fileURL = URL.createObjectURL(file);
-                // window.open(fileURL);
-                // window.location.href= fileURL;
-                console.log(file);
+                window.open(fileURL);
+                window.location = fileURL;
+                console.log(fileURL);
             },
             error: function (response, status, jqXHR) {
                 alert("error");
