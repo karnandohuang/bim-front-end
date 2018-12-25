@@ -192,3 +192,7 @@ $(document).ready(function () {
     });
 });
 
+export default {
+
+}
+

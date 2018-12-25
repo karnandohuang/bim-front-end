@@ -25,8 +25,6 @@ function displayMessageBox(message) {
     if(getCookie("USERCOOKIE") === ""){
         window.location.replace('login.html');
     }
-    //if session is over 2 hours and status code is 500
-    //should display pop up to redirect to login page
 })();
 
 (function hideAttributesBasedOnRole() {
@@ -38,18 +36,13 @@ function displayMessageBox(message) {
         $('#request-button-div').css('display','none');
 
     } else if(localStorage.getItem('role') === "SUPERIOR" || localStorage.getItem('role') === "EMPLOYEE"){
-        //items page
+        //items page & employees page
         $('#entry-button-div').css('display','none');
         $('#delete-button-div').css('display','none');
     }
 })();
 
-(function pageAuthorization () {
-
-})();
-
 $(document).ready(function () {
-
     $(window).on('load',function(){
         (function checkSession() {
             if(date >= localStorage.getItem('ts')){
@@ -62,10 +55,4 @@ $(document).ready(function () {
             }
         })();
     });
-
-    // (function setName(){
-    //     alert($(document).find('#user-name').text());
-    //     $('#top-navbar').find('#user-name').html('aaa');
-    // })();
-    // $(document).parents('#left-navbar').find('#employees').hide();
 });

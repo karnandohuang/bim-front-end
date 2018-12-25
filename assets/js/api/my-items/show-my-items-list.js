@@ -22,8 +22,8 @@ $(document).ready(function () {
             },
             success: function (response, status, jqXHR) {
                 if(response.paging.totalRecords > 0) {
-                    $(response.value).each(function (index, value) {
-
+                    console.log(response.value.list);
+                    $(response.value.list).each(function (index, value) {
                         let record =
                             "<tr class='row-select'>" +
                             "<td class='assignment-id'>" + value.assignmentId +
