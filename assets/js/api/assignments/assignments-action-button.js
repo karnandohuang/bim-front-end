@@ -1,11 +1,40 @@
 let API_PATH_CHANGE_ASSIGNMENT_STATUS = 'http://localhost:8080/bim/api/requests/changeStatus';
 
-$(document).ready(function () {
+function changeStatusAjax(actionName, jsonData){
+    $.ajax({
+        url: API_PATH_CHANGE_ASSIGNMENT_STATUS,
+        type: 'PUT',
+        dataType: 'JSON',
+        async: false,
+        contentType: 'application/json',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+            // console.log(xhr.getAllResponseHeaders());
+        },
+        data: jsonData,
+        success: function (response, status, jqXHR) {
+            if (response.success === true) {
+                displayMessageBox(actionName + " Success");
+                $('#action-modal').modal('hide');
+                $('.modal-footer').on('click', '#message-box-button', function () {
+                    window.location.reload();
+                });
+            } else {
+                displayMessageBox(actionName + " Assignment Failed" + " (" + response.errorMessage + ")");
+            }
+        },
+        error: function (response, status, jqXHR) {
+            displayMessageBox(actionName + " Assignment Failed" + " (" + status + ")");
+        }
+    });
+}
 
-    function displayMessageBox(message) {
-        $('#message-box .modal-body').text(message);
-        $('#message-box').modal('show');
-    }
+function displayMessageBox(message) {
+    $('#message-box .modal-body').text(message);
+    $('#message-box').modal('show');
+}
+
+$(document).ready(function () {
 
     function setApproveModalAttributes() {
         $("#entry-edit-form").css("display", "none");
@@ -68,34 +97,6 @@ $(document).ready(function () {
         return ids;
     }
 
-    function changeStatusAjax(actionName, jsonData){
-        $.ajax({
-            url: API_PATH_CHANGE_ASSIGNMENT_STATUS,
-            type: 'PUT',
-            dataType: 'JSON',
-            async: false,
-            contentType: 'application/json',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-                // console.log(xhr.getAllResponseHeaders());
-            },
-            data: jsonData,
-            success: function (response, status, jqXHR) {
-                if (response.success === true) {
-                    displayMessageBox(actionName + " Success");
-                    $('#action-modal').modal('hide');
-                    $('.modal-footer').on('click', '#message-box-button', function () {
-                        window.location.reload();
-                    });
-                } else {
-                    displayMessageBox(actionName + " Assignment Failed" + " (" + response.errorMessage + ")");
-                }
-            },
-            error: function (response, status, jqXHR) {
-                displayMessageBox(actionName + " Assignment Failed" + " (" + status + ")");
-            }
-        });
-    }
 
 //when pressing assignment button
     $('#approve-button, #reject-button, #handover-button').on('click', function () {
@@ -192,7 +193,16 @@ $(document).ready(function () {
     });
 });
 
-export default {
+window.module = window.module || {};
 
+var some = 5;
+
+function display(message){
+    console.log(message)
 }
 
+module.exports = {
+    some,
+    displayMessageBox,
+    changeStatusAjax
+};

@@ -38,24 +38,33 @@
 
                     <div class="title-and-sort-div"></div>
                     <div class="assignment-sort-div row justify-content-end">
-                        <div class="col-md-10 col-lg-6 mb-3 text-right">
+                        <div class="col-md-12 col-lg-8 mb-3 text-right">
                             <div class="form-check-inline">
-                                <h6>Filter Status : </h6>
+                                <h6>Filter Assignment Status : </h6>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="pending-assignment" value="pending-assignment" checked>
+                                <input class="form-check-input" type="radio" id="all-assignment" name="assignment-status-filter"
+                                       value="" checked>
+                                <label class="form-check-label" for="all-assignment">All</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="pending-assignment" name="assignment-status-filter"
+									   value="Pending">
                                 <label class="form-check-label" for="pending-assignment">Pending</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="approved--assignment" value="approved-assignment" checked>
-                                <label class="form-check-label" for="approved--assignment">Approved</label>
+                                <input class="form-check-input" type="radio" id="approved-assignment" name="assignment-status-filter"
+                                       value="Approved">
+                                <label class="form-check-label" for="approved-assignment">Approved</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="handover-assignment" value="handover-assignment" checked>
+                                <input class="form-check-input" type="radio" id="handover-assignment" name="assignment-status-filter"
+                                       value="Handover" >
                                 <label class="form-check-label" for="handover-assignment">Handover</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="rejected-assignment" value="rejected-assignment" checked>
+                                <input class="form-check-input" type="radio" id="rejected-assignment" name="assignment-status-filter"
+                                       value="Rejected">
                                 <label class="form-check-label" for="rejected-assignment">Rejected</label>
                             </div>
                         </div>

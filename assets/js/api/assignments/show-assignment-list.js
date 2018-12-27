@@ -173,4 +173,12 @@ $(document).ready(function () {
         currentPage = 1;
         displayTablePage(currentPage);
     });
+
+    $(document).on('change', 'input[type=radio][name=assignment-status-filter]', function () {
+        $('#data-table>tbody').empty();
+        filter=$('input[type=radio][name=assignment-status-filter]:checked').val();
+        console.log(filter);
+        currentPage = 1;
+        displayTablePage(currentPage);
+    });
 });
