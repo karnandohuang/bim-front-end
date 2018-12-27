@@ -6,23 +6,24 @@ $(document).ready(function () {
     }
 
     function getPdf(itemId) {
-        $.ajax({
-            url: 'http://localhost:8080/bim/api/items/pdf/' + itemId,
-            type: 'GET',
-            contentType: 'application/pdf',
-            // responseType: 'arraybuffer',
-            success: function (response, status, jqXHR) {
-                var file = new Blob([response], {type: 'application/pdf'});
-                console.log(file);
-                var fileURL = URL.createObjectURL(file);
-                window.open(fileURL);
-                window.location = fileURL;
-                console.log(fileURL);
-            },
-            error: function (response, status, jqXHR) {
-                alert("error");
-            }
-        });
+        // $.ajax({
+        //     url: 'http://localhost:8080/bim/api/items/pdf/' + itemId,
+        //     type: 'GET',
+        //     contentType: 'application/pdf',
+        //     dataType: "jsonp",
+        //     success: function (response, status, jqXHR) {
+        //         // var file = new Blob([response], {type: 'application/pdf'});
+        //         // console.log(file);
+        //         var fileURL = URL.createObjectURL(response);
+        //         window.open(fileURL);
+        //     },
+        //     error: function (response, status, jqXHR) {
+        //         console.log(response.getAllResponseHeaders());
+        //         alert("error");
+        //     }
+        // });
+
+        window.location.href = "http://localhost:8080/bim/api/items/pdf/" + itemId;
     }
 
     $(document).on('click', '.print-button', function () {
