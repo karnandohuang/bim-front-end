@@ -67,7 +67,7 @@ var assignmentList = {
 describe('Assignment List Ajax Call', function () {
 
     beforeEach(function () {
-        sinon.spy(jQuery, 'ajax');
+        sinon.stub(jQuery, 'ajax').yieldsTo('success', {});
     });
 
     afterEach(function() {

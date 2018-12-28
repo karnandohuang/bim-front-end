@@ -31,10 +31,3 @@ require.config({
     callback: window.__karma__.start,
     // callback: mocha.run
 });
-
-var assignmentActionButton = require(['base/assets/js/api/assignments/assignments-action-button.js'], function () {
-    console.log(some);
-    display("haha");
-});
-
-

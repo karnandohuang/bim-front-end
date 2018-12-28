@@ -4,9 +4,18 @@
 // });
 // const assignmentActionButton = require('./assets/js/api/assignments/assignments-action-button-test');
 
+window.module = window.module || {};
+
 var expect = chai.expect;
 
-
+// function goblok() {
+//     console.log("ayam");
+// }
+//
+// var ayam = "ayam";
+//
+// module.exports = {goblok, ayam};
+//
 // describe("A test suite", function() {
 //     beforeEach(function() { });
 //     afterEach(function() { });

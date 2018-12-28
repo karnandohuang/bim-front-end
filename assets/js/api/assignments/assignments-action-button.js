@@ -1,3 +1,5 @@
+window.module = window.module || {};
+
 let API_PATH_CHANGE_ASSIGNMENT_STATUS = 'http://localhost:8080/bim/api/requests/changeStatus';
 
 function changeStatusAjax(actionName, jsonData){
@@ -193,7 +195,6 @@ $(document).ready(function () {
     });
 });
 
-window.module = window.module || {};
 
 var some = 5;
 
@@ -201,8 +202,12 @@ function display(message){
     console.log(message)
 }
 
+function calculate(a,b){
+    return a+b
+}
+
 module.exports = {
     some,
-    displayMessageBox,
-    changeStatusAjax
+    calculate,
+    displayMessageBox
 };

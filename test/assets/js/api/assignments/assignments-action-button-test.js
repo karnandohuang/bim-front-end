@@ -1,18 +1,19 @@
 var expect = chai.expect;
-var path = 'base/assets/js/api/assignments/assignments-action-button.js';
+var path = './assets/js/api/assignments/assignments-action-button';
 
 // define(['require', path], function (require) {
 //     var assignmentActionButton = require(path);
 // });
 
-var assignmentActionButton = require(path);
+// var assignmentActionButton = require(path);
 
-require([path], function (assignmentActionButton) {
-    console.log("some ->" + some);
-});
-
-
-// console.log(assignmentActionButton.something);
+// var goblok = require('./test/test');
+// require(['./test/test'], function (assignmentActionButton) {
+//     console.log("some ->" + ayam);
+// });
+//
+// goblok;
+// console.log(goblok.ayam);
 
 var changeAssignmentStatus = {
     callAjaxWithAuthorization: function () {
@@ -176,34 +177,46 @@ describe('Change Assignment Status Without Authorization', function (done) {
 describe('Show Message Box', function () {
     var a;
 
-    // beforeEach(function (done) {
-        // require([path], function (assignmentActionButton) {
-        //     console.log("some ->" + some);
-        //     displayMessageBox("hello");
-        //     a = some;
-        //     done();
-        // });
-    // });
+    beforeEach(function (done) {
+        require([path], function (assignmentActionButton) {
+            console.log("some ->" + some);
+            // displayMessageBox("hello");
 
-    beforeEach(function() {
-        sinon.stub(jQuery, 'ajax').yieldsTo('success', {
+
+
+            done();
         });
     });
 
-    afterEach(function() {
-        jQuery.ajax.restore();
-    });
+    // beforeEach(function() {
+    //     sinon.stub(jQuery, 'ajax').yieldsTo('success', {
+    //     });
+    // });
+    //
+    // afterEach(function() {
+    //     jQuery.ajax.restore();
+    // });
 
     it('should show message box', function (done) {
         let assignment = {
             ids: ["AT001"],
             status: "Received"
         };
-        let assignmentJson = JSON.stringify(assignment);
+        // let assignmentJson = JSON.stringify(assignment);
 
-        assignmentActionButton.changeStatusAjax("Reject", assignmentJson);
-        expect($.ajax.calledOnce).to.be.true;
+        // assignmentActionButton.changeStatusAjax("Reject", assignmentJson);
+        // expect($.ajax.calledOnce).to.be.true;
         done();
     });
 });
 
+
+define(['assets/js/api/assignments/assignments-action-button'], function (assignmentActionButton) {
+    describe('expect some to equal 5', function () {
+        it('should return true', function () {
+            c = calculate(10,5);
+            expect(c).to.equal(15);
+            expect(some).to.equal(5);
+        })
+    })
+});
