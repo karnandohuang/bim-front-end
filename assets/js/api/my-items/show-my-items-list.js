@@ -27,15 +27,12 @@ $(document).ready(function () {
                         let record =
                             "<tr class='row-select'>" +
                             "<td class='assignment-id'>" + value.assignmentId +
-                            "<td class='sku'>" + value.item.id +
+                            "<td class='id'>" + value.item.id +
                             "</td><td class='name'>" + value.item.name +
                             "</td><td class='price'>" + value.item.price +
                             "</td><td class='location'>" + value.item.location +
                             "</td><td class='qty'>" + value.item.qty +
                             "</td><td class='status'>" + value.status +
-                            "</td><td class='p-1 text-center'>" +
-                            "<button type=\"button\" class=\"btn btn-secondary px-2 mx-1 print-button\" " +
-                            "onclick='window.print()''><i class=\"fas fa-print\"></i></button>" +
                             "</td></tr>";
 
                         $('#data-table').append(record);

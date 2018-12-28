@@ -44,9 +44,14 @@ $(document).ready(function () {
                             "</td><td class='position'>" + value.position +
                             "</td><td class='division'>" + value.division +
                             "</td><td class='superiorId'>" + value.superiorId +
-                            "</td><td class='p-1 text-center'>" +
-                            "<button type=\"button\" class=\"btn btn-success px-2 mx-1 edit-button\">" +
-                            "<i class=\"fas fa-edit\"></i></button>" +
+                            "</td><td class='p-1 text-center'>";
+
+                        if(localStorage.getItem('role') === 'ADMIN')
+                            record +=
+                                "<button type=\"button\" class=\"btn btn-success px-2 mx-1 edit-button\">" +
+                                "<i class=\"fas fa-edit\"></i></button>";
+
+                        record +=
                             "</td></tr>";
 
                         $("#data-table").append(record);

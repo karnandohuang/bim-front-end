@@ -12,6 +12,7 @@ function displayMessageBox(message) {
 })();
 
 (function hideAttributesBasedOnRole() {
+
     if(localStorage.getItem('role') === "ADMIN"){
         //dashboard
         $('#total-my-items-card').css('display','none');
@@ -24,7 +25,7 @@ function displayMessageBox(message) {
         $('#entry-button-div').css('display','none');
         $('#delete-button-div').css('display','none');
     }
-})();
+    })();
 
 $(document).ready(function () {
     $(window).on('load',function(){

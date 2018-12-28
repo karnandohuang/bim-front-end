@@ -60,9 +60,14 @@ $(document).ready(function () {
                             "</td><td class='price'>" + value.price +
                             "</td><td class='location'>" + value.location +
                             "</td><td class='qty'>" + value.qty +
-                            "</td><td class='p-1 text-center'>" +
-                            "<button type=\"button\" class=\"btn btn-success px-2 mx-1 edit-button\">" +
-                            "<i class=\"fas fa-edit\"></i></button>" +
+                            "</td><td class='p-1 text-center'>";
+
+                        if(localStorage.getItem('role') === 'ADMIN')
+                            record +=
+                                "<button type=\"button\" class=\"btn btn-success px-2 mx-1 edit-button\">" +
+                                "<i class=\"fas fa-edit\"></i></button>";
+
+                        record +=
                             "<button type=\"button\" class=\"btn btn-info px-2 mx-1 info-button\">" +
                             "<i class=\"fas fa-info-circle\"></i></button>" +
                             "<button type=\"button\" class=\"btn btn-secondary px-2 mx-1 print-button\">" +
