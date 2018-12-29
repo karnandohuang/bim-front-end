@@ -1,3 +1,10 @@
+window.module = window.module || {};
+
+function logout() {
+    localStorage.clear();
+    window.location = 'login.html';
+}
+
 $(document).ready(function () {
     var loginBox = $('.login-box');
     loginBox.addClass("transitioned");
@@ -19,7 +26,6 @@ $(document).ready(function () {
         //     error: {},
         // });
 
-        localStorage.removeItem('token');
-        window.location = 'login.html';
+        logout();
     });
 });

@@ -1,20 +1,6 @@
 var expect = chai.expect;
 var path = './assets/js/api/assignments/assignments-action-button';
 
-// define(['require', path], function (require) {
-//     var assignmentActionButton = require(path);
-// });
-
-// var assignmentActionButton = require(path);
-
-// var goblok = require('./test/test');
-// require(['./test/test'], function (assignmentActionButton) {
-//     console.log("some ->" + ayam);
-// });
-//
-// goblok;
-// console.log(goblok.ayam);
-
 var changeAssignmentStatus = {
     callAjaxWithAuthorization: function () {
         $.ajax({
@@ -179,7 +165,7 @@ describe('Show Message Box', function () {
 
     beforeEach(function (done) {
         require([path], function (assignmentActionButton) {
-            console.log("some ->" + some);
+            // console.log("some ->" + some);
             // displayMessageBox("hello");
 
 
@@ -212,11 +198,9 @@ describe('Show Message Box', function () {
 
 
 define(['assets/js/api/assignments/assignments-action-button'], function (assignmentActionButton) {
-    describe('expect some to equal 5', function () {
-        it('should return true', function () {
-            c = calculate(10,5);
-            expect(c).to.equal(15);
-            expect(some).to.equal(5);
+    describe('expect to show message box', function () {
+        it('should show message box', function () {
+            // displayMessageBox("Hello");
         })
     })
 });

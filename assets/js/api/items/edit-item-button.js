@@ -39,6 +39,10 @@ $(document).ready(function () {
                 $('#input-item-price').val(response.value.value.price);
                 $('#input-item-qty').val(response.value.value.qty);
                 $('#input-item-location').val(response.value.value.location);
+                if(response.value.value.imageUrl !== "null")
+                    $('#image-preview').prop('src', ('http://localhost:8080/bim/items/image?imagePath=' + response.value.value.imageUrl));
+                else
+                    $('#image-preview').prop('src', '../assets/images/no-image-available.png');
                 imageUrl = response.value.value.imageUrl;
             },
             error: function (response, status, jqXHR) {
@@ -59,7 +63,6 @@ $(document).ready(function () {
             cache: false,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-                // console.log(xhr.getAllResponseHeaders());
             },
             success: function (response, status, jqXHR) {
                 if (response.success === true) {

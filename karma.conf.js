@@ -17,7 +17,7 @@ module.exports = function(config) {
         files: [
             'test/assets/js/jquery-3.3.1.min.js',
             {
-                pattern: 'assets/js/api/**/*.js',
+                pattern: 'assets/js/**/**/*.js',
                 included: false
             },
             {

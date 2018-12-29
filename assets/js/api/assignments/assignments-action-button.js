@@ -11,7 +11,6 @@ function changeStatusAjax(actionName, jsonData){
         contentType: 'application/json',
         beforeSend: function (xhr) {
             xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-            // console.log(xhr.getAllResponseHeaders());
         },
         data: jsonData,
         success: function (response, status, jqXHR) {

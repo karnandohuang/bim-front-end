@@ -11,33 +11,6 @@ $(document).ready(function () {
         $('#item-action-modal').modal('show');
     }
 
-    function displayMessageBox(message) {
-        $('#message-box .modal-body').text(message);
-        $('#message-box').modal('show');
-    }
-
-    function getImageByte(imagePath) {
-        $.ajax({
-            url: 'http://localhost:8080/bim/api/items/image?imagePath=' + imagePath,
-            type: 'GET',
-            dataType: "jsonp",
-            contentType: "image/jpeg",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-                // console.log(xhr.getAllResponseHeaders());
-            },
-            success: function (response, status, jqXHR) {
-                console.log(response);
-                $('#item-info-image').prop('src', ('http://localhost:8080/bim/api/items/image?imagePath='
-                    + response.value.value.imageUrl +
-                    ''));
-            },
-            error: function (response, status, jqXHR) {
-                console.log(response);
-            }
-        });
-    }
-
     function getItemJson(itemId) {
         $.ajax({
             url: 'http://localhost:8080/bim/api/items/' + itemId,
@@ -45,7 +18,6 @@ $(document).ready(function () {
             dataType: 'JSON',
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-                // console.log(xhr.getAllResponseHeaders());
             },
             contentType: 'application/json',
             success: function (response, status, jqXHR) {
@@ -56,7 +28,10 @@ $(document).ready(function () {
                 $('#item-info-location').text(response.value.value.location);
 
                 if(response.value.value.imageUrl !== "null")
-                    getImageByte(response.value.value.imageUrl);
+                    $('#item-info-image').prop('src', ('http://localhost:8080/bim/items/image?imagePath=' + response.value.value.imageUrl));
+                else
+                    $('#item-info-image').prop('src', '../assets/images/no-image-available.png');
+
             },
             error: function (response, status, jqXHR) {
 

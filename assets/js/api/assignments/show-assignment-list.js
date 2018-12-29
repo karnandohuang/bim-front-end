@@ -1,75 +1,77 @@
-$(document).ready(function () {
+window.module = window.module || {};
 
-    let currentPage = 1;
-    let pageSize = 6;
-    let totalPage = 1;
-    let sortedBy = "id";
-    let sortedType = "asc";
-    let filter="";
+let currentPage = 1;
+let pageSize = 6;
+let totalPage = 1;
+let sortedBy = "id";
+let sortedType = "asc";
+let filter="";
+
+$(document).ready(function () {
 
     function displayTablePage(currentPage) {
         $('#current-page').text(currentPage);
         $('#table-prev-page-button').prop('disabled', false);
         $('#table-next-page-button').prop('disabled', false);
         if (localStorage.getItem("role") === "ADMIN") {
-        $.ajax({
-            url: 'http://localhost:8080/bim/api/requests?' + 'filterStatus='  + filter + '&pageNumber=' + currentPage + '&pageSize=' + pageSize +
-                '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
-            type: 'GET',
-            dataType: 'JSON',
-            contentType: 'application/json',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-                // console.log(xhr.getAllResponseHeaders());
-            },
-            success: function (response, status, jqXHR) {
-                if(response.paging.totalRecords > 0) {
-                    $(response.value.list).each(function (index, value) {
+            $.ajax({
+                url: 'http://localhost:8080/bim/api/requests' + '?filterStatus='  + filter + '&pageNumber=' + currentPage + '&pageSize=' + pageSize +
+                    '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
+                type: 'GET',
+                dataType: 'JSON',
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+                    // console.log(xhr.getAllResponseHeaders());
+                },
+                success: function (response, status, jqXHR) {
+                    if(response.paging.totalRecords > 0) {
+                        $(response.value.list).each(function (index, value) {
 
-                        let record =
-                            "<tr class='row-select'><td class='select'>" +
-                            '<input class="form-check-input position-static ml-1" type="checkbox" value="">' +
-                            "</td><td class='assignment-id'>" + value.assignment.id +
-                            "</td><td class='employee-id'>" + value.assignment.employee.id +
-                            "</td><td class='employee-name'>" + value.assignment.employee.name +
-                            "</td><td class='item-id'>" + value.assignment.item.id +
-                            "</td><td class='item-name'>" + value.assignment.item.name +
-                            "</td><td class='qty'>" + value.assignment.qty +
-                            "</td><td class='status'>" + value.assignment.status +
-                            "</td><td class='notes'>" + value.assignment.notes +
-                            "</td></tr>";
+                            let record =
+                                "<tr class='row-select'><td class='select'>" +
+                                '<input class="form-check-input position-static ml-1" type="checkbox" value="">' +
+                                "</td><td class='assignment-id'>" + value.assignment.id +
+                                "</td><td class='employee-id'>" + value.assignment.employee.id +
+                                "</td><td class='employee-name'>" + value.assignment.employee.name +
+                                "</td><td class='item-id'>" + value.assignment.item.id +
+                                "</td><td class='item-name'>" + value.assignment.item.name +
+                                "</td><td class='qty'>" + value.assignment.qty +
+                                "</td><td class='status'>" + value.assignment.status +
+                                "</td><td class='notes'>" + value.assignment.notes +
+                                "</td></tr>";
 
+                            $('#data-table').append(record);
+                        });
+                        totalPage = response.paging.totalPage;
+                        if(totalPage===0)
+                            totalPage=1;
+                        $('#total-page').text(totalPage);
+
+                        if((currentPage === 1) && (currentPage === totalPage)) {
+                            $('#table-prev-page-button').prop('disabled', true);
+                            $('#table-next-page-button').prop('disabled', true);
+                        } else if(currentPage === 1){
+                            $('#table-prev-page-button').prop('disabled', true);
+                        } else if(currentPage === totalPage){
+                            $('#table-next-page-button').prop('disabled', true);
+                        }
+
+                    }else {
+                        let record = "<tr><td colspan='100' class='text-center p-4'><h3>No Data Available</h3></td></tr>";
                         $('#data-table').append(record);
-                    });
-                    totalPage = response.paging.totalPage;
-                    if(totalPage===0)
-                        totalPage=1;
-                    $('#total-page').text(totalPage);
-
-                    if((currentPage === 1) && (currentPage === totalPage)) {
-                        $('#table-prev-page-button').prop('disabled', true);
-                        $('#table-next-page-button').prop('disabled', true);
-                    } else if(currentPage === 1){
-                        $('#table-prev-page-button').prop('disabled', true);
-                    } else if(currentPage === totalPage){
-                        $('#table-next-page-button').prop('disabled', true);
                     }
+                },
+                error: function (response, status, jqXHR) {
+                    let record =
+                        "<tr><td colspan='100' class='text-center p-4'>" +
+                        "<h3>Error Retrieving Data</h3>" +
+                        "<button class='btn btn-primary' onclick='window.location.reload()'>Reload</button>" +
+                        "</td></tr>";
 
-                }else {
-                    let record = "<tr><td colspan='100' class='text-center p-4'><h3>No Data Available</h3></td></tr>";
                     $('#data-table').append(record);
                 }
-            },
-            error: function (response, status, jqXHR) {
-                let record =
-                    "<tr><td colspan='100' class='text-center p-4'>" +
-                    "<h3>Error Retrieving Data</h3>" +
-                    "<button class='btn btn-primary' onclick='window.location.reload()'>Reload</button>" +
-                    "</td></tr>";
-
-                $('#data-table').append(record);
-            }
-        });
+            });
         }
         else if (localStorage.getItem('role') === "SUPERIOR") {
             $.ajax({

@@ -26,17 +26,8 @@ var assignmentList = {
         });
     },
 
-    // callAjaxWithoutAuthorization: function () {
-    //     jQuery.ajax({
-    //         url: 'http://localhost:8080/bim/api/requests?pageNumber=1&pageSize=&sortedBy=id&sortedType=asc',
-    //         type: 'GET',
-    //         dataType: 'JSON',
-    //         contentType: 'application/json',
-    //         success: function (response, status, jqXHR) {
-    //             console.log(response);
-    //         }
-    //     });
-    // },
+    callAjax : function(){
+    },
 
     getData: function () {
         var self = this;
@@ -87,35 +78,46 @@ describe('Assignment List Ajax Call', function () {
     // });
 });
 
-describe('Get Assignment List', function () {
-    beforeEach(function() {
-        sinon.stub(jQuery, 'ajax').yieldsTo('success', {
-            assignmentId: 'AT001',
-            employeeId : 'EM001',
-            employeeName: 'Karnando Sepryan',
-            itemId: 'IM001',
-            itemName: 'Dell XPS 13',
-            itemQty: '2',
-            assignmentStatus: 'Pending',
-            assignmentNotes: ''
+
+
+define(['assets/js/api/assignments/show-assignment-list'], function () {
+    describe('Get Assignment List', function () {
+        beforeEach(function() {
+            sinon.stub(jQuery, 'ajax').yieldsTo('success', {
+                assignmentId: 'AT001',
+                employeeId : 'EM001',
+                employeeName: 'Karnando Sepryan',
+                itemId: 'IM001',
+                itemName: 'Dell XPS 13',
+                itemQty: '2',
+                assignmentStatus: 'Pending',
+                assignmentNotes: ''
+            });
         });
-    });
 
-    afterEach(function() {
-        jQuery.ajax.restore();
-    });
+        afterEach(function() {
+            jQuery.ajax.restore();
+        });
 
-    it('Get Assignment List Data from ajax request should return correct data', function (done) {
-        assignmentList.getData();
-        console.log(assignmentList.assignmentId);
-        expect(assignmentList.assignmentId).to.equals('AT001');
-        expect(assignmentList.employeeId).to.equals("EM001");
-        expect(assignmentList.employeeName).to.equals("Karnando Sepryan");
-        expect(assignmentList.itemId).to.equals("IM001");
-        expect(assignmentList.itemName).to.equals("Dell XPS 13");
-        expect(assignmentList.itemQty).to.equals("2");
-        expect(assignmentList.assignmentStatus).to.equals("Pending");
-        expect(assignmentList.assignmentNotes).to.equals("");
-        done();
+        it('Get Assignment List Data from ajax request should return correct data', function (done) {
+            let currentPage = 1;
+            let pageSize = 6;
+            let totalPage = 1;
+            let sortedBy = "id";
+            let sortedType = "asc";
+            let filter="";
+
+            // assignmentList.callAjax(currentPage);
+            showAssignmentListAjax(currentPage);
+            expect(assignmentList.assignmentId).to.equals('AT001');
+            expect(assignmentList.employeeId).to.equals("EM001");
+            expect(assignmentList.employeeName).to.equals("Karnando Sepryan");
+            expect(assignmentList.itemId).to.equals("IM001");
+            expect(assignmentList.itemName).to.equals("Dell XPS 13");
+            expect(assignmentList.itemQty).to.equals("2");
+            expect(assignmentList.assignmentStatus).to.equals("Pending");
+            expect(assignmentList.assignmentNotes).to.equals("");
+            done();
+        });
     });
 });

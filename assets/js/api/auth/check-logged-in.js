@@ -28,7 +28,7 @@ function displayMessageBox(message) {
     })();
 
 $(document).ready(function () {
-    $(window).on('load',function(){
+    $(window).on('load', function(){
         (function checkSession() {
             if(date >= localStorage.getItem('ts')){
                 displayMessageBox("Your session has expired. Please login to continue.");
