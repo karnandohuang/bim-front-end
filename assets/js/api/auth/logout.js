@@ -11,21 +11,6 @@ $(document).ready(function () {
     setTimeout(function(){loginBox.removeClass("transitioned")},200);
 
     $(document).on('click', '#logout-button', function () {
-        // $.ajax({
-        //     type: "GET",
-        //     url: "http://localhost:8080/bim/api/logout",
-        //     dataType: 'json',
-        //     crossDomain: true,
-        //     beforeSend: function (xhr) {
-        //         xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-        //     },
-        //     contentType: 'application/json',
-        //     success: function (response, status, xhr) {
-        //
-        //     },
-        //     error: {},
-        // });
-
         logout();
     });
 });

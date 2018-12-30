@@ -3,6 +3,12 @@ window.module = window.module || {};
 var date = Math.floor(Date.now() / 1000);
 var loginData = {};
 
+function setLocalStorage(response) {
+    localStorage.setItem("token", response.value.token);
+    localStorage.setItem("role", response.value.role);
+    localStorage.setItem("ts", date + (60 * 60 * 2));
+}
+
 function callLoginAjax(API_PATH_LOGIN, login_json) {
     $.ajax({
         type: "POST",
@@ -10,16 +16,12 @@ function callLoginAjax(API_PATH_LOGIN, login_json) {
         dataType: 'json',
         crossDomain: true,
         contentType: 'application/json',
-        // xhrFields: {withCredentials: true},
         data: login_json,
         success: function (response, status, xhr) {
             if (response.success === true) {
+
                 displayLoginAlert('<i class="fas fa-check-circle"></i> Login Successful.', true);
-
-                localStorage.setItem("token", response.value.token);
-                localStorage.setItem("role", response.value.role);
-                localStorage.setItem("ts", date + (60 * 60 * 2));
-
+                setLocalStorage(response);
                 redirectToDashboard();
             }
             else {
@@ -96,10 +98,15 @@ $(document).ready(function () {
 
     $('#login-button').on('click', function (){
 
-        let EMAIL = $('#email').val();
-        let PASSWORD = $('#password').val();
+        $('#login-form').click();
+        let form = $('#login-form');
 
-        login(EMAIL, PASSWORD);
+        if(form[0].checkValidity()){
+            let EMAIL = $('#email').val();
+            let PASSWORD = $('#password').val();
+
+            login(EMAIL, PASSWORD);
+        }
     });
 });
 

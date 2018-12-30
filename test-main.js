@@ -12,9 +12,9 @@ Object.keys(window.__karma__.files).forEach(function (file) {
     }
 });
 
-for (var file in window.__karma__.files) {
-    console.log(file)
-}
+// for (var file in window.__karma__.files) {
+//     console.log(file)
+// }
 
 require.config({
     // Karma serves files under /base, which is the basePath from your config file
@@ -24,7 +24,9 @@ require.config({
     deps: allTestFiles,
 
     paths: {
-        'assignments-action-button': 'assets/js/api/assignments/assignments-action-button.js'
+        'assignments-action-button': 'assets/js/api/assignments/assignments-action-button.js',
+        'chai-jquery': 'node_modules/chai-jquery/chai-jquery',
+
     },
 
     // we have to kickoff jasmine, as it is asynchronous

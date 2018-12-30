@@ -1,34 +1,89 @@
+function setRequestModalAttributes() {
+    $("#request-table>tbody").empty();
+    $("#request-div").css("display", "inline");
+    $("#entry-edit-form").css("display", "none");
+    $("#item-information-div").css("display", "none");
+
+    $('.modal-title').text("Request Item");
+    $('.modal-save-button').css("display", "block");
+    $('.modal-save-button').prop('id', 'request-item-button');
+    $('#item-action-modal').modal('show');
+}
+
+function setDeleteModalAttributes() {
+    $("#request-table>tbody").empty();
+    $("#entry-edit-form").css("display", "none");
+    $("#item-information-div").css("display", "none");
+    $("#request-div").css("display", "");
+    $("#input-item-id-row").css("display", "none");
+
+    $('.modal-title').text("Delete Item");
+    $('.modal-save-button').css("display", "block");
+    $('.modal-save-button').prop('id', 'delete-item-button');
+    $('#item-action-modal').modal('show');
+}
+
+function displayMessageBox(message) {
+    $('#message-box .modal-body').text(message);
+    $('#message-box').modal('show');
+}
+
+function sendDeleteItemAjax(deleteItemJson) {
+    $.ajax({
+        url: 'http://localhost:8080/bim/api/items',
+        type: 'DELETE',
+        contentType: 'application/json',
+        dataType: 'JSON',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+        },
+        data: deleteItemJson,
+        success: function (response) {
+            if (response.success === true) {
+                displayMessageBox("delete success");
+                $('#item-action-modal').modal('hide');
+                $('.modal-footer').on('click', '#message-box-button', function () {
+                    window.location.reload();
+                });
+            } else {
+                displayMessageBox("delete failed" + " (" + response.errorMessage + ")");
+            }
+        },
+        error: function (response, status, jqXHR) {
+            displayMessageBox("delete failed" + " (" + status + ")");
+        }
+    });
+}
+
+function sendRequestItemAjax(requestItemJson) {
+    $.ajax({
+        url: "http://localhost:8080/bim/api/requests",
+        type: "POST",
+        dataType: "JSON",
+        contentType: "application/json",
+        data: requestItemJson,
+        async: false,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"));
+        },
+        success: function (response, status, jqXHR) {
+            if (response.success === true) {
+                displayMessageBox("Request Success");
+                $('#item-action-modal').modal('hide');
+                $('.modal-footer').on('click', '#message-box-button', function () {
+                    window.location.reload();
+                });
+            } else {
+                displayMessageBox("Request Failed" + " (" + response.errorMessage + ")");
+            }
+        },
+        error: function (response, status, jqXHR) {
+            displayMessageBox("Request Failed" + " (" + status + ")");
+        }
+    });
+}
+
 $(document).ready(function () {
-    function setRequestModalAttributes() {
-        $("#request-table>tbody").empty();
-        $("#request-div").css("display", "inline");
-        $("#entry-edit-form").css("display", "none");
-        $("#item-information-div").css("display", "none");
-
-        $('.modal-title').text("Request Item");
-        $('.modal-save-button').css("display", "block");
-        $('.modal-save-button').prop('id', 'request-item-button');
-        $('#item-action-modal').modal('show');
-    }
-
-    function setDeleteModalAttributes() {
-        $("#request-table>tbody").empty();
-        $("#entry-edit-form").css("display", "none");
-        $("#item-information-div").css("display", "none");
-        $("#request-div").css("display", "");
-        $("#input-item-id-row").css("display", "none");
-
-        $('.modal-title').text("Delete Item");
-        $('.modal-save-button').css("display", "block");
-        $('.modal-save-button').prop('id', 'delete-item-button');
-        $('#item-action-modal').modal('show');
-    }
-
-    function displayMessageBox(message) {
-        $('#message-box .modal-body').text(message);
-        $('#message-box').modal('show');
-    }
-
     function requestButtonOnClick() {
         $(document).on('click', '#request-item-button', function (e) {
             e.stopPropagation();
@@ -45,39 +100,12 @@ $(document).ready(function () {
                 item.push(itemData);
             });
 
-            let requestEmployeeId = "EM068"; //need to change it
-
             let request = {
-                employeeId : requestEmployeeId,
                 items : item,
             };
 
             let requestItemJson = JSON.stringify(request);
-            $.ajax({
-                url: "http://localhost:8080/bim/api/requests",
-                type: "POST",
-                dataType: "JSON",
-                contentType: "application/json",
-                data: requestItemJson,
-                async: false,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"));
-                },
-                success: function (response, status, jqXHR) {
-                    if(response.success === true){
-                        displayMessageBox("Request Success");
-                        $('#item-action-modal').modal('hide');
-                        $('.modal-footer').on('click', '#message-box-button', function () {
-                            window.location.reload();
-                        });
-                    }else {
-                        displayMessageBox("Request Failed" + " (" + response.errorMessage + ")");
-                    }
-                },
-                error: function (response, status, jqXHR) {
-                    displayMessageBox("Request Failed" + " (" + status + ")");
-                }
-            });
+            sendRequestItemAjax(requestItemJson);
         });
     }
 
@@ -95,31 +123,7 @@ $(document).ready(function () {
             let deleteItemData = {"ids": items};
             let deleteItemJson = JSON.stringify(deleteItemData);
 
-            $.ajax({
-                url: 'http://localhost:8080/bim/api/items',
-                type: 'DELETE',
-                contentType: 'application/json',
-                dataType: 'JSON',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-                    // console.log(xhr.getAllResponseHeaders());
-                },
-                data: deleteItemJson,
-                success: function (response) {
-                    if(response.success === true) {
-                        displayMessageBox("delete success");
-                        $('#item-action-modal').modal('hide');
-                        $('.modal-footer').on('click', '#message-box-button', function () {
-                            window.location.reload();
-                        });
-                    } else {
-                        displayMessageBox("delete failed" + " (" + response.errorMessage + ")");
-                    }
-                },
-                error: function (response, status, jqXHR) {
-                    displayMessageBox("delete failed" + " (" + status + ")");
-                }
-            });
+            sendDeleteItemAjax(deleteItemJson);
         });
     }
 
@@ -150,12 +154,12 @@ $(document).ready(function () {
         //if no item is selected
         if(!selectedItem.length>0){
             displayMessageBox("You must select at least 1 item")
-
-        } else{
+        }
+        else {
             if (this.id === 'request-button') {
                 setRequestModalAttributes();
 
-                var quantities;
+                let quantities;
 
                 for(let i=0;i<selectedItem.length;i++){
                     let tr = "<tr class='request-item-row'>";
@@ -194,7 +198,6 @@ $(document).ready(function () {
                     $("#request-table").append(tr+td1+td2+td3+td4);
                 }
                 deleteButtonOnClick();
-
             }
         }
     });

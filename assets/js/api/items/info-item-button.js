@@ -11,6 +11,33 @@ $(document).ready(function () {
         $('#item-action-modal').modal('show');
     }
 
+    function displayMessageBox(message) {
+        $('#message-box .modal-body').text(message);
+        $('#message-box').modal('show');
+    }
+
+    function getImageByte(imagePath) {
+        $.ajax({
+            url: 'http://localhost:8080/bim/items/image?imagePath=' + imagePath,
+            type: 'GET',
+            dataType: "jsonp",
+            contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
+            },
+            success: function (response, status, jqXHR) {
+                console.log(this.url);
+                console.log(response.value.value.imageUrl);
+                $('#item-info-image').prop('src', ('http://localhost:8080/bim/api/items/image?imagePath='
+                    + response.value.value.imageUrl +
+                    ''));
+            },
+            error: function (response, status, jqXHR) {
+                console.log(response);
+            }
+        });
+    }
+
     function getItemJson(itemId) {
         $.ajax({
             url: 'http://localhost:8080/bim/api/items/' + itemId,
@@ -29,9 +56,7 @@ $(document).ready(function () {
 
                 if(response.value.value.imageUrl !== "null")
                     $('#item-info-image').prop('src', ('http://localhost:8080/bim/items/image?imagePath=' + response.value.value.imageUrl));
-                else
-                    $('#item-info-image').prop('src', '../assets/images/no-image-available.png');
-
+                    getImageByte(response.value.value.imageUrl);
             },
             error: function (response, status, jqXHR) {
 

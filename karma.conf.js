@@ -10,7 +10,7 @@ module.exports = function(config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['mocha', 'requirejs' ,'chai', 'sinon'],
+        frameworks: ['mocha', 'requirejs', 'sinon', 'chai-jquery', 'chai', 'jquery-3.3.1'],
 
 
         // list of files / patterns to load in the browser
@@ -18,6 +18,10 @@ module.exports = function(config) {
             'test/assets/js/jquery-3.3.1.min.js',
             {
                 pattern: 'assets/js/**/**/*.js',
+                included: false
+            },
+            {
+                pattern: 'node_modules/chai-jquery/chai-jquery.js',
                 included: false
             },
             {
@@ -81,12 +85,15 @@ module.exports = function(config) {
 
         plugins: [
             'karma-chai',
-            'karma-chai-sinon',
+            'karma-jquery',
             'karma-mocha',
-            'karma-chrome-launcher',
-            'karma-requirejs',
             'karma-sinon',
-            'karma-spec-reporter'
+            'karma-requirejs',
+            'karma-chai-sinon',
+            'karma-chai-jquery',
+            'karma-chrome-launcher',
+            'karma-spec-reporter',
+
         ]
 
     })

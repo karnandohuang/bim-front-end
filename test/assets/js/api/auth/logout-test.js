@@ -1,3 +1,4 @@
+
 var expect = chai.expect;
 
 define(['assets/js/api/auth/logout'], function () {

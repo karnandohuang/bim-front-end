@@ -1,3 +1,4 @@
+window.module = window.module || {};
 var date = Math.floor(Date.now() / 1000);
 
 function displayMessageBox(message) {
@@ -5,11 +6,13 @@ function displayMessageBox(message) {
     $('#message-box').modal('show');
 }
 
-(function isLoggedIn() {
+function isLoggedIn() {
     if(localStorage.getItem('token') === ""){
         window.location.replace('login.html');
     }
-})();
+}
+
+isLoggedIn();
 
 (function hideAttributesBasedOnRole() {
 
@@ -40,3 +43,5 @@ $(document).ready(function () {
         })();
     });
 });
+
+module.exports = isLoggedIn;

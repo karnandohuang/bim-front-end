@@ -203,5 +203,6 @@ module.exports = {
     displayMessageBox,
     setModalTableData,
     getAssignmentIds,
-    actionButtonOnClick
+    actionButtonOnClick,
+    setApproveModalAttributes
 };

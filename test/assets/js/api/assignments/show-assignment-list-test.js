@@ -2,14 +2,47 @@ var expect = chai.expect;
 
 var assignmentList = {
     //data
-    assignmentId : '',
-    employeeId : '',
-    employeeName: '',
-    itemId: '',
-    itemName: '',
-    itemQty: '',
-    assignmentStatus: '',
-    assignmentNotes: '',
+    success: 'true',
+    code: '200 OK',
+    value: {
+        assignment: {
+            id: "",
+            qty: "",
+            status: "",
+            notes: "",
+            createdDate: "",
+            updatedDate: "",
+            createdBy: "",
+            updatedBy: "",
+            employee: {
+                id: "",
+                name: "",
+                superiorId: "",
+                dob: "",
+                email: "",
+                password: "",
+                position: "",
+                division: "",
+                createdDate: "",
+                updatedDate: "",
+                createdBy: "",
+                updatedBy: "",
+                role: ""
+            },
+            item: {
+                id: "",
+                name: "",
+                price: "",
+                location: "",
+                createdDate: "",
+                updatedDate: "",
+                createdBy: "",
+                updatedBy: "",
+                qty: "",
+                imageUrl: ""
+            }
+        }
+    },
 
     callAjaxWithAuthorization: function () {
         jQuery.ajax({
@@ -26,7 +59,7 @@ var assignmentList = {
         });
     },
 
-    callAjax : function(){
+    callAjax: function () {
     },
 
     getData: function () {
@@ -43,7 +76,7 @@ var assignmentList = {
                 console.log(response);
 
                 self.assignmentId = response.assignmentId;
-                self.employeeId= response.employeeId;
+                self.employeeId = response.employeeId;
                 self.employeeName = response.employeeName;
                 self.itemId = response.itemId;
                 self.itemName = response.itemName;
@@ -54,6 +87,7 @@ var assignmentList = {
         });
     }
 };
+
 
 describe('Assignment List Ajax Call', function () {
 
@@ -82,17 +116,52 @@ describe('Assignment List Ajax Call', function () {
 
 define(['assets/js/api/assignments/show-assignment-list'], function () {
     describe('Get Assignment List', function () {
+        let injectJson = {
+            success : 'true',
+            code: '200 OK',
+            value: {
+                assignment: {
+                    id: 'AT065',
+                    qty: 3,
+                    status: "Approved",
+                    notes: null,
+                    createdDate: 1545152400000,
+                    updatedDate: 1546016400000,
+                    createdBy: "stellia@gdn-commerce.com",
+                    updatedBy: "stellib@gdn-commerce.com",
+                    employee: {
+                        id: "EM093",
+                        name: "Stelli Tan",
+                        superiorId: "EM094",
+                        dob: "01/01/2000",
+                        email: "stellia@gdn-commerce.com",
+                        password: null,
+                        position: "IT Intern",
+                        division: "IT",
+                        createdDate: 1545152400000,
+                        updatedDate: 1545670800000,
+                        createdBy: "admin",
+                        updatedBy: "admin1@gdn-commerce.com",
+                        role: "SUPERIOR"
+                    },
+                    item: {
+                        id: "IM020",
+                        name: "Samsung J7ssss",
+                        price: 1200000,
+                        location: "Thamrin Office",
+                        createdDate: 1542387600000,
+                        updatedDate: 1546016400000,
+                        createdBy: null,
+                        updatedBy: "admin1@gdn-commerce.com",
+                        qty: 8,
+                        imageUrl: "/Users/karnandohuang/Documents/Projects/blibli-inventory-system/bim-back-end/resources2018/12/IM020/2001560093 - Karnando Sepryan.jpg"
+                    }
+                }
+            }
+        };
+
         beforeEach(function() {
-            sinon.stub(jQuery, 'ajax').yieldsTo('success', {
-                assignmentId: 'AT001',
-                employeeId : 'EM001',
-                employeeName: 'Karnando Sepryan',
-                itemId: 'IM001',
-                itemName: 'Dell XPS 13',
-                itemQty: '2',
-                assignmentStatus: 'Pending',
-                assignmentNotes: ''
-            });
+            sinon.stub(jQuery, 'ajax').yieldsTo('success', injectJson);
         });
 
         afterEach(function() {
@@ -107,9 +176,12 @@ define(['assets/js/api/assignments/show-assignment-list'], function () {
             let sortedType = "asc";
             let filter="";
 
-            // assignmentList.callAjax(currentPage);
-            showAssignmentListAjax(currentPage);
-            expect(assignmentList.assignmentId).to.equals('AT001');
+            assignmentList.callAjaxWithAuthorization();
+            console.log(assignmentList.value.assignment);
+            // showAssignmentListAjax(currentPage);
+            expect(assignmentList.success).to.equals('true');
+            console.log(assignmentList.success);
+            expect(assignmentList.value.assignment.id).to.equals('AT065');
             expect(assignmentList.employeeId).to.equals("EM001");
             expect(assignmentList.employeeName).to.equals("Karnando Sepryan");
             expect(assignmentList.itemId).to.equals("IM001");

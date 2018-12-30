@@ -1,3 +1,61 @@
+function setTotalPage(totalPage, response) {
+    totalPage = response.paging.totalPage;
+    if (totalPage === 0)
+        totalPage = 1;
+    $('#total-page').text(totalPage);
+    return totalPage;
+}
+
+function setPagingButton(currentPage, totalPage) {
+    if ((currentPage === 1) && (currentPage === totalPage)) {
+        $('#table-prev-page-button').prop('disabled', true);
+        $('#table-next-page-button').prop('disabled', true);
+    } else if (currentPage === 1) {
+        $('#table-prev-page-button').prop('disabled', true);
+    } else if (currentPage === totalPage) {
+        $('#table-next-page-button').prop('disabled', true);
+    }
+}
+
+function displayErrorRetrievingData() {
+    let record =
+        "<tr><td colspan='100' class='text-center p-4'>" +
+        "<h3>Error Retrieving Data</h3>" +
+        "<button class='btn btn-primary' onclick='window.location.reload()'>Reload</button>" +
+        "</td></tr>";
+
+    $('#data-table').append(record);
+}
+
+function displayNoDataAvailable() {
+    let record = "<tr><td colspan='100' class='text-center p-4'><h3>No Data Available</h3></td></tr>";
+    $('#data-table').append(record);
+}
+
+function populateEmployeeTable(response) {
+    $(response.value.list).each(function (index, value) {
+        var record = "<tr class='row-select'><td class='select'>" +
+            '<input class="form-check-input position-static m-0 ml-1 " type="checkbox" value="">' +
+            "</td><td class='id'>" + value.id +
+            "</td><td class='name'>" + value.name +
+            "</td><td class='email'>" + value.email +
+            "</td><td class='position'>" + value.position +
+            "</td><td class='division'>" + value.division +
+            "</td><td class='superiorId'>" + value.superiorId +
+            "</td><td class='p-1 text-center'>";
+
+        if (localStorage.getItem('role') === 'ADMIN')
+            record +=
+                "<button type=\"button\" class=\"btn btn-success px-2 mx-1 edit-button\">" +
+                "<i class=\"fas fa-edit\"></i></button>";
+
+        record +=
+            "</td></tr>";
+
+        $("#data-table").append(record);
+    });
+}
+
 $(document).ready(function () {
 
     let currentPage = 1;
@@ -6,9 +64,7 @@ $(document).ready(function () {
     let name = "";
     let sortedBy = "id";
     let sortedType = "asc";
-    var PATH = "-";
-
-
+    var PATH = "";
 
     function displayTablePage(currentPage){
         $('#current-page').text(currentPage);
@@ -30,62 +86,19 @@ $(document).ready(function () {
             contentType:'application/json',
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-                console.log(xhr.getAllResponseHeaders());
             },
             success : function (response, status, jqXHR) {
                 if(response.paging.totalRecords > 0) {
-                    $(response.value.list).each(function (index, value) {
-
-                        var record = "<tr class='row-select'><td class='select'>" +
-                            '<input class="form-check-input position-static m-0 ml-1 " type="checkbox" value="">' +
-                            "</td><td class='id'>"+ value.id +
-                            "</td><td class='name'>" + value.name +
-                            "</td><td class='email'>" + value.email +
-                            "</td><td class='position'>" + value.position +
-                            "</td><td class='division'>" + value.division +
-                            "</td><td class='superiorId'>" + value.superiorId +
-                            "</td><td class='p-1 text-center'>";
-
-                        if(localStorage.getItem('role') === 'ADMIN')
-                            record +=
-                                "<button type=\"button\" class=\"btn btn-success px-2 mx-1 edit-button\">" +
-                                "<i class=\"fas fa-edit\"></i></button>";
-
-                        record +=
-                            "</td></tr>";
-
-                        $("#data-table").append(record);
-                    });
-
-                    totalPage = response.paging.totalPage;
-                    if(totalPage===0)
-                        totalPage=1;
-                    $('#total-page').text(totalPage);
-
-                    if((currentPage === 1) && (currentPage === totalPage)) {
-                        $('#table-prev-page-button').prop('disabled', true);
-                        $('#table-next-page-button').prop('disabled', true);
-                    } else if(currentPage === 1){
-                        $('#table-prev-page-button').prop('disabled', true);
-                    } else if(currentPage === totalPage){
-                        $('#table-next-page-button').prop('disabled', true);
-                    }
+                    populateEmployeeTable(response);
+                    totalPage = setTotalPage(totalPage, response);
+                    setPagingButton(currentPage, totalPage);
 
                 } else{
-                    let record = "<tr><td colspan='100' class='text-center p-4'><h3>No Data Available</h3></td></tr>";
-                    $('#data-table').append(record);
+                    displayNoDataAvailable();
                 }
             },
             error : function (response, status, jqXHR) {
-
-                let record =
-                    "<tr><td colspan='100' class='text-center p-4'>" +
-                    "<h3>Error Retrieving Data</h3>" +
-                    "<button class='btn btn-primary' onclick='window.location.reload()'>Reload</button>" +
-                    "</td></tr>";
-
-                $('#data-table').append(record);
-
+                displayErrorRetrievingData();
             }
         });
     }

@@ -35,7 +35,6 @@ $(document).ready(function () {
                 dataType: 'JSON',
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-                    // console.log(xhr.getAllResponseHeaders());
                 },
                 data: deleteEmployeeJson,
                 success: function (response, status, jqXHR) {
