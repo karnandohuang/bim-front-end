@@ -87,10 +87,14 @@ $(document).ready(function () {
         $('#table-prev-page-button').prop('disabled', false);
         $('#table-next-page-button').prop('disabled', false);
 
+        let API_PATH_ADMIN_ASSIGNMENT_LIST = 'http://localhost:8080/bim/api/assignments' + '?filterStatus='  + filter + '&pageNumber=' +
+            currentPage + '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType;
+        let API_PATH_SUPERIOR_ASSIGNMENT_LIST = 'http://localhost:8080/bim/api/assignments/superior/employee?' + 'filterStatus=' + filter +
+            '&pageNumber=' + currentPage + '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType;
+
         if (localStorage.getItem("role") === "ADMIN") {
             $.ajax({
-                url: 'http://localhost:8080/bim/api/requests' + '?filterStatus='  + filter + '&pageNumber=' + currentPage + '&pageSize=' + pageSize +
-                    '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
+                url: API_PATH_ADMIN_ASSIGNMENT_LIST,
                 type: 'GET',
                 dataType: 'JSON',
                 contentType: 'application/json',
@@ -115,14 +119,12 @@ $(document).ready(function () {
         }
         else if (localStorage.getItem('role') === "SUPERIOR") {
             $.ajax({
-                url: 'http://localhost:8080/bim/api/requests/superior/employee?' + 'filterStatus=' + filter + '&pageNumber=' + currentPage + '&pageSize=' + pageSize +
-                    '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
+                url: API_PATH_SUPERIOR_ASSIGNMENT_LIST,
                 type: 'GET',
                 dataType: 'JSON',
                 contentType: 'application/json',
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-                    // console.log(xhr.getAllResponseHeaders());
                 },
                 success: function (response, status, jqXHR) {
                     if (response.paging.totalRecords > 0) {

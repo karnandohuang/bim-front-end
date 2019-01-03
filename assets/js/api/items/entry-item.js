@@ -87,7 +87,7 @@ $(document).on('click', '#entry-button', function () {
 
 function uploadImageJson(formData) {
     $.ajax({
-        url: "http://localhost:8080/bim/api/upload",
+        url: API_PATH_UPLOAD_IMAGE,
         type: "POST",
         data: formData,
         enctype: 'multipart/form-data',

@@ -1,3 +1,28 @@
+let API_PATH_EMPLOYEES = 'http://localhost:8080/bim/api/employees';
+
+function setSelectedEmployee() {
+    let selectedEmployee = [];
+    $('.row-select input:checked').each(function () {
+        let selectedId = $(this).closest('tr').find('.id').html();
+        let selectedName = $(this).closest('tr').find('.name').html();
+        let selectedEmail = $(this).closest('tr').find('.email').html();
+        let selectedPosition = $(this).closest('tr').find('.position').html();
+        let selectedDivision = $(this).closest('tr').find('.division').html();
+        let selectedSuperiorId = $(this).closest('tr').find('.superiorId').html();
+
+        let employee = {
+            id: selectedId,
+            name: selectedName,
+            email: selectedEmail,
+            position: selectedPosition,
+            division: selectedDivision,
+            superiorId: selectedSuperiorId
+        };
+        selectedEmployee.push(employee);
+    });
+    return selectedEmployee;
+}
+
 $(document).ready(function () {
 
     function setDeleteModalAttributes() {
@@ -29,7 +54,7 @@ $(document).ready(function () {
             let deleteEmployeeJson = JSON.stringify(deleteEmployeeData);
 
             $.ajax({
-                url: 'http://localhost:8080/bim/api/employees',
+                url: API_PATH_EMPLOYEES,
                 type: 'DELETE',
                 contentType: 'application/json',
                 dataType: 'JSON',
@@ -56,25 +81,7 @@ $(document).ready(function () {
     }
 
     $('#edit-button, #delete-button').click(function () {
-        let selectedEmployee = [];
-        $('.row-select input:checked').each(function () {
-            let selectedId = $(this).closest('tr').find('.id').html();
-            let selectedName = $(this).closest('tr').find('.name').html();
-            let selectedEmail = $(this).closest('tr').find('.email').html();
-            let selectedPosition = $(this).closest('tr').find('.position').html();
-            let selectedDivision = $(this).closest('tr').find('.division').html();
-            let selectedSuperiorId = $(this).closest('tr').find('.superiorId').html();
-
-            let employee = {
-                id: selectedId,
-                name: selectedName,
-                email: selectedEmail,
-                position: selectedPosition,
-                division: selectedDivision,
-                superiorId: selectedSuperiorId
-            };
-            selectedEmployee.push(employee);
-        });
+        let selectedEmployee = setSelectedEmployee();
 
         if(!selectedEmployee.length>0){
             displayMessageBox("You must select at least 1 employee");

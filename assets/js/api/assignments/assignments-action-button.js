@@ -1,6 +1,5 @@
 window.module = window.module || {};
-
-let API_PATH_CHANGE_ASSIGNMENT_STATUS = 'http://localhost:8080/bim/api/requests/changeStatus';
+let API_PATH_CHANGE_ASSIGNMENT_STATUS = 'http://localhost:8080/bim/api/assignments/changeStatus';
 
 function changeStatusAjax(actionName, jsonData){
     $.ajax({
@@ -133,6 +132,7 @@ function actionButtonOnClick() {
             let ids = [];
 
             $('.modal-footer').one('click', '#approve-assignment-button', function () {
+                console.log(selectedAssignment);
                 ids = getAssignmentIds(selectedAssignment, ids, 'Pending');
 
                 if (ids.length !== 0) {

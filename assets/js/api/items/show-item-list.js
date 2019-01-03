@@ -75,11 +75,13 @@ $(document).ready(function () {
         $('#table-prev-page-button').prop('disabled', false);
         $('#table-next-page-button').prop('disabled', false);
 
+        let API_PATH_ITEM_LIST = 'http://localhost:8080/bim/api/items?name=' + name + '&pageNumber=' + currentPage +
+            '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType;
+
         // $('#table-prev-page-button').removeClass('disabled');
         // $('#table-next-page-button').removeClass('disabled');
         $.ajax({
-            url: 'http://localhost:8080/bim/api/items?name=' + name + '&pageNumber=' + currentPage +
-                '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
+            url: API_PATH_ITEM_LIST,
             type: 'GET',
             dataType: 'JSON',
             contentType: 'application/json',

@@ -48,10 +48,11 @@ $(document).ready(function () {
 
     function displaySuperiorTablePage(currentPage){
         $('#current-superior-page').text(currentPage);
-        $.ajax({
-            url : 'http://localhost:8080/bim/api/employees?pageNumber=' + currentPage + '&pageSize=' + pageSize +
-            '&name=' + name,
+        let API_PATH_GET_SUPERIOR_LIST = 'http://localhost:8080/bim/api/employees?pageNumber=' + currentPage + '&pageSize=' + pageSize +
+            '&name=' + name;
 
+        $.ajax({
+            url : API_PATH_GET_SUPERIOR_LIST,
             type : 'GET',
             dataType : 'JSON',
             beforeSend: function (xhr) {

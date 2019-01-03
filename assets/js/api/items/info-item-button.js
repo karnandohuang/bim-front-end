@@ -17,8 +17,9 @@ $(document).ready(function () {
     }
 
     function getImageByte(imagePath) {
+        let API_PATH_GET_IMAGE = 'http://localhost:8080/bim/items/image?imagePath=' + imagePath;
         $.ajax({
-            url: 'http://localhost:8080/bim/items/image?imagePath=' + imagePath,
+            url: API_PATH_GET_IMAGE,
             type: 'GET',
             dataType: "jsonp",
             contentType: "application/json",
@@ -39,8 +40,10 @@ $(document).ready(function () {
     }
 
     function getItemJson(itemId) {
+        let API_PATH_GET_ITEM = 'http://localhost:8080/bim/api/items/' + itemId;
+
         $.ajax({
-            url: 'http://localhost:8080/bim/api/items/' + itemId,
+            url: API_PATH_GET_ITEM,
             type: 'GET',
             dataType: 'JSON',
             beforeSend: function (xhr) {

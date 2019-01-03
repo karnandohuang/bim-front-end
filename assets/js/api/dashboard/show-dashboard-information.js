@@ -1,3 +1,5 @@
+let API_PATH_DASHBOARD = 'http://localhost:8080/bim/api/assignments/count';
+
 function populateDashboardData(response) {
     let pendingAssignmentCount = response.value.listOfCount.pendingAssignmentCount;
     let pendingHandoverCount = response.value.listOfCount.pendingHandoverCount;
@@ -24,7 +26,7 @@ function populateDashboardData(response) {
 
 function callCountAjax() {
     $.ajax({
-        url: 'http://localhost:8080/bim/api/requests/count',
+        url: API_PATH_DASHBOARD,
         type: 'GET',
         dataType: 'JSON',
         contentType: 'application/json',

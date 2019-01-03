@@ -110,4 +110,8 @@ $(document).ready(function () {
     });
 });
 
-module.exports = loginData;
+module.exports = {
+    login,
+    loginData,
+    setLocalStorage
+};

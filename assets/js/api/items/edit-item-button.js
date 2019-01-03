@@ -1,6 +1,7 @@
 let API_PATH_UPLOAD_IMAGE = "http://localhost:8080/bim/api/upload";
 let API_PATH_EDIT_ITEM = 'http://localhost:8080/bim/api/items';
 
+
 function editItem() {
 //get value from each text box
     let id = $('#input-item-id').val();
@@ -32,7 +33,6 @@ function getItemJson(itemId) {
         contentType: 'application/json',
         beforeSend: function (xhr) {
             xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-            // console.log(xhr.getAllResponseHeaders());
         },
         success: function (response, status, jqXHR) {
             $('#input-item-id').val(response.value.value.id);

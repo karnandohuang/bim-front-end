@@ -1,6 +1,12 @@
 window.module = window.module || {};
 var date = Math.floor(Date.now() / 1000);
 
+let loc = {
+    redirect : function (path) {
+        window.location.replace(path);
+    }
+};
+
 function displayMessageBox(message) {
     $('#message-box .modal-body').text(message);
     $('#message-box').modal('show');
@@ -8,7 +14,7 @@ function displayMessageBox(message) {
 
 function isLoggedIn() {
     if(localStorage.getItem('token') === ""){
-        window.location.replace('login.html');
+        loc.redirect('login.html');
     }
 }
 
@@ -37,11 +43,14 @@ $(document).ready(function () {
                 displayMessageBox("Your session has expired. Please login to continue.");
                 $('#message-box-div').on('click', '#message-box-button', function () {
                     localStorage.clear();
-                    window.location.replace('login.html');
+                    loc.redirect('login.html');
                 });
             }
         })();
     });
 });
 
-module.exports = isLoggedIn;
+module.exports = {
+    isLoggedIn,
+    loc
+};

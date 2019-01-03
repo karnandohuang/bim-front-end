@@ -1,3 +1,6 @@
+let API_PATH_ITEMS = 'http://localhost:8080/bim/api/items';
+let API_PATH_ASSIGNMENTS = "http://localhost:8080/bim/api/assignments";
+
 function setRequestModalAttributes() {
     $("#request-table>tbody").empty();
     $("#request-div").css("display", "inline");
@@ -30,7 +33,7 @@ function displayMessageBox(message) {
 
 function sendDeleteItemAjax(deleteItemJson) {
     $.ajax({
-        url: 'http://localhost:8080/bim/api/items',
+        url: API_PATH_ITEMS,
         type: 'DELETE',
         contentType: 'application/json',
         dataType: 'JSON',
@@ -57,7 +60,7 @@ function sendDeleteItemAjax(deleteItemJson) {
 
 function sendRequestItemAjax(requestItemJson) {
     $.ajax({
-        url: "http://localhost:8080/bim/api/requests",
+        url: API_PATH_ASSIGNMENTS,
         type: "POST",
         dataType: "JSON",
         contentType: "application/json",

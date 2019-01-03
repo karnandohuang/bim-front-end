@@ -1,3 +1,5 @@
+let API_PATH_EMPLOYEES = "http://localhost:8080/bim/api/employees";
+
 function editEmployee() {
     $('#submit-form').click();
     let form = $("#entry-edit-form");
@@ -45,6 +47,16 @@ function displayMessageBox(message) {
     $('#message-box').modal('show');
 }
 
+function setEditEmployeeForm(data) {
+    $('#input-employee-id').val(data.value.value.id);
+    $('#input-employee-name').val(data.value.value.name);
+    $('#input-superior-id').val(data.value.value.superiorId);
+    $('#datepicker').datepicker().value(data.value.value.dob);
+    $('#input-email').val(data.value.value.email);
+    $('#input-position').val(data.value.value.position);
+    $('#input-division').val(data.value.value.division);
+}
+
 function getEmployeeJson(employeeIdToBeEdited) {
     $.ajax({
         url: 'http://localhost:8080/bim/api/employees/' + employeeIdToBeEdited,
@@ -55,13 +67,7 @@ function getEmployeeJson(employeeIdToBeEdited) {
             xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
         },
         success: function (data) {
-            $('#input-employee-id').val(data.value.value.id);
-            $('#input-employee-name').val(data.value.value.name);
-            $('#input-superior-id').val(data.value.value.superiorId);
-            $('#datepicker').datepicker().value(data.value.value.dob);
-            $('#input-email').val(data.value.value.email);
-            $('#input-position').val(data.value.value.position);
-            $('#input-division').val(data.value.value.division);
+            setEditEmployeeForm(data);
         },
         error: function () {
 
@@ -71,7 +77,7 @@ function getEmployeeJson(employeeIdToBeEdited) {
 
 function sendEditedEmployeeJson(employeeJson) {
     $.ajax({
-        url: "http://localhost:8080/bim/api/employees",
+        url: API_PATH_EMPLOYEES,
         type: "PUT",
         dataType: "JSON",
         contentType: "application/json",
