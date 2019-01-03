@@ -52,7 +52,7 @@ function displayMessageBox(message) {
     $('#message-box').modal('show');
 }
 
-function setEmployeeJson() {
+function entryEmployee() {
     let employeeJson = [];
 
     $('#submit-form').click();
@@ -80,8 +80,8 @@ function setEmployeeJson() {
             division: division
         };
         employeeJson = JSON.stringify(employee);
+        sendEntryEmployeeJson(employeeJson);
     }
-    return employeeJson;
 }
 
 $(document).ready(function () {
@@ -93,7 +93,6 @@ $(document).ready(function () {
 
     $('.modal-footer').on('click', '#entry-employee-button', function (e) {
         e.stopPropagation();
-        let employeeJson = setEmployeeJson();
-        sendEntryEmployeeJson(employeeJson);
+        entryEmployee();
     });
 });

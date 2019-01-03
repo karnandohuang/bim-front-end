@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    let employeeId = "EM068";
     let currentPage = 1;
     let totalPage = 1;
     let pageSize = 6;
@@ -22,7 +21,6 @@ $(document).ready(function () {
             },
             success: function (response, status, jqXHR) {
                 if(response.paging.totalRecords > 0) {
-                    console.log(response.value.list);
                     $(response.value.list).each(function (index, value) {
                         let record =
                             "<tr class='row-select'>" +
@@ -88,13 +86,6 @@ $(document).ready(function () {
         }
         displayTablePage(currentPage);
     });
-
-    // $(document).on('click', '#table-search-button', function () {
-    //     name = $('#table-search-name').val();
-    //     $('#data-table>tbody').empty();
-    //     currentPage = 1;
-    //     displayTablePage(currentPage);
-    // });
 
     $(document).on('change', '#sorted-by', function () {
         $('#data-table>tbody').empty();

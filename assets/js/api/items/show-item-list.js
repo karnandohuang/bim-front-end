@@ -78,8 +78,6 @@ $(document).ready(function () {
         let API_PATH_ITEM_LIST = 'http://localhost:8080/bim/api/items?name=' + name + '&pageNumber=' + currentPage +
             '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType;
 
-        // $('#table-prev-page-button').removeClass('disabled');
-        // $('#table-next-page-button').removeClass('disabled');
         $.ajax({
             url: API_PATH_ITEM_LIST,
             type: 'GET',
@@ -96,20 +94,6 @@ $(document).ready(function () {
                     populateItemTable(response);
                     totalPage = setTotalPage(totalPage, response);
                     setPaginationButton(currentPage, totalPage);
-
-                    // let pageNumbers;
-                    // (function appendPageNumber() {
-                    //     pageNumbers += '<li class="page-item"><a class="page-link" href="#">First</a></li>';
-                    //     pageNumbers += '<li class="page-item" id="table-prev-page-button"><a class="page-link" href="#">Prev</a></li>;'
-                    //     for(let i=1;i<=totalPage;i++){
-                    //         pageNumbers += '<li class="page-item"><a class="page-link" href="#">' + i + '</a></li>';
-                    //     }
-                    //     pageNumbers += '<li class="page-item" id="table-next-page-button"><a class="page-link" href="#">Next</a></li>';
-                    //     pageNumbers += '<li class="page-item"><a class="page-link" href="#">Last</a></li>\n';
-                    // })();
-                    //
-                    //
-                    // $('.pagination').append();
 
                 } else{
                     displayNoDataAvailable();
