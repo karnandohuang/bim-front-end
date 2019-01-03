@@ -18,7 +18,15 @@ function isLoggedIn() {
     }
 }
 
-isLoggedIn();
+function checkSession() {
+    if(date >= localStorage.getItem('ts')){
+        displayMessageBox("Your session has expired. Please login to continue.");
+        $('#message-box-div').on('click', '#message-box-button', function () {
+            localStorage.clear();
+            loc.redirect('login.html');
+        });
+    }
+}
 
 (function hideAttributesBasedOnRole() {
 
@@ -38,15 +46,9 @@ isLoggedIn();
 
 $(document).ready(function () {
     $(window).on('load', function(){
-        (function checkSession() {
-            if(date >= localStorage.getItem('ts')){
-                displayMessageBox("Your session has expired. Please login to continue.");
-                $('#message-box-div').on('click', '#message-box-button', function () {
-                    localStorage.clear();
-                    loc.redirect('login.html');
-                });
-            }
-        })();
+        console.log();
+        isLoggedIn();
+        checkSession();
     });
 });
 

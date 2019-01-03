@@ -16,29 +16,6 @@ $(document).ready(function () {
         $('#message-box').modal('show');
     }
 
-    function getImageByte(imagePath) {
-        let API_PATH_GET_IMAGE = 'http://localhost:8080/bim/items/image?imagePath=' + imagePath;
-        $.ajax({
-            url: API_PATH_GET_IMAGE,
-            type: 'GET',
-            dataType: "jsonp",
-            contentType: "application/json",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('token'));
-            },
-            success: function (response, status, jqXHR) {
-                console.log(this.url);
-                console.log(response.value.value.imageUrl);
-                $('#item-info-image').prop('src', ('http://localhost:8080/bim/api/items/image?imagePath='
-                    + response.value.value.imageUrl +
-                    ''));
-            },
-            error: function (response, status, jqXHR) {
-                console.log(response);
-            }
-        });
-    }
-
     function getItemJson(itemId) {
         let API_PATH_GET_ITEM = 'http://localhost:8080/bim/api/items/' + itemId;
 
@@ -58,8 +35,7 @@ $(document).ready(function () {
                 $('#item-info-location').text(response.value.value.location);
 
                 if(response.value.value.imageUrl !== "null")
-                    $('#item-info-image').prop('src', ('http://localhost:8080/bim/items/image?imagePath=' + response.value.value.imageUrl));
-                    getImageByte(response.value.value.imageUrl);
+                    $('#item-info-image').prop('src', ('http://localhost:8080/bim/api/items/image?imagePath=' + response.value.value.imageUrl));
             },
             error: function (response, status, jqXHR) {
 

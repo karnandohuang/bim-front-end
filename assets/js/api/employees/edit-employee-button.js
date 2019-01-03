@@ -1,4 +1,4 @@
-let API_PATH_EMPLOYEES = "http://localhost:8080/bim/api/employees";
+let API_PATH_GET_EMPLOYEES = "http://localhost:8080/bim/api/employees";
 
 function editEmployee() {
     $('#submit-form').click();
@@ -77,7 +77,7 @@ function getEmployeeJson(employeeIdToBeEdited) {
 
 function sendEditedEmployeeJson(employeeJson) {
     $.ajax({
-        url: API_PATH_EMPLOYEES,
+        url: API_PATH_GET_EMPLOYEES,
         type: "PUT",
         dataType: "JSON",
         contentType: "application/json",

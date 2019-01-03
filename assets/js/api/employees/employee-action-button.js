@@ -1,5 +1,3 @@
-let API_PATH_EMPLOYEES = 'http://localhost:8080/bim/api/employees';
-
 function setSelectedEmployee() {
     let selectedEmployee = [];
     $('.row-select input:checked').each(function () {
@@ -24,6 +22,7 @@ function setSelectedEmployee() {
 }
 
 $(document).ready(function () {
+    let API_PATH_EMPLOYEES = 'http://localhost:8080/bim/api/employees';
 
     function setDeleteModalAttributes() {
         $('.modal-title').text("Delete Employee");

@@ -65,13 +65,13 @@ function setHandoverModalAttributes() {
 }
 
 function setModalTableData(assignment) {
-
+    console.log(assignment);
     for (let i = 0; i < assignment.length; i++) {
         let tr = "<tr>";
         let td0 = "<td class='selected-assignment-id'>" + assignment[i].id + "</td>";
         let td1 = "<td class='selected-employee-id'>" + assignment[i].employeeId + "</td>";
         let td2 = "<td class='selected-employee-name'>" + assignment[i].employeeName + "</td>";
-        let td3 = "<td class='selected-item-id'>" + assignment[i].itemId + "</td>";
+        let td3 = "<td class='selected-item-id'>" + assignment[i].itemSKU + "</td>";
         let td4 = "<td class='selected-item-name'>" + assignment[i].itemName + "</td>";
         let td5 = "<td class='selected-quantity'>" + assignment[i].quantity + "</td>";
         let td6 = "<td class='selected-status'>" + assignment[i].status + "</td></tr>";

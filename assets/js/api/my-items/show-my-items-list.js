@@ -12,7 +12,7 @@ $(document).ready(function () {
         $('#table-next-page-button').prop('disabled', false);
 
         $.ajax({
-            url: 'http://localhost:8080/bim/api/requests/employee?pageNumber=' + currentPage +
+            url: 'http://localhost:8080/bim/api/assignments/employee?pageNumber=' + currentPage +
                 '&pageSize=' + pageSize + '&sortedBy=' + sortedBy + '&sortedType=' + sortedType,
             type: 'GET',
             dataType: 'JSON',

@@ -56,58 +56,6 @@ describe('Change Assignment Status With Authorization', function () {
     });
 });
 
-// describe('Show Message Box', function () {
-//     var a;
-//
-//     beforeEach(function (done) {
-//         require([path], function (assignmentActionButton) {
-//             // console.log("some ->" + some);
-//             // displayMessageBox("hello");
-//
-//
-//
-//             done();
-//         });
-//     });
-//
-//     // beforeEach(function() {
-//     //     sinon.stub(jQuery, 'ajax').yieldsTo('success', {
-//     //     });
-//     // });
-//     //
-//     // afterEach(function() {
-//     //     jQuery.ajax.restore();
-//     // });
-//
-//     it('should show message box', function (done) {
-//         let assignment = {
-//             ids: ["AT001"],
-//             status: "Received"
-//         };
-//         // let assignmentJson = JSON.stringify(assignment);
-//
-//         // assignmentActionButton.changeStatusAjax("Reject", assignmentJson);
-//         // expect($.ajax.calledOnce).to.be.true;
-//         done();
-//     });
-// });
-
-// define(['assets/js/api/assignments/assignments-action-button', 'chai-jquery', 'jsdom'], function (assignmentActionButton, chai_jquery, jsdom) {
-//     chai.use(chai_jquery);
-//
-//     describe('set approve modal attribute', function () {
-//         it('should set the right attribute', function () {
-//
-//             document.body.innerHTML = '<div id="entry-edit-form"></div>';
-//             console.log("document " + document.body.innerHTML);
-//             setApproveModalAttributes();
-//             expect($('div')).to.have.prop('display', 'block');
-            // expect($('div')).to.have.attr('display', 'block');
-            // expect($('div')).to.exist;
-        // })
-    // });
-// });
-
 describe('blabla', function () {
     it('should ', function () {
         let jqdiv;

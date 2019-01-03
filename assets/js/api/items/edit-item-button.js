@@ -42,7 +42,7 @@ function getItemJson(itemId) {
             $('#input-item-qty').val(response.value.value.qty);
             $('#input-item-location').val(response.value.value.location);
             if(response.value.value.imageUrl !== "null")
-                $('#image-preview').prop('src', ('http://localhost:8080/bim/items/image?imagePath=' + response.value.value.imageUrl));
+                $('#image-preview').prop('src', ('http://localhost:8080/bim/api/items/image?imagePath=' + response.value.value.imageUrl));
             else
                 $('#image-preview').prop('src', '../assets/images/no-image-available.png');
             imageUrl = response.value.value.imageUrl;

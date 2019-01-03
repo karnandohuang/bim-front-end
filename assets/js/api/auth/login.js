@@ -89,11 +89,11 @@ function checkIfUserIsAlreadyLoggedIn(){
     }
 }
 
-$(document).ready(function () {
-    var loginBox = $('.login-box');
-    loginBox.addClass("transitioned");
-    setTimeout(function(){loginBox.removeClass("transitioned")},200);
+var loginBox = $('.login-box');
+loginBox.addClass("transitioned");
+setTimeout(function(){loginBox.removeClass("transitioned")},200);
 
+$(document).ready(function () {
     checkIfUserIsAlreadyLoggedIn();
 
     $('#login-button').on('click', function (){
