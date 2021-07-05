@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Assignment List</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/base_style.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+		  integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../assets/css/loading.css">
+
+	<link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon/favicon-32x32.png">
+</head>
+<body>
+	<div id="progress" class="waiting">
+	</div>
+	<div class="container-fluid p-0 m-0">
+		<div class="row" id="page-row">
+			<div class="left-navbar col-sm-2 col-md-3 col-lg-3 col-xl-2 p-0 shadow"></div>
+
+			<div class="col-sm-10 col-md-9 col-lg-9 col-xl-10 p-0">
+				<div id="top-navbar"></div>
+
+				<div class="p-4">
+					<div class="row pt-1 pl-1 pr-4">
+						<div class="col-3 px-2">
+							<button type="button" class="btn btn-success btn-block" data-toggle="modal" id="approve-button">
+								Approve Assignment</button>
+						</div>
+						<div class="col-3 px-2">
+							<button type="button" class="btn btn-danger btn-block" data-toggle="modal" id="reject-button">
+								Reject Assignment</button>
+						</div>
+						<div class="col-3 px-2">
+							<button type="button" class="btn btn-primary btn-block" data-toggle="modal" id="handover-button">
+								Handover Items</button>
+						</div>
+					</div>
+
+                    <div class="title-and-sort-div"></div>
+                    <div class="assignment-sort-div row justify-content-end">
+                        <div class="col-md-12 col-lg-8 mb-3 text-right">
+                            <div class="form-check-inline">
+                                <h6>Filter Assignment Status : </h6>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="all-assignment" name="assignment-status-filter"
+                                       value="" checked>
+                                <label class="form-check-label" for="all-assignment">All</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="pending-assignment" name="assignment-status-filter"
+									   value="Pending">
+                                <label class="form-check-label" for="pending-assignment">Pending</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="approved-assignment" name="assignment-status-filter"
+                                       value="Approved">
+                                <label class="form-check-label" for="approved-assignment">Approved</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="handover-assignment" name="assignment-status-filter"
+                                       value="Received" >
+                                <label class="form-check-label" for="handover-assignment">Received</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="rejected-assignment" name="assignment-status-filter"
+                                       value="Rejected">
+                                <label class="form-check-label" for="rejected-assignment">Rejected</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="table-responsive">
+						<table class="table table-hover" id="data-table">
+							<thead>
+							<tr>
+								<th scope="col" class="pl-3">
+									<input class="form-check-input position-static m-0 select-all" type="checkbox" value="">
+								</th>
+								<th scope="col">Assignment ID</th>
+								<th scope="col">Employee ID</th>
+								<th scope="col">Employee Name</th>
+								<th scope="col">Item ID</th>
+								<th scope="col">Item Name</th>
+								<th scope="col">Qty</th>
+								<th scope="col">Status</th>
+                                <th scope="col" class="text-center">Notes</th>
+                            </tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+                        <div id="table-pagination-div"></div>
+					</div>
+
+				</div>
+				<div class="modal fade" id="action-modal" tabindex="-1" role="dialog"
+					 aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="action-modal-label">Entry Item</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="container-fluid">
+									<div class="table-responsive">
+										<table class="table table-hover" id="assignment-table">
+											<thead>
+											<tr>
+												<th scope="col">Assignment ID</th>
+												<th scope="col">Employee ID</th>
+												<th scope="col">Employee Name</th>
+												<th scope="col">Item ID</th>
+												<th scope="col">Item Name</th>
+												<th scope="col">Qty</th>
+												<th scope="col">Status</th>
+											</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+
+									<div id="reject-reason-box" style="display : none">
+										<div class="form-group">
+											<label for="reject-reason">Reject Reason :</label>
+											<input class="form-control needs-validation" id="reject-reason" type="text">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary modal-save-button" >Save</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+                <div id="change-password-div"></div>
+                <div id="message-box-div"></div>
+            </div>
+		</div>
+	</div>
+
+	<script src="../assets/js/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../assets/js/bootstrap/bootstrap.js"></script>
+    <script src="../assets/js/loading.js"></script>
+
+    <script src="../assets/components/js/left-navbar/assignment.js"></script>
+    <script src="../assets/components/js/top-navbar.js"></script>
+    <script src="../assets/components/js/change-password.js"></script>
+    <script src="../assets/components/js/message-box.js"></script>
+    <script src="../assets/components/js/table-pagination-button.js"></script>
+	<script src="../assets/components/js/table-title-and-sort/assignments-table-title-and-sort.js"></script>
+
+	<script src="../assets/js/api/assignments/show-assignment-list.js"></script>
+	<script src="../assets/js/api/assignments/assignments-action-button.js"></script>
+    <script src="../assets/js/api/checkbox.js"></script>
+
+    <script src="../assets/js/api/auth/check-logged-in.js"></script>
+    <script src="../assets/js/api/auth/logout.js"></script>
+
+</body>
+</html>

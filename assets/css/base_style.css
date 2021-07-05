@@ -1,23 +1,26 @@
-html,body
+html
 {
 	height: 100%;
+	padding: 0;
+	margin: 0;
 }
 
 body{
+    min-height: 100%;
 	display: flex;
-	align-items: center;
 }
 
 .container-fluid{
-	height: 100%;
+    min-height: 100%;
 	margin: 0 auto;
 }
 
-#page-row,.page-full, .left-navbar, #left-nav{
-	height: 100%;
+#left-nav{
+	min-height: 100%;
 }
 
 #page-row{
+    height: 100%;
 	width: 100%;
 	margin:0;
 }
